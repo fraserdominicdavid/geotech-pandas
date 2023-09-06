@@ -19,6 +19,7 @@ version_files = ["pyproject.toml:version"]
 
 [tool.poetry.dependencies]  # https://python-poetry.org/docs/dependency-specification/
 python = ">=3.11,<4.0"
+pandas = "^2.1.0"
 
 [tool.poetry.group.test.dependencies]  # https://python-poetry.org/docs/master/managing-dependencies/
 black = { extras = ["jupyter"], version = ">=23.3.0" }
