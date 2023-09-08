@@ -46,3 +46,27 @@ class GeotechPandasBase:
                 f"The dataframe must have: {', '.join(missing_columns)} "
                 f"column{'s' if len(missing_columns) > 1 else ''}."
             )
+
+    @staticmethod
+    def validate_monotony(df: pd.DataFrame) -> None:
+        """
+        Validate if the ``Bottom`` of each ``PointID`` group is monotonically increasing.
+
+        Parameters
+        ----------
+        df : pandas.DataFrame
+            Dataframe to be validated.
+
+        Raises
+        ------
+        AttributeError
+            When ``Bottom`` is not monotonically increasing in one or more ``PointID``.
+        """
+        g = df.groupby("PointID")
+        check_df = pd.Series(g["Bottom"].is_monotonic_increasing).to_frame().reset_index()
+        check_list = check_df[~check_df["Bottom"]]["PointID"].to_list()
+        if ~check_df["Bottom"].all():
+            raise AttributeError(
+                f"Elements in the Bottom column must be monotonically increasing for:"
+                f" {', '.join(check_list)}."
+            )
