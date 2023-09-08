@@ -70,3 +70,25 @@ class GeotechPandasBase:
                 f"Elements in the Bottom column must be monotonically increasing for:"
                 f" {', '.join(check_list)}."
             )
+
+    @staticmethod
+    def validate_duplicates(df: pd.DataFrame) -> None:
+        """
+        Validate the dataframe for duplicate value pairs in the ``PointID`` and ``Bottom`` columns.
+
+        Parameters
+        ----------
+        df : pandas.DataFrame
+            Dataframe to be validated.
+
+        Raises
+        ------
+        AttributeError
+            When duplicate value pairs in the ``PointID`` and ``Bottom`` columns are detected.
+        """
+        duplicate_list = df[df[["PointID", "Bottom"]].duplicated()]["PointID"].to_list()
+        if len(duplicate_list) > 0:
+            raise AttributeError(
+                "The dataframe contains duplicate PointID and Bottom:"
+                f" {', '.join(duplicate_list)}."
+            )
