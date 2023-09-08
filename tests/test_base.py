@@ -120,3 +120,45 @@ def test_validate_duplicates(df, error, error_message):
     with error as e:
         GeotechPandasBase.validate_duplicates(df)
         assert error_message is None or error_message in str(e)
+
+
+@pytest.mark.parametrize(
+    ("df", "error", "error_message"),
+    [
+        (
+            base_df[["PointID"]].copy(),
+            pytest.raises(AttributeError),
+            "The dataframe must have: Bottom column.",
+        ),
+        (
+            pd.DataFrame(
+                {
+                    "PointID": ["BH-1", "BH-1", "BH-1", "BH-2", "BH-2"],
+                    "Bottom": [0.0, 2.0, 1.0, 0.0, 1.0],
+                }
+            ),
+            pytest.raises(AttributeError),
+            "Elements in the Bottom column must be monotonically increasing for: BH-1.",
+        ),
+        (
+            pd.DataFrame(
+                {
+                    "PointID": ["BH-1", "BH-1", "BH-1", "BH-2", "BH-2"],
+                    "Bottom": [0.0, 1.0, 1.0, 0.0, 1.0],
+                }
+            ),
+            pytest.raises(AttributeError),
+            "The dataframe contains duplicate PointID and Bottom: BH-1.",
+        ),
+        (
+            base_df,
+            does_not_raise(),
+            None,
+        ),
+    ],
+)
+def test_validatorsj(df, error, error_message):
+    """Test if validators are triggered for wrong dataframe configurations."""
+    with error as e:
+        GeotechPandasBase(df)
+        assert error_message is None or error_message in str(e)
