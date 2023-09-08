@@ -1,7 +1,10 @@
 """Test base class methods."""
 
+from contextlib import nullcontext as does_not_raise
+
 import pandas as pd
 import pandas._testing as tm
+import pytest
 
 from geotech_pandas.base import GeotechPandasBase
 
@@ -17,3 +20,39 @@ def test_obj():
     """Test if dataframe is stored in ``_obj``."""
     gpdf = GeotechPandasBase(base_df)
     tm.assert_frame_equal(base_df, gpdf._obj)
+
+
+@pytest.mark.parametrize(
+    ("df", "columns", "error", "error_message"),
+    [
+        (
+            base_df[["PointID"]].copy(),
+            None,
+            pytest.raises(AttributeError),
+            "The dataframe must have: Bottom column.",
+        ),
+        (
+            base_df[["PointID"]].copy(),
+            ["PointID", "Top", "Bottom"],
+            pytest.raises(AttributeError),
+            "The dataframe must have: Top, Bottom columns.",
+        ),
+        (
+            base_df,
+            ["PointID", "Top", "Bottom"],
+            pytest.raises(AttributeError),
+            "The dataframe must have: Top column.",
+        ),
+        (
+            base_df,
+            None,
+            does_not_raise(),
+            None,
+        ),
+    ],
+)
+def test_validate_columns(df, columns, error, error_message):
+    """Test if columns are in df else raise error with error_message."""
+    with error as e:
+        GeotechPandasBase.validate_columns(df, columns)
+        assert error_message is None or error_message in str(e)
