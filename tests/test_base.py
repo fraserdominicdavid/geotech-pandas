@@ -56,3 +56,35 @@ def test_validate_columns(df, columns, error, error_message):
     with error as e:
         GeotechPandasBase.validate_columns(df, columns)
         assert error_message is None or error_message in str(e)
+
+
+@pytest.mark.parametrize(
+    ("df", "error", "error_message"),
+    [
+        (
+            pd.DataFrame(
+                {
+                    "PointID": ["BH-1", "BH-1", "BH-1", "BH-2", "BH-2"],
+                    "Bottom": [0.0, 2.0, 1.0, 0.0, 1.0],
+                }
+            ),
+            pytest.raises(AttributeError),
+            "Elements in the Bottom column must be monotonically increasing for: BH-1.",
+        ),
+        (
+            pd.DataFrame(
+                {
+                    "PointID": ["BH-1", "BH-1", "BH-1", "BH-2", "BH-2"],
+                    "Bottom": [0.0, 1.0, 2.0, 0.0, 1.0],
+                }
+            ),
+            does_not_raise(),
+            None,
+        ),
+    ],
+)
+def test_validate_monotony(df, error, error_message):
+    """Test if the ``Bottom`` of each ``PointID`` group is monotonically increasing."""
+    with error as e:
+        GeotechPandasBase.validate_monotony(df)
+        assert error_message is None or error_message in str(e)
