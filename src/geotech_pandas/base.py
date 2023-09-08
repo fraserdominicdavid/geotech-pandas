@@ -7,6 +7,9 @@ class GeotechPandasBase:
     """A base class with common validation methods for dataframes."""
 
     def __init__(self, df: pd.DataFrame) -> None:
+        self.validate_columns(df)
+        self.validate_monotony(df)
+        self.validate_duplicates(df)
         self._obj = df
 
     @staticmethod
