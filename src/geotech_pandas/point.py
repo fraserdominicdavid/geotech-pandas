@@ -27,3 +27,19 @@ class PointDataFrameAccessor(GeotechPandasBase):
             GroupBy object that contains the grouped dataframes.
         """
         return self._obj.groupby("PointID")
+
+    def get_group(self, point_id: str):
+        """
+        Return a `DataFrame` from the point groups with provided `PointID`.
+
+        Parameters
+        ----------
+        point_id: str
+            PointID of the group to get as a DataFrame.
+
+        Returns
+        -------
+        DataFrame
+            DataFrame that matches `point_id`.
+        """
+        return self.groups.get_group(point_id)
