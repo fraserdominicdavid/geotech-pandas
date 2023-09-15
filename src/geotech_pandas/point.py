@@ -1,5 +1,6 @@
 """A module containing a custom accessor for pandas that adds methods for depth related points."""
 
+import pandas as pd
 from pandas.core.groupby.generic import DataFrameGroupBy
 
 from geotech_pandas.base import GeotechPandasBase
@@ -43,3 +44,19 @@ class PointDataFrameAccessor(GeotechPandasBase):
             DataFrame that matches `point_id`.
         """
         return self.groups.get_group(point_id)
+
+    def get_top(self, fill_value: float = 0.0) -> pd.Series:
+        """Return shifted ``Bottom`` depth values that can be used as ``Top`` depth values.
+
+        Parameters
+        ----------
+        fill_value: float, optional
+            Float value to use for newly introduced missing values.
+
+        Returns
+        -------
+        Series
+            Series with shifted ``Bottom`` values.
+        """
+        top = pd.Series(self.groups["Bottom"].shift(1, fill_value=fill_value), name="Top")
+        return top
