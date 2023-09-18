@@ -64,3 +64,106 @@ def test_get_thickness():
         )
     )
     tm.assert_series_equal(df.get_thickness(), pd.Series([1.0, 1.0, 3.0, 1.0], name="thickness"))
+
+
+def test_split_at_depth_numeric():
+    """Test if `split_at_depth` with `depth` as a numeric value will return the correct result."""
+    expected = pd.DataFrame(
+        {
+            "point_id": ["BH-1", "BH-1", "BH-1", "BH-2", "BH-2", "BH-2"],
+            "bottom": [0.5, 1.0, 2.0, 0.5, 3.0, 4.0],
+            "top": [0.0, 0.5, 1.0, 0.0, 0.5, 3.0],
+            "thickness": [1.0, 1.0, 1.0, 3.0, 3.0, 1.0],
+        }
+    )
+    result = pd.DataFrame(
+        {
+            "point_id": ["BH-1", "BH-1", "BH-2", "BH-2"],
+            "bottom": [1.0, 2.0, 3.0, 4.0],
+            "top": [0.0, 1.0, 0.0, 3.0],
+            "thickness": [1.0, 1.0, 3.0, 1.0],
+        }
+    )
+    result = PointDataFrameAccessor(result).split_at_depth(depth=0.5)
+    tm.assert_frame_equal(result, expected)
+
+
+def test_split_at_depth_series():
+    """Test if `split_at_depth` with `depth` as a series will return the correct result."""
+    expected = pd.DataFrame(
+        {
+            "point_id": ["BH-1", "BH-1", "BH-1", "BH-2", "BH-2", "BH-2"],
+            "bottom": [0.5, 1.0, 2.0, 1.5, 3.0, 4.0],
+            "top": [0.0, 0.5, 1.0, 0.0, 1.5, 3.0],
+        }
+    )
+    result = pd.DataFrame(
+        {
+            "point_id": ["BH-1", "BH-1", "BH-2", "BH-2"],
+            "bottom": [1.0, 2.0, 3.0, 4.0],
+            "top": [0.0, 1.0, 0.0, 3.0],
+        }
+    )
+    result = PointDataFrameAccessor(result).split_at_depth(depth=pd.Series([0.5, 0.5, 1.5, 1.5]))
+    tm.assert_frame_equal(result, expected)
+
+
+def test_split_at_depth_str():
+    """Test if `split_at_depth` with `depth` as a str value will return the correct result."""
+    expected = pd.DataFrame(
+        {
+            "point_id": ["BH-1", "BH-1", "BH-1", "BH-2", "BH-2", "BH-2"],
+            "water_level": [0.5, 0.5, 0.5, 1.5, 1.5, 1.5],
+            "bottom": [0.5, 1.0, 2.0, 1.5, 3.0, 4.0],
+            "top": [0.0, 0.5, 1.0, 0.0, 1.5, 3.0],
+        }
+    )
+    result = pd.DataFrame(
+        {
+            "point_id": ["BH-1", "BH-1", "BH-2", "BH-2"],
+            "water_level": [0.5, 0.5, 1.5, 1.5],
+            "bottom": [1.0, 2.0, 3.0, 4.0],
+            "top": [0.0, 1.0, 0.0, 3.0],
+        }
+    )
+    result = PointDataFrameAccessor(result).split_at_depth(depth="water_level")
+    tm.assert_frame_equal(result, expected)
+
+
+def test_split_at_depth_no_split():
+    """Test if `split_at_depth` where no splitting should happen will return the correct result."""
+    expected = pd.DataFrame(
+        {
+            "point_id": ["BH-1", "BH-1", "BH-2", "BH-2"],
+            "bottom": [1.0, 2.0, 3.0, 4.0],
+            "top": [0.0, 1.0, 0.0, 3.0],
+            "thickness": [1.0, 1.0, 3.0, 1.0],
+        }
+    )
+    result = expected.copy()
+    result = PointDataFrameAccessor(result).split_at_depth(0)
+    tm.assert_frame_equal(result, expected)
+
+
+def test_split_at_depth_no_index_reset():
+    """Test if `split_at_depth` with `reset_index` set to `True` will return the correct result.
+
+    The expected result should have the added layers take the original index of the split layers.
+    """
+    expected = pd.DataFrame(
+        {
+            "point_id": ["BH-1", "BH-1", "BH-1", "BH-2", "BH-2", "BH-2"],
+            "bottom": [0.5, 1.0, 2.0, 0.5, 3.0, 4.0],
+            "top": [0.0, 0.5, 1.0, 0.0, 0.5, 3.0],
+        },
+        index=[0, 0, 1, 2, 2, 3],
+    )
+    result = pd.DataFrame(
+        {
+            "point_id": ["BH-1", "BH-1", "BH-2", "BH-2"],
+            "bottom": [1.0, 2.0, 3.0, 4.0],
+            "top": [0.0, 1.0, 0.0, 3.0],
+        }
+    )
+    result = PointDataFrameAccessor(result).split_at_depth(depth=0.5, reset_index=False)
+    tm.assert_frame_equal(result, expected)

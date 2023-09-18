@@ -82,3 +82,53 @@ class PointDataFrameAccessor(GeotechPandasBase):
         """
         self.validate_columns(self._obj, ["top", "bottom"])
         return pd.Series((self._obj["bottom"] - self._obj["top"]).abs(), name="thickness")
+
+    def split_at_depth(
+        self, depth: pd.Series | float | int | str, reset_index: bool = True
+    ) -> pd.DataFrame:
+        """Split layers in the dataframe into two with the provided depth.
+
+        If the provided depth is found in between the ``top`` and ``bottom`` columns of the
+        dataframe, then those particular layers would be split.
+
+        The ``top`` and ``bottom`` depths of the affected layers are also adjusted to have
+        continuity after splitting. However, columns other than ``top`` and ``bottom`` are not
+        modified. As such, it is recommended to split the layers before any depth-integrated
+        calculations are done.
+
+        This is particularly useful for cases where it is required or beneficial to split layers
+        into two. For example, splitting a layer that is partly saturated and partly dry due to the
+        groundwater level being found inside the layer.
+
+        Parameters
+        ----------
+        depth: pandas.Series, float, int, or str
+            The depth/s where the layer would be split.
+        reset_index: bool, default True
+            If `True`, resets the index after splitting.
+
+        Returns
+        -------
+        DataFrame
+            Dataframe with added and modified values for applicable layer splits. If no applicable
+            splits are found, then the original dataframe is returned instead.
+        """
+        if isinstance(depth, str):
+            validation_list = [depth, "top"]
+            depth = self._obj[depth]
+        else:
+            validation_list = ["top"]
+        self.validate_columns(self._obj, validation_list)
+
+        temp = self._obj.loc[(self._obj["top"] < depth) & (depth < self._obj["bottom"])].copy(
+            deep=True
+        )
+        if temp.empty:
+            return self._obj
+        temp["bottom"] = depth
+        temp = pd.concat([self._obj, temp])
+        temp = temp.sort_values(["point_id", "bottom"])
+        if reset_index:
+            temp = temp.reset_index(drop=True)
+        temp["top"] = PointDataFrameAccessor(temp).get_top()
+        return temp
