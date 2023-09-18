@@ -10,8 +10,8 @@ from geotech_pandas.base import GeotechPandasBase
 
 base_df = pd.DataFrame(
     {
-        "PointID": ["BH-1", "BH-1", "BH-2", "BH-2"],
-        "Bottom": [0.0, 1.0, 0.0, 1.0],
+        "point_id": ["BH-1", "BH-1", "BH-2", "BH-2"],
+        "bottom": [0.0, 1.0, 0.0, 1.0],
     }
 )
 
@@ -26,22 +26,22 @@ def test_obj():
     ("df", "columns", "error", "error_message"),
     [
         (
-            base_df[["PointID"]].copy(),
+            base_df[["point_id"]].copy(),
             None,
             pytest.raises(AttributeError),
-            "The dataframe must have: Bottom column.",
+            "The dataframe must have: bottom column.",
         ),
         (
-            base_df[["PointID"]].copy(),
-            ["PointID", "Top", "Bottom"],
+            base_df[["point_id"]].copy(),
+            ["point_id", "top", "bottom"],
             pytest.raises(AttributeError),
-            "The dataframe must have: Top, Bottom columns.",
+            "The dataframe must have: top, bottom columns.",
         ),
         (
             base_df,
-            ["PointID", "Top", "Bottom"],
+            ["point_id", "top", "bottom"],
             pytest.raises(AttributeError),
-            "The dataframe must have: Top column.",
+            "The dataframe must have: top column.",
         ),
         (
             base_df,
@@ -64,18 +64,18 @@ def test_validate_columns(df, columns, error, error_message):
         (
             pd.DataFrame(
                 {
-                    "PointID": ["BH-1", "BH-1", "BH-1", "BH-2", "BH-2"],
-                    "Bottom": [0.0, 2.0, 1.0, 0.0, 1.0],
+                    "point_id": ["BH-1", "BH-1", "BH-1", "BH-2", "BH-2"],
+                    "bottom": [0.0, 2.0, 1.0, 0.0, 1.0],
                 }
             ),
             pytest.raises(AttributeError),
-            "Elements in the Bottom column must be monotonically increasing for: BH-1.",
+            "Elements in the bottom column must be monotonically increasing for: BH-1.",
         ),
         (
             pd.DataFrame(
                 {
-                    "PointID": ["BH-1", "BH-1", "BH-1", "BH-2", "BH-2"],
-                    "Bottom": [0.0, 1.0, 2.0, 0.0, 1.0],
+                    "point_id": ["BH-1", "BH-1", "BH-1", "BH-2", "BH-2"],
+                    "bottom": [0.0, 1.0, 2.0, 0.0, 1.0],
                 }
             ),
             does_not_raise(),
@@ -84,7 +84,7 @@ def test_validate_columns(df, columns, error, error_message):
     ],
 )
 def test_validate_monotony(df, error, error_message):
-    """Test if the ``Bottom`` of each ``PointID`` group is monotonically increasing."""
+    """Test if the ``bottom`` of each ``point_id`` group is monotonically increasing."""
     with error as e:
         GeotechPandasBase.validate_monotony(df)
         assert error_message is None or error_message in str(e)
@@ -96,18 +96,18 @@ def test_validate_monotony(df, error, error_message):
         (
             pd.DataFrame(
                 {
-                    "PointID": ["BH-1", "BH-1", "BH-1", "BH-2", "BH-2"],
-                    "Bottom": [0.0, 1.0, 1.0, 0.0, 1.0],
+                    "point_id": ["BH-1", "BH-1", "BH-1", "BH-2", "BH-2"],
+                    "bottom": [0.0, 1.0, 1.0, 0.0, 1.0],
                 }
             ),
             pytest.raises(AttributeError),
-            "The dataframe contains duplicate PointID and Bottom: BH-1.",
+            "The dataframe contains duplicate point_id and bottom: BH-1.",
         ),
         (
             pd.DataFrame(
                 {
-                    "PointID": ["BH-1", "BH-1", "BH-1", "BH-2", "BH-2"],
-                    "Bottom": [0.0, 1.0, 2.0, 0.0, 1.0],
+                    "point_id": ["BH-1", "BH-1", "BH-1", "BH-2", "BH-2"],
+                    "bottom": [0.0, 1.0, 2.0, 0.0, 1.0],
                 }
             ),
             does_not_raise(),
@@ -116,7 +116,7 @@ def test_validate_monotony(df, error, error_message):
     ],
 )
 def test_validate_duplicates(df, error, error_message):
-    """Test df for duplicate value pairs in the ``PointID`` and ``Bottom`` columns."""
+    """Test df for duplicate value pairs in the ``point_id`` and ``bottom`` columns."""
     with error as e:
         GeotechPandasBase.validate_duplicates(df)
         assert error_message is None or error_message in str(e)
@@ -126,29 +126,29 @@ def test_validate_duplicates(df, error, error_message):
     ("df", "error", "error_message"),
     [
         (
-            base_df[["PointID"]].copy(),
+            base_df[["point_id"]].copy(),
             pytest.raises(AttributeError),
-            "The dataframe must have: Bottom column.",
+            "The dataframe must have: bottom column.",
         ),
         (
             pd.DataFrame(
                 {
-                    "PointID": ["BH-1", "BH-1", "BH-1", "BH-2", "BH-2"],
-                    "Bottom": [0.0, 2.0, 1.0, 0.0, 1.0],
+                    "point_id": ["BH-1", "BH-1", "BH-1", "BH-2", "BH-2"],
+                    "bottom": [0.0, 2.0, 1.0, 0.0, 1.0],
                 }
             ),
             pytest.raises(AttributeError),
-            "Elements in the Bottom column must be monotonically increasing for: BH-1.",
+            "Elements in the bottom column must be monotonically increasing for: BH-1.",
         ),
         (
             pd.DataFrame(
                 {
-                    "PointID": ["BH-1", "BH-1", "BH-1", "BH-2", "BH-2"],
-                    "Bottom": [0.0, 1.0, 1.0, 0.0, 1.0],
+                    "point_id": ["BH-1", "BH-1", "BH-1", "BH-2", "BH-2"],
+                    "bottom": [0.0, 1.0, 1.0, 0.0, 1.0],
                 }
             ),
             pytest.raises(AttributeError),
-            "The dataframe contains duplicate PointID and Bottom: BH-1.",
+            "The dataframe contains duplicate point_id and bottom: BH-1.",
         ),
         (
             base_df,
