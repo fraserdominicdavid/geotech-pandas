@@ -10,33 +10,33 @@ class PointDataFrameAccessor(GeotechPandasBase):
     """
     An accessor class that contains methods for depth-related points.
 
-    The dataframe should have ``PointID`` and ``Bottom`` columns, where ``PointID`` would signify
-    what group the ``Bottom`` depths and other related data belong to. These groups can be accessed
+    The dataframe should have ``point_id`` and ``bottom`` columns, where ``point_id`` would signify
+    what group the ``bottom`` depths and other related data belong to. These groups can be accessed
     as a `DataFrameGroupBy` object through the `groups` property.
     """
 
     @property
     def groups(self) -> DataFrameGroupBy:
         """
-        Return a pandas `DataFrameGroupBy` object based on the ``PointID`` column.
+        Return a pandas `DataFrameGroupBy` object based on the ``point_id`` column.
 
-        This can be used a shortcut for grouping the dataframe by the ``PointID``.
+        This can be used a shortcut for grouping the dataframe by the ``point_id``.
 
         Returns
         -------
         DataFrameGroupBy
             GroupBy object that contains the grouped dataframes.
         """
-        return self._obj.groupby("PointID")
+        return self._obj.groupby("point_id")
 
     def get_group(self, point_id: str):
         """
-        Return a `DataFrame` from the point groups with provided `PointID`.
+        Return a `DataFrame` from the point groups with provided `point_id`.
 
         Parameters
         ----------
         point_id: str
-            PointID of the group to get as a DataFrame.
+            point_id of the group to get as a DataFrame.
 
         Returns
         -------
@@ -46,7 +46,7 @@ class PointDataFrameAccessor(GeotechPandasBase):
         return self.groups.get_group(point_id)
 
     def get_top(self, fill_value: float = 0.0) -> pd.Series:
-        """Return shifted ``Bottom`` depth values that can be used as ``Top`` depth values.
+        """Return shifted ``bottom`` depth values that can be used as ``top`` depth values.
 
         Parameters
         ----------
@@ -56,7 +56,7 @@ class PointDataFrameAccessor(GeotechPandasBase):
         Returns
         -------
         Series
-            Series with shifted ``Bottom`` values.
+            Series with shifted ``bottom`` values.
         """
-        top = pd.Series(self.groups["Bottom"].shift(1, fill_value=fill_value), name="Top")
+        top = pd.Series(self.groups["bottom"].shift(1, fill_value=fill_value), name="top")
         return top

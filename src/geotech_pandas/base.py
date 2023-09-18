@@ -19,8 +19,8 @@ class GeotechPandasBase:
 
         The `validate_columns` method is a static method that is used to validate the columns of a
         given dataframe. The method takes in a dataframe and a list of columns to be validated. If
-        the validation list is not provided, the method defaults to checking if the ``PointID`` and
-        ``Bottom`` columns are present in the dataframe. If any of the columns in the validation
+        the validation list is not provided, the method defaults to checking if the ``point_id`` and
+        ``bottom`` columns are present in the dataframe. If any of the columns in the validation
         list are not found in the dataframe, the method raises an `AttributeError` and lists the
         missing columns in the error message.
 
@@ -28,7 +28,7 @@ class GeotechPandasBase:
         ----------
         df : pandas.DataFrame
             Dataframe to be validated.
-        columns : list of str, optional, default ["PointID", "Bottom"]
+        columns : list of str, optional, default ["point_id", "bottom"]
             List of column names to be validated.
 
         Raises
@@ -37,7 +37,7 @@ class GeotechPandasBase:
             When any of the columns in the validation list are not found in the dataframe.
         """
         if columns is None:
-            columns = ["PointID", "Bottom"]
+            columns = ["point_id", "bottom"]
 
         missing_columns = []
         for column in columns:
@@ -53,7 +53,7 @@ class GeotechPandasBase:
     @staticmethod
     def validate_monotony(df: pd.DataFrame) -> None:
         """
-        Validate if the ``Bottom`` of each ``PointID`` group is monotonically increasing.
+        Validate if the ``bottom`` of each ``point_id`` group is monotonically increasing.
 
         Parameters
         ----------
@@ -63,21 +63,21 @@ class GeotechPandasBase:
         Raises
         ------
         AttributeError
-            When ``Bottom`` is not monotonically increasing in one or more ``PointID``.
+            When ``bottom`` is not monotonically increasing in one or more ``point_id``.
         """
-        g = df.groupby("PointID")
-        check_df = pd.Series(g["Bottom"].is_monotonic_increasing).to_frame().reset_index()
-        check_list = check_df[~check_df["Bottom"]]["PointID"].to_list()
-        if ~check_df["Bottom"].all():
+        g = df.groupby("point_id")
+        check_df = pd.Series(g["bottom"].is_monotonic_increasing).to_frame().reset_index()
+        check_list = check_df[~check_df["bottom"]]["point_id"].to_list()
+        if ~check_df["bottom"].all():
             raise AttributeError(
-                f"Elements in the Bottom column must be monotonically increasing for:"
+                f"Elements in the bottom column must be monotonically increasing for:"
                 f" {', '.join(check_list)}."
             )
 
     @staticmethod
     def validate_duplicates(df: pd.DataFrame) -> None:
         """
-        Validate the dataframe for duplicate value pairs in the ``PointID`` and ``Bottom`` columns.
+        Validate the dataframe for duplicate value pairs in the ``point_id`` and ``bottom`` columns.
 
         Parameters
         ----------
@@ -87,11 +87,11 @@ class GeotechPandasBase:
         Raises
         ------
         AttributeError
-            When duplicate value pairs in the ``PointID`` and ``Bottom`` columns are detected.
+            When duplicate value pairs in the ``point_id`` and ``bottom`` columns are detected.
         """
-        duplicate_list = df[df[["PointID", "Bottom"]].duplicated()]["PointID"].to_list()
+        duplicate_list = df[df[["point_id", "bottom"]].duplicated()]["point_id"].to_list()
         if len(duplicate_list) > 0:
             raise AttributeError(
-                "The dataframe contains duplicate PointID and Bottom:"
+                "The dataframe contains duplicate point_id and bottom:"
                 f" {', '.join(duplicate_list)}."
             )
