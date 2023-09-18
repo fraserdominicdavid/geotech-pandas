@@ -36,3 +36,17 @@ def test_get_top():
         )
     )
     tm.assert_series_equal(df.get_top(), pd.Series([0.0, 1.0, 0.0, 3.0], name="top"))
+
+
+def test_get_center():
+    """Test if `get_center` returns correct depth values."""
+    df = PointDataFrameAccessor(
+        pd.DataFrame(
+            {
+                "point_id": ["BH-1", "BH-1", "BH-2", "BH-2"],
+                "bottom": [1.0, 2.0, 3.0, 4.0],
+                "top": [0.0, 1.0, 0.0, 3.0],
+            }
+        )
+    )
+    tm.assert_series_equal(df.get_center(), pd.Series([0.5, 1.5, 1.5, 3.5], name="center"))
