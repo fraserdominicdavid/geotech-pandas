@@ -71,3 +71,14 @@ class PointDataFrameAccessor(GeotechPandasBase):
         """
         self.validate_columns(self._obj, ["top", "bottom"])
         return pd.Series(self._obj[["top", "bottom"]].mean(axis=1), name="center")
+
+    def get_thickness(self) -> pd.Series:
+        """Return ``thickness`` values of ``top`` and ``bottom`` depth values.
+
+        Returns
+        -------
+        Series
+            Series with ``thickness`` values.
+        """
+        self.validate_columns(self._obj, ["top", "bottom"])
+        return pd.Series((self._obj["bottom"] - self._obj["top"]).abs(), name="thickness")
