@@ -50,3 +50,17 @@ def test_get_center():
         )
     )
     tm.assert_series_equal(df.get_center(), pd.Series([0.5, 1.5, 1.5, 3.5], name="center"))
+
+
+def test_get_thickness():
+    """Test if `get_thickness` returns correct values."""
+    df = PointDataFrameAccessor(
+        pd.DataFrame(
+            {
+                "point_id": ["BH-1", "BH-1", "BH-2", "BH-2"],
+                "bottom": [1.0, 2.0, 3.0, 4.0],
+                "top": [0.0, 1.0, 0.0, 3.0],
+            }
+        )
+    )
+    tm.assert_series_equal(df.get_thickness(), pd.Series([1.0, 1.0, 3.0, 1.0], name="thickness"))
