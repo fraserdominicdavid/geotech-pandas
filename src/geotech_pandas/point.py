@@ -60,3 +60,14 @@ class PointDataFrameAccessor(GeotechPandasBase):
         """
         top = pd.Series(self.groups["bottom"].shift(1, fill_value=fill_value), name="top")
         return top
+
+    def get_center(self) -> pd.Series:
+        """Return ``center`` depth values from ``top`` and ``bottom`` depth values.
+
+        Returns
+        -------
+        Series
+            Series with ``center`` depth values.
+        """
+        self.validate_columns(self._obj, ["top", "bottom"])
+        return pd.Series(self._obj[["top", "bottom"]].mean(axis=1), name="center")
