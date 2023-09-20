@@ -18,7 +18,7 @@ version = "0.0.0"
 version_files = ["pyproject.toml:version"]
 
 [tool.poetry.dependencies]  # https://python-poetry.org/docs/dependency-specification/
-python = ">=3.11,<4.0"
+python = ">=3.9,<4.0"
 pandas = "^2.1.0"
 
 [tool.poetry.group.test.dependencies]  # https://python-poetry.org/docs/master/managing-dependencies/
@@ -42,7 +42,7 @@ pdoc = ">=13.1.1"
 
 [tool.black]  # https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#configuration-via-a-file
 line-length = 100
-target-version = ["py311"]
+target-version = ["py39"]
 
 [tool.coverage.report]  # https://coverage.readthedocs.io/en/latest/config.html#report
 precision = 1
@@ -80,7 +80,7 @@ select = ["A", "ASYNC", "B", "C4", "C90", "D", "DTZ", "E", "F", "FLY", "I", "ISC
 ignore = ["E501", "PGH001", "PGH002", "PGH003", "RET504", "S101"]
 unfixable = ["F401", "F841"]
 src = ["src", "tests"]
-target-version = "py311"
+target-version = "py39"
 
 [tool.ruff.flake8-tidy-imports]
 ban-relative-imports = "all"
