@@ -1,5 +1,7 @@
 """A module containing a custom accessor for pandas that adds methods for depth related points."""
 
+from typing import Union
+
 import pandas as pd
 from pandas.core.groupby.generic import DataFrameGroupBy
 
@@ -84,7 +86,7 @@ class PointDataFrameAccessor(GeotechPandasBase):
         return pd.Series((self._obj["bottom"] - self._obj["top"]).abs(), name="thickness")
 
     def split_at_depth(
-        self, depth: pd.Series | float | int | str, reset_index: bool = True
+        self, depth: Union[pd.Series, float, int, str], reset_index: bool = True
     ) -> pd.DataFrame:
         """Split layers in the dataframe into two with the provided depth.
 

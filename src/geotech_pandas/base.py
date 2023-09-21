@@ -1,5 +1,7 @@
 """A module containing a common class used throughout the geotech-pandas package."""
 
+from typing import Optional
+
 import pandas as pd
 
 
@@ -13,7 +15,7 @@ class GeotechPandasBase:
         self._obj = df
 
     @staticmethod
-    def validate_columns(df: pd.DataFrame, columns: list[str] | None = None) -> None:
+    def validate_columns(df: pd.DataFrame, columns: Optional[list[str]] = None) -> None:
         """
         Validate the dataframe if it contains the columns from a provided list.
 
