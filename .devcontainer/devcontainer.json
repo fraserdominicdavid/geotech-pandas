@@ -13,7 +13,8 @@
                 "ms-python.python",
                 "ryanluker.vscode-coverage-gutters",
                 "tamasfe.even-better-toml",
-                "visualstudioexptteam.vscodeintellicode"
+                "visualstudioexptteam.vscodeintellicode",
+                "ms-toolsai.jupyter"
             ],
             "settings": {
                 "coverage-gutters.coverageFileNames": [
