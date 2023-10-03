@@ -38,7 +38,6 @@ pandas-stubs = ">=2.0.3.230814"
 [tool.poetry.group.dev.dependencies]  # https://python-poetry.org/docs/master/managing-dependencies/
 cruft = ">=2.14.0"
 jupyterlab = ">=3.6.3"
-pdoc = ">=13.1.1"
 
 [tool.black]  # https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#configuration-via-a-file
 line-length = 100
