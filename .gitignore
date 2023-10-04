@@ -62,3 +62,6 @@ __pycache__/
 
 # VS Code
 .vscode/
+
+# Sphinx
+docs/_build
