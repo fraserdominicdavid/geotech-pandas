@@ -95,23 +95,36 @@ convention = "numpy"
   [tool.poe.tasks.docs]
   help = "Generate this package's docs"
   cmd = """
-    pdoc
-      --docformat $docformat
-      --output-directory $outputdirectory
-      geotech_pandas
+    sphinx-build
+      -M $buildername
+      $sourcedirectory
+      $builddirectory
+      $sphinxopts
     """
 
     [[tool.poe.tasks.docs.args]]
-    help = "The docstring style (default: numpy)"
-    name = "docformat"
-    options = ["--docformat"]
-    default = "numpy"
+    help = "The builder to use (default: html)"
+    name = "buildername"
+    options = ["-b", "--builder"]
+    default = "html"
 
     [[tool.poe.tasks.docs.args]]
-    help = "The output directory (default: docs)"
-    name = "outputdirectory"
-    options = ["--output-directory"]
+    help = "The source directory (default: docs)"
+    name = "sourcedirectory"
+    options = ["--sourcedir"]
     default = "docs"
+
+    [[tool.poe.tasks.docs.args]]
+    help = "The build directory (default: docs/_build)"
+    name = "builddirectory"
+    options = ["--builddir"]
+    default = "docs/_build"
+
+    [[tool.poe.tasks.docs.args]]
+    help = "The additional sphinx options to use (default: None)"
+    name = "sphinxopts"
+    options = ["-O", "--opts"]
+    default = ""
 
   [tool.poe.tasks.lab]
   help = "Run Jupyter Lab"
