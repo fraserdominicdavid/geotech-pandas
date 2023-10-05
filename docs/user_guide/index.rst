@@ -53,3 +53,9 @@ is equivalent to,
 
 Guides
 ------
+
+.. toctree::
+    :caption: Usage and Accessors
+    :maxdepth: 2
+
+    basics
