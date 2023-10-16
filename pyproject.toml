@@ -42,6 +42,7 @@ sphinx = ">=7.2.6"
 pydata-sphinx-theme = ">=0.14.1"
 sphinx-design = ">=0.5.0"
 numpydoc = ">=1.6.0"
+sphinx-autosummary-accessors = ">=2023.4.0"
 
 [tool.black]  # https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#configuration-via-a-file
 line-length = 100

@@ -2766,6 +2766,20 @@ lint = ["docutils-stubs", "flake8 (>=3.5.0)", "flake8-simplify", "isort", "mypy 
 test = ["cython (>=3.0)", "filelock", "html5lib", "pytest (>=4.6)", "setuptools (>=67.0)"]
 
 [[package]]
+name = "sphinx-autosummary-accessors"
+version = "2023.4.0"
+description = "sphinx autosummary extension to properly format pandas or xarray accessors"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "sphinx-autosummary-accessors-2023.4.0.tar.gz", hash = "sha256:26f60f44dea2b4b487022921dfba6d773b4529b71afb7069cb97d4ceff0abab9"},
+    {file = "sphinx_autosummary_accessors-2023.4.0-py3-none-any.whl", hash = "sha256:75ac537ce318e2cb104324f714c0260ee32483f117d8cd376dfaa3c5e949933d"},
+]
+
+[package.dependencies]
+sphinx = ">=3.5"
+
+[[package]]
 name = "sphinx-design"
 version = "0.5.0"
 description = "A sphinx extension for designing beautiful, view size responsive web components."
@@ -3232,4 +3246,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<4.0"
-content-hash = "02f791487c972ec3a91748a9909ec1f7b1f9a74f08f6706b09eb55af156c6c82"
+content-hash = "b0a4f71df0390d4fb5102651b6d7f1a679c3b9592682520f00ab5dedc77215d2"
