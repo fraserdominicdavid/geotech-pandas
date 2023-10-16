@@ -11,6 +11,7 @@ geotech-pandas documentation
    :hidden:
    
    User Guide <user_guide/index>
+   API Reference <api_reference/index>
 
 **Version**: |version|
 
@@ -31,4 +32,15 @@ calculations.
 
       The user guide provides in-depth information on the key concepts of ``geotech-pandas`` with
       useful background information and explanation.
+
+    .. grid-item-card:: API Reference
+      :link: api_reference
+      :link-type: ref
+
+      :material-regular:`data_object;5em`
+      ^^^
+
+      The reference guide contains a detailed description of the functions, modules, and objects
+      included in ``geotech-pandas``. The reference describes how the methods work and which
+      parameters can be used. It assumes that you have an understanding of the key concepts.
       
