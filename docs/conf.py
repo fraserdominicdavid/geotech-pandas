@@ -6,6 +6,10 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
+import sphinx_autosummary_accessors
+
+import geotech_pandas  # noqa: F401 registers accessor for autosummary
+
 project = "geotech-pandas"
 copyright = "2023, Fraser Dominic David"
 author = "Fraser Dominic David"
@@ -20,9 +24,16 @@ extensions = [
     "IPython.sphinxext.ipython_directive",
     "IPython.sphinxext.ipython_console_highlighting",
     "sphinx.ext.intersphinx",
+    "sphinx.ext.autodoc",
+    "sphinx.ext.autosummary",
+    "numpydoc",
+    "sphinx_autosummary_accessors",
 ]
 
-templates_path = ["_templates"]
+autosummary_generate = True
+autodoc_typehints = "none"
+
+templates_path = ["_templates", sphinx_autosummary_accessors.templates_path]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 intersphinx_mapping = {
@@ -31,6 +42,11 @@ intersphinx_mapping = {
 }
 
 intersphinx_disabled_reftypes = ["*"]
+
+# numpydoc
+numpydoc_show_class_members = False
+numpydoc_show_inherited_class_members = False
+numpydoc_attributes_as_param_list = False
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
