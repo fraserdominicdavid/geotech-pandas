@@ -8,6 +8,8 @@ The user guide covers all of :mod:`geotech-pandas` by topic area. Each of the su
 introduces a topic, and discusses how :mod:`geotech-pandas` approaches the problem, with many
 examples throughout.
 
+Further information on any specific method can be obtained in the :ref:`api_reference`.
+
 If you're new to `pandas <https://pandas.pydata.org/>`__ in general, it is recommended to make
 yourself familiar with it first by heading to the
 `pandas documentation <https://pandas.pydata.org/docs/>`__.
