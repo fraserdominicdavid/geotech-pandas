@@ -1,14 +1,23 @@
-"""General dataframe accessor class for the Geotech Pandas package."""
+"""General :external:class:`~pandas.DataFrame` accessor for the :mod:`geotech-pandas` package."""
 
 import pandas as pd
 
+from geotech_pandas.base import GeotechPandasBase
 from geotech_pandas.point import PointDataFrameAccessor
+from geotech_pandas.utils import SubAccessor
 
 
 @pd.api.extensions.register_dataframe_accessor("geotech")
-class GeotechDataFrameAccessor:
-    """DataFrame accessor that provides namespaces to the various accessors in Geotech Pandas."""
+class GeotechDataFrameAccessor(GeotechPandasBase):
+    """:external:class:`~pandas.DataFrame` accessor that provides namespaces to the various
+    subaccessors in :mod:`geotech-pandas`.
+    """  # noqa: D205
+
+    point = SubAccessor(PointDataFrameAccessor)
 
     def __init__(self, df: pd.DataFrame):
-        self.point: PointDataFrameAccessor = PointDataFrameAccessor(df)
-        """Accessor for depth-related points."""
+        self._obj = df
+
+        self._validate_columns()
+        self._validate_monotony()
+        self._validate_duplicates()

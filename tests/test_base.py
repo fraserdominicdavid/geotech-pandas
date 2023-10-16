@@ -6,7 +6,7 @@ import pandas as pd
 import pandas._testing as tm
 import pytest
 
-from geotech_pandas.base import GeotechPandasBase
+import geotech_pandas  # noqa: F401
 
 base_df = pd.DataFrame(
     {
@@ -18,8 +18,8 @@ base_df = pd.DataFrame(
 
 def test_obj():
     """Test if dataframe is stored in ``_obj``."""
-    gpdf = GeotechPandasBase(base_df)
-    tm.assert_frame_equal(base_df, gpdf._obj)
+    df = base_df
+    tm.assert_frame_equal(base_df, df.geotech._obj)
 
 
 @pytest.mark.parametrize(
@@ -54,7 +54,7 @@ def test_obj():
 def test_validate_columns(df, columns, error, error_message):
     """Test if columns are in df else raise error with error_message."""
     with error as e:
-        GeotechPandasBase.validate_columns(df, columns)
+        df.geotech._validate_columns(columns)
         assert error_message is None or error_message in str(e)
 
 
@@ -86,7 +86,7 @@ def test_validate_columns(df, columns, error, error_message):
 def test_validate_monotony(df, error, error_message):
     """Test if the ``bottom`` of each ``point_id`` group is monotonically increasing."""
     with error as e:
-        GeotechPandasBase.validate_monotony(df)
+        df.geotech._validate_monotony()
         assert error_message is None or error_message in str(e)
 
 
@@ -118,7 +118,7 @@ def test_validate_monotony(df, error, error_message):
 def test_validate_duplicates(df, error, error_message):
     """Test df for duplicate value pairs in the ``point_id`` and ``bottom`` columns."""
     with error as e:
-        GeotechPandasBase.validate_duplicates(df)
+        df.geotech._validate_duplicates()
         assert error_message is None or error_message in str(e)
 
 
@@ -157,8 +157,8 @@ def test_validate_duplicates(df, error, error_message):
         ),
     ],
 )
-def test_validatorsj(df, error, error_message):
+def test_validators(df, error, error_message):
     """Test if validators are triggered for wrong dataframe configurations."""
     with error as e:
-        GeotechPandasBase(df)
+        df.geotech  # noqa: B018
         assert error_message is None or error_message in str(e)

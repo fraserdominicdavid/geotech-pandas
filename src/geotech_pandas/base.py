@@ -1,4 +1,4 @@
-"""A module containing a common class used throughout the geotech-pandas package."""
+"""Common base class used throughout the :mod:`geotech-pandas` package."""
 
 from typing import Optional
 
@@ -6,20 +6,21 @@ import pandas as pd
 
 
 class GeotechPandasBase:
-    """A base class with common validation methods for dataframes."""
+    """Base class with common validation methods for :external:class:`~pandas.DataFrame` objects."""
 
-    def __init__(self, df: pd.DataFrame) -> None:
-        self.validate_columns(df)
-        self.validate_monotony(df)
-        self.validate_duplicates(df)
-        self._obj = df
+    def __init__(self, accessor) -> None:
+        self._accessor = accessor
+        self._obj: pd.DataFrame = accessor._obj
 
-    @staticmethod
-    def validate_columns(df: pd.DataFrame, columns: Optional[list[str]] = None) -> None:
+        self._validate_columns()
+        self._validate_monotony()
+        self._validate_duplicates()
+
+    def _validate_columns(self, columns: Optional[list[str]] = None) -> None:
         """
         Validate the dataframe if it contains the columns from a provided list.
 
-        The `validate_columns` method is a static method that is used to validate the columns of a
+        The `_validate_columns` method is a static method that is used to validate the columns of a
         given dataframe. The method takes in a dataframe and a list of columns to be validated. If
         the validation list is not provided, the method defaults to checking if the ``point_id`` and
         ``bottom`` columns are present in the dataframe. If any of the columns in the validation
@@ -43,7 +44,7 @@ class GeotechPandasBase:
 
         missing_columns = []
         for column in columns:
-            if column not in df.columns:
+            if column not in self._obj.columns:
                 missing_columns.append(column)
 
         if len(missing_columns) > 0:
@@ -52,8 +53,7 @@ class GeotechPandasBase:
                 f"column{'s' if len(missing_columns) > 1 else ''}."
             )
 
-    @staticmethod
-    def validate_monotony(df: pd.DataFrame) -> None:
+    def _validate_monotony(self) -> None:
         """
         Validate if the ``bottom`` of each ``point_id`` group is monotonically increasing.
 
@@ -67,7 +67,7 @@ class GeotechPandasBase:
         AttributeError
             When ``bottom`` is not monotonically increasing in one or more ``point_id``.
         """
-        g = df.groupby("point_id")
+        g = self._obj.groupby("point_id")
         check_df = pd.Series(g["bottom"].is_monotonic_increasing).to_frame().reset_index()
         check_list = check_df[~check_df["bottom"]]["point_id"].to_list()
         if ~check_df["bottom"].all():
@@ -76,8 +76,7 @@ class GeotechPandasBase:
                 f" {', '.join(check_list)}."
             )
 
-    @staticmethod
-    def validate_duplicates(df: pd.DataFrame) -> None:
+    def _validate_duplicates(self) -> None:
         """
         Validate the dataframe for duplicate value pairs in the ``point_id`` and ``bottom`` columns.
 
@@ -91,7 +90,9 @@ class GeotechPandasBase:
         AttributeError
             When duplicate value pairs in the ``point_id`` and ``bottom`` columns are detected.
         """
-        duplicate_list = df[df[["point_id", "bottom"]].duplicated()]["point_id"].to_list()
+        duplicate_list = self._obj[self._obj[["point_id", "bottom"]].duplicated()][
+            "point_id"
+        ].to_list()
         if len(duplicate_list) > 0:
             raise AttributeError(
                 "The dataframe contains duplicate point_id and bottom:"
