@@ -1,4 +1,4 @@
-"""A module containing a custom accessor for pandas that adds methods for depth related points."""
+"""Subaccessor that contains methods for depth-related points."""
 
 from typing import Union
 
@@ -10,30 +10,32 @@ from geotech_pandas.base import GeotechPandasBase
 
 class PointDataFrameAccessor(GeotechPandasBase):
     """
-    An accessor class that contains methods for depth-related points.
+    Subaccessor that contains methods for depth-related points.
 
-    The dataframe should have ``point_id`` and ``bottom`` columns, where ``point_id`` would signify
-    what group the ``bottom`` depths and other related data belong to. These groups can be accessed
-    as a `DataFrameGroupBy` object through the `groups` property.
+    The :external:class:`~pandas.DataFrame` should have ``point_id`` and ``bottom`` columns, where
+    ``point_id`` would signify what group the ``bottom`` depths and other related data belong to.
+    These groups can be accessed as a :external:class:`~pandas.api.typing.DataFrameGroupBy` object
+    through the :attr:`~DataFrame.geotech.point.groups` property.
     """
 
     @property
     def groups(self) -> DataFrameGroupBy:
         """
-        Return a pandas `DataFrameGroupBy` object based on the ``point_id`` column.
+        Return a :external:class:`~pandas.api.typing.DataFrameGroupBy` object based on the
+        ``point_id`` column.
 
         This can be used a shortcut for grouping the dataframe by the ``point_id``.
 
         Returns
         -------
-        DataFrameGroupBy
-            GroupBy object that contains the grouped dataframes.
-        """
+        :external:class:`~pandas.api.typing.DataFrameGroupBy`
+            GroupBy object that contains the grouped DataFrames.
+        """  # noqa: D205
         return self._obj.groupby("point_id")
 
     def get_group(self, point_id: str):
         """
-        Return a `DataFrame` from the point groups with provided `point_id`.
+        Return a :external:class:`~pandas.DataFrame` from the point groups with provided `point_id`.
 
         Parameters
         ----------
@@ -42,7 +44,7 @@ class PointDataFrameAccessor(GeotechPandasBase):
 
         Returns
         -------
-        DataFrame
+        :external:class:`~pandas.DataFrame`
             DataFrame that matches `point_id`.
         """
         return self.groups.get_group(point_id)
@@ -57,7 +59,7 @@ class PointDataFrameAccessor(GeotechPandasBase):
 
         Returns
         -------
-        Series
+        :external:class:`~pandas.Series`
             Series with shifted ``bottom`` values.
         """
         top = pd.Series(self.groups["bottom"].shift(1, fill_value=fill_value), name="top")
@@ -68,10 +70,10 @@ class PointDataFrameAccessor(GeotechPandasBase):
 
         Returns
         -------
-        Series
+        :external:class:`~pandas.Series`
             Series with ``center`` depth values.
         """
-        self.validate_columns(self._obj, ["top", "bottom"])
+        self._validate_columns(["top", "bottom"])
         return pd.Series(self._obj[["top", "bottom"]].mean(axis=1), name="center")
 
     def get_thickness(self) -> pd.Series:
@@ -79,10 +81,10 @@ class PointDataFrameAccessor(GeotechPandasBase):
 
         Returns
         -------
-        Series
+        :external:class:`~pandas.Series`
             Series with ``thickness`` values.
         """
-        self.validate_columns(self._obj, ["top", "bottom"])
+        self._validate_columns(["top", "bottom"])
         return pd.Series((self._obj["bottom"] - self._obj["top"]).abs(), name="thickness")
 
     def split_at_depth(
@@ -104,14 +106,14 @@ class PointDataFrameAccessor(GeotechPandasBase):
 
         Parameters
         ----------
-        depth: pandas.Series, float, int, or str
+        depth: Series, float, int, or str
             The depth/s where the layer would be split.
         reset_index: bool, default True
             If `True`, resets the index after splitting.
 
         Returns
         -------
-        DataFrame
+        :external:class:`~pandas.DataFrame`
             Dataframe with added and modified values for applicable layer splits. If no applicable
             splits are found, then the original dataframe is returned instead.
         """
@@ -120,7 +122,7 @@ class PointDataFrameAccessor(GeotechPandasBase):
             depth = self._obj[depth]
         else:
             validation_list = ["top"]
-        self.validate_columns(self._obj, validation_list)
+        self._validate_columns(validation_list)
 
         temp = self._obj.loc[(self._obj["top"] < depth) & (depth < self._obj["bottom"])].copy(
             deep=True
@@ -132,5 +134,5 @@ class PointDataFrameAccessor(GeotechPandasBase):
         temp = temp.sort_values(["point_id", "bottom"])
         if reset_index:
             temp = temp.reset_index(drop=True)
-        temp["top"] = PointDataFrameAccessor(temp).get_top()
+        temp["top"] = temp.geotech.point.get_top()
         return temp
