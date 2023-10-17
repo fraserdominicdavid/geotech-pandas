@@ -102,5 +102,5 @@ scopes provided in :mod:`geotech-pandas`. These scopes are accessors that can be
     df.geotech.point
 
 Here, we can access the :py:class:`~pandas.DataFrame.geotech.point` accessor where depth-related
-calculations can be accessed. Head to the related :ref:`guide <point>` for more information about
+calculations can be accessed. Head to the related :doc:`guide <point>` for more information about
 the :py:class:`~pandas.DataFrame.geotech.point` accessor.
