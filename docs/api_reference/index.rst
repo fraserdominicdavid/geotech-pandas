@@ -24,6 +24,8 @@ Subaccessors
 
    point
 
+.. _columns:
+
 Columns
 -------
 

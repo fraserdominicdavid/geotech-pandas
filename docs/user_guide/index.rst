@@ -61,3 +61,4 @@ Guides
     :maxdepth: 2
 
     basics
+    point
