@@ -17,7 +17,7 @@ base_df = pd.DataFrame(
 
 
 def test_obj():
-    """Test if dataframe is stored in ``_obj``."""
+    """Test if the ``DataFrame`` is stored in ``_obj``."""
     df = base_df
     tm.assert_frame_equal(base_df, df.geotech._obj)
 
@@ -29,19 +29,19 @@ def test_obj():
             base_df[["point_id"]].copy(),
             None,
             pytest.raises(AttributeError),
-            "The dataframe must have: bottom column.",
+            "The DataFrame must have: bottom column.",
         ),
         (
             base_df[["point_id"]].copy(),
             ["point_id", "top", "bottom"],
             pytest.raises(AttributeError),
-            "The dataframe must have: top, bottom columns.",
+            "The DataFrame must have: top, bottom columns.",
         ),
         (
             base_df,
             ["point_id", "top", "bottom"],
             pytest.raises(AttributeError),
-            "The dataframe must have: top column.",
+            "The DataFrame must have: top column.",
         ),
         (
             base_df,
@@ -52,7 +52,7 @@ def test_obj():
     ],
 )
 def test_validate_columns(df, columns, error, error_message):
-    """Test if columns are in df else raise error with error_message."""
+    """Test if ``columns`` are in ``df`` else raise ``error`` with ``error_message``."""
     with error as e:
         df.geotech._validate_columns(columns)
         assert error_message is None or error_message in str(e)
@@ -101,7 +101,7 @@ def test_validate_monotony(df, error, error_message):
                 }
             ),
             pytest.raises(AttributeError),
-            "The dataframe contains duplicate point_id and bottom: BH-1.",
+            "The DataFrame contains duplicate point_id and bottom: BH-1.",
         ),
         (
             pd.DataFrame(
@@ -116,7 +116,7 @@ def test_validate_monotony(df, error, error_message):
     ],
 )
 def test_validate_duplicates(df, error, error_message):
-    """Test df for duplicate value pairs in the ``point_id`` and ``bottom`` columns."""
+    """Test ``DataFrame`` for duplicate value pairs in the ``point_id`` and ``bottom`` columns."""
     with error as e:
         df.geotech._validate_duplicates()
         assert error_message is None or error_message in str(e)
@@ -128,7 +128,7 @@ def test_validate_duplicates(df, error, error_message):
         (
             base_df[["point_id"]].copy(),
             pytest.raises(AttributeError),
-            "The dataframe must have: bottom column.",
+            "The DataFrame must have: bottom column.",
         ),
         (
             pd.DataFrame(
@@ -148,7 +148,7 @@ def test_validate_duplicates(df, error, error_message):
                 }
             ),
             pytest.raises(AttributeError),
-            "The dataframe contains duplicate point_id and bottom: BH-1.",
+            "The DataFrame contains duplicate point_id and bottom: BH-1.",
         ),
         (
             base_df,
@@ -158,7 +158,7 @@ def test_validate_duplicates(df, error, error_message):
     ],
 )
 def test_validators(df, error, error_message):
-    """Test if validators are triggered for wrong dataframe configurations."""
+    """Test if validators are triggered for wrong ``DataFrame`` configurations."""
     with error as e:
         df.geotech  # noqa: B018
         assert error_message is None or error_message in str(e)

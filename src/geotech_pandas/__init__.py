@@ -1,4 +1,4 @@
-"""Geotech Pandas package."""
+"""geotech-pandas package."""
 
 from geotech_pandas.accessor import GeotechDataFrameAccessor
 

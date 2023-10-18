@@ -4,7 +4,7 @@
   "checkout": null,
   "context": {
     "cookiecutter": {
-      "package_name": "Geotech Pandas",
+      "package_name": "geotech-pandas",
       "package_description": "A Pandas extension for geotechnical calculations.",
       "package_url": "https://github.com/fraserdominicdavid/geotech-pandas",
       "author_name": "Fraser Dominic David",
