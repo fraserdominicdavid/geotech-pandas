@@ -1,1 +1,1 @@
-"""Geotech Pandas test suite."""
+"""geotech-pandas test suite."""

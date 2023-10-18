@@ -1,4 +1,4 @@
-"""Test Geotech Pandas."""
+"""Test geotech-pandas."""
 
 import geotech_pandas
 
