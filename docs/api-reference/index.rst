@@ -1,5 +1,3 @@
-.. _api_reference:
-
 .. currentmodule:: pandas
 
 =============
@@ -7,7 +5,7 @@ API Reference
 =============
 
 :mod:`geotech-pandas` provides scope-specific methods under various subaccessors. These are separate
-namespaces within :py:class:`~pandas.DataFrame.geotech`.
+namespaces within :class:`~pandas.DataFrame.geotech`.
 
 .. autoaccessorcallable:: DataFrame.geotech
 

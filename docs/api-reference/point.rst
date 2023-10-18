@@ -1,5 +1,3 @@
-.. _api.geotech.point:
-
 .. currentmodule:: pandas
 
 Point Subaccessor
