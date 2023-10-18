@@ -12,6 +12,7 @@ Attributes
    :toctree: api/
    :template: autosummary/accessor_attribute.rst
 
+   DataFrame.geotech.point.ids
    DataFrame.geotech.point.groups
 
 Methods

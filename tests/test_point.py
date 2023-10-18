@@ -17,6 +17,12 @@ def test_accessor():
     isinstance(pd.DataFrame.geotech.point, geotech_pandas.point.PointDataFrameAccessor)
 
 
+def test_get_ids():
+    """Test if ``ids`` property returns correct list."""
+    df = base_df
+    assert ["BH-1", "BH-2"] == df.geotech.point.ids
+
+
 def test_groups():
     """Test if groups property returns a ``DataFrameGroupBy`` object."""
     df = base_df

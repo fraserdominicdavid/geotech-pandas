@@ -35,7 +35,14 @@ Getting a specific point
 The :meth:`~pandas.DataFrame.geotech.point.get_group` method returns a copy of the supplied
 ``point_id``.
 
-For example, if you wish to get a copy of **BH-1**,
+If you somehow forgot the IDs we stored in ``df`` earlier, then you can easliy check the list stored
+in the :attr:`~pandas.DataFrame.geotech.point.ids` attribute,
+
+.. ipython:: python
+
+    df.geotech.point.ids
+
+Now, if you wish to get a copy of **BH-1**,
 
 .. ipython:: python
 

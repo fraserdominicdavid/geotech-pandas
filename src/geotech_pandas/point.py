@@ -16,6 +16,17 @@ class PointDataFrameAccessor(GeotechPandasBase):
     """
 
     @property
+    def ids(self) -> list[str]:
+        """Return a list of unique ``point_id`` values.
+
+        Returns
+        -------
+        list of str
+            List of unique point IDs.
+        """
+        return self._obj["point_id"].unique().tolist()
+
+    @property
     def groups(self) -> DataFrameGroupBy:
         """
         Return a :external:class:`~pandas.api.typing.DataFrameGroupBy` object based on the
