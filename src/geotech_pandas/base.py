@@ -18,27 +18,24 @@ class GeotechPandasBase:
 
     def _validate_columns(self, columns: Optional[list[str]] = None) -> None:
         """
-        Validate the dataframe if it contains the columns from a provided list.
+        Validate if the :external:class:`~pandas.DataFrame` contains the columns from a provided
+        list.
 
-        The `_validate_columns` method is a static method that is used to validate the columns of a
-        given dataframe. The method takes in a dataframe and a list of columns to be validated. If
-        the validation list is not provided, the method defaults to checking if the ``point_id`` and
-        ``bottom`` columns are present in the dataframe. If any of the columns in the validation
-        list are not found in the dataframe, the method raises an `AttributeError` and lists the
-        missing columns in the error message.
+        If the validation list is not provided, the method defaults to checking if the ``point_id``
+        and ``bottom`` columns are present in the :external:class:`~pandas.DataFrame`. If any of the
+        columns in the validation list are not found in the :external:class:`~pandas.DataFrame`, the
+        method raises an ``AttributeError`` and lists the missing columns in the error message.
 
         Parameters
         ----------
-        df : pandas.DataFrame
-            Dataframe to be validated.
         columns : list of str, optional, default ["point_id", "bottom"]
             List of column names to be validated.
 
         Raises
         ------
         AttributeError
-            When any of the columns in the validation list are not found in the dataframe.
-        """
+            When any of the columns in the validation list are not found in the DataFrame.
+        """  # noqa: D205
         if columns is None:
             columns = ["point_id", "bottom"]
 
@@ -49,18 +46,13 @@ class GeotechPandasBase:
 
         if len(missing_columns) > 0:
             raise AttributeError(
-                f"The dataframe must have: {', '.join(missing_columns)} "
+                f"The DataFrame must have: {', '.join(missing_columns)} "
                 f"column{'s' if len(missing_columns) > 1 else ''}."
             )
 
     def _validate_monotony(self) -> None:
         """
         Validate if the ``bottom`` of each ``point_id`` group is monotonically increasing.
-
-        Parameters
-        ----------
-        df : pandas.DataFrame
-            Dataframe to be validated.
 
         Raises
         ------
@@ -78,23 +70,19 @@ class GeotechPandasBase:
 
     def _validate_duplicates(self) -> None:
         """
-        Validate the dataframe for duplicate value pairs in the ``point_id`` and ``bottom`` columns.
-
-        Parameters
-        ----------
-        df : pandas.DataFrame
-            Dataframe to be validated.
+        Validate the :external:class:`~pandas.DataFrame` for duplicate value pairs in the
+        ``point_id`` and ``bottom`` columns.
 
         Raises
         ------
         AttributeError
             When duplicate value pairs in the ``point_id`` and ``bottom`` columns are detected.
-        """
+        """  # noqa: D205
         duplicate_list = self._obj[self._obj[["point_id", "bottom"]].duplicated()][
             "point_id"
         ].to_list()
         if len(duplicate_list) > 0:
             raise AttributeError(
-                "The dataframe contains duplicate point_id and bottom:"
+                "The DataFrame contains duplicate point_id and bottom:"
                 f" {', '.join(duplicate_list)}."
             )

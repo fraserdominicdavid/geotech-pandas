@@ -4,7 +4,7 @@
 class SubAccessor:
     """A property-like object for both classes and class instances.
 
-    This is required for sphinx autodoc to work correctly on sub-accessors.
+    This is required for sphinx autodoc to work correctly on subaccessors.
     """
 
     def __init__(self, accessor) -> None:

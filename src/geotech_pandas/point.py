@@ -24,18 +24,20 @@ class PointDataFrameAccessor(GeotechPandasBase):
         Return a :external:class:`~pandas.api.typing.DataFrameGroupBy` object based on the
         ``point_id`` column.
 
-        This can be used a shortcut for grouping the dataframe by the ``point_id``.
+        This can be used as a shortcut for grouping the :external:class:`~pandas.DataFrame` by the
+        ``point_id``.
 
         Returns
         -------
         :external:class:`~pandas.api.typing.DataFrameGroupBy`
-            GroupBy object that contains the grouped DataFrames.
+            GroupBy object that contains the grouped DataFrame objects.
         """  # noqa: D205
         return self._obj.groupby("point_id")
 
     def get_group(self, point_id: str):
         """
-        Return a :external:class:`~pandas.DataFrame` from the point groups with provided `point_id`.
+        Return a :external:class:`~pandas.DataFrame` from the point groups with matching
+        ``point_id``.
 
         Parameters
         ----------
@@ -45,8 +47,8 @@ class PointDataFrameAccessor(GeotechPandasBase):
         Returns
         -------
         :external:class:`~pandas.DataFrame`
-            DataFrame that matches `point_id`.
-        """
+            DataFrame that matches ``point_id``.
+        """  # noqa: D205
         return self.groups.get_group(point_id)
 
     def get_top(self, fill_value: float = 0.0) -> pd.Series:
@@ -90,10 +92,10 @@ class PointDataFrameAccessor(GeotechPandasBase):
     def split_at_depth(
         self, depth: Union[pd.Series, float, int, str], reset_index: bool = True
     ) -> pd.DataFrame:
-        """Split layers in the dataframe into two with the provided depth.
+        """Split layers in the :external:class:`~pandas.DataFrame` into two with the provided depth.
 
         If the provided depth is found in between the ``top`` and ``bottom`` columns of the
-        dataframe, then those particular layers would be split.
+        :external:class:`~pandas.DataFrame`, then those particular layers would be split.
 
         The ``top`` and ``bottom`` depths of the affected layers are also adjusted to have
         continuity after splitting. However, columns other than ``top`` and ``bottom`` are not
@@ -114,8 +116,8 @@ class PointDataFrameAccessor(GeotechPandasBase):
         Returns
         -------
         :external:class:`~pandas.DataFrame`
-            Dataframe with added and modified values for applicable layer splits. If no applicable
-            splits are found, then the original dataframe is returned instead.
+            DataFrame with added and modified values for applicable layer splits. If no applicable
+            splits are found, then the original DataFrame is returned instead.
         """
         if isinstance(depth, str):
             validation_list = [depth, "top"]

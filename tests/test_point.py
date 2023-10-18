@@ -1,3 +1,4 @@
+"""Test ``point`` subaccessor methods."""
 import pandas as pd
 import pandas._testing as tm
 
@@ -17,14 +18,14 @@ def test_accessor():
 
 
 def test_groups():
-    """Test if groups property returns a `DataFrameGroupBy` object."""
+    """Test if groups property returns a ``DataFrameGroupBy`` object."""
     df = base_df
     g = df.geotech.point.groups
     assert len(base_df["point_id"].unique()) == len(g)
 
 
 def test_get_group():
-    """Test if `get_group` returns the correct `DataFrame` object."""
+    """Test if ``get_group`` returns the correct ``DataFrame`` object."""
     df = base_df
     for point_id in base_df["point_id"].to_list():
         tm.assert_frame_equal(
@@ -33,7 +34,7 @@ def test_get_group():
 
 
 def test_get_top():
-    """Test if `get_top` returns correct shifted ``bottom`` depths."""
+    """Test if ``get_top`` returns the correct shifted ``bottom`` depths."""
     df = pd.DataFrame(
         {
             "point_id": ["BH-1", "BH-1", "BH-2", "BH-2"],
@@ -44,7 +45,7 @@ def test_get_top():
 
 
 def test_get_center():
-    """Test if `get_center` returns correct depth values."""
+    """Test if ``get_center`` returns the correct values."""
     df = pd.DataFrame(
         {
             "point_id": ["BH-1", "BH-1", "BH-2", "BH-2"],
@@ -58,7 +59,7 @@ def test_get_center():
 
 
 def test_get_thickness():
-    """Test if `get_thickness` returns correct values."""
+    """Test if ``get_thickness`` returns the correct values."""
     df = pd.DataFrame(
         {
             "point_id": ["BH-1", "BH-1", "BH-2", "BH-2"],
@@ -72,7 +73,9 @@ def test_get_thickness():
 
 
 def test_split_at_depth_numeric():
-    """Test if `split_at_depth` with `depth` as a numeric value will return the correct result."""
+    """Test if ``split_at_depth`` with ``depth`` as a numeric value will return the correct
+    result.
+    """  # noqa: D205
     expected = pd.DataFrame(
         {
             "point_id": ["BH-1", "BH-1", "BH-1", "BH-2", "BH-2", "BH-2"],
@@ -94,7 +97,7 @@ def test_split_at_depth_numeric():
 
 
 def test_split_at_depth_series():
-    """Test if `split_at_depth` with `depth` as a series will return the correct result."""
+    """Test if ``split_at_depth`` with ``depth`` as a ``Series`` will return the correct result."""
     expected = pd.DataFrame(
         {
             "point_id": ["BH-1", "BH-1", "BH-1", "BH-2", "BH-2", "BH-2"],
@@ -114,7 +117,9 @@ def test_split_at_depth_series():
 
 
 def test_split_at_depth_str():
-    """Test if `split_at_depth` with `depth` as a str value will return the correct result."""
+    """Test if ``split_at_depth`` with ``depth`` as a ``str`` value will return the correct
+    result.
+    """  # noqa: D205
     expected = pd.DataFrame(
         {
             "point_id": ["BH-1", "BH-1", "BH-1", "BH-2", "BH-2", "BH-2"],
@@ -136,7 +141,9 @@ def test_split_at_depth_str():
 
 
 def test_split_at_depth_no_split():
-    """Test if `split_at_depth` where no splitting should happen will return the correct result."""
+    """Test if ``split_at_depth`` where no splitting should happen will return the correct
+    result.
+    """  # noqa: D205
     expected = pd.DataFrame(
         {
             "point_id": ["BH-1", "BH-1", "BH-2", "BH-2"],
@@ -151,10 +158,11 @@ def test_split_at_depth_no_split():
 
 
 def test_split_at_depth_no_index_reset():
-    """Test if `split_at_depth` with `reset_index` set to `True` will return the correct result.
+    """Test if ``split_at_depth`` with ``reset_index`` set to ``True`` will return the correct
+    result.
 
     The expected result should have the added layers take the original index of the split layers.
-    """
+    """  # noqa: D205
     expected = pd.DataFrame(
         {
             "point_id": ["BH-1", "BH-1", "BH-1", "BH-2", "BH-2", "BH-2"],
