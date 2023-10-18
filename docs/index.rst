@@ -10,8 +10,8 @@ geotech-pandas documentation
    :maxdepth: 1
    :hidden:
    
-   User Guide <user_guide/index>
-   API Reference <api_reference/index>
+   User Guide <user-guide/index>
+   API Reference <api-reference/index>
 
 **Version**: |version|
 
@@ -24,8 +24,8 @@ calculations.
     :class-container: sd-text-center
 
     .. grid-item-card:: User Guide
-      :link: user_guide
-      :link-type: ref
+      :link: user-guide/index
+      :link-type: doc
 
       :material-regular:`menu_book;5em`
       ^^^
@@ -34,8 +34,8 @@ calculations.
       useful background information and explanation.
 
     .. grid-item-card:: API Reference
-      :link: api_reference
-      :link-type: ref
+      :link: api-reference/index
+      :link-type: doc
 
       :material-regular:`data_object;5em`
       ^^^
