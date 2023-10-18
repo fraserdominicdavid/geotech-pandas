@@ -16,11 +16,13 @@ Subaccessors
    :template: autosummary/accessor.rst
 
    DataFrame.geotech.point
+   DataFrame.geotech.layer
 
 .. toctree::
    :hidden:
 
    point
+   layer
 
 .. _columns:
 
