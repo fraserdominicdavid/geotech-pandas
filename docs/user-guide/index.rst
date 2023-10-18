@@ -6,6 +6,17 @@ The user guide covers all of :mod:`geotech-pandas` by topic area. Each of the su
 introduces a topic, and discusses how :mod:`geotech-pandas` approaches the problem, with many
 examples throughout.
 
+The methods in :mod:`geotech-pandas` are designed to work on multiple points at the same time which
+effectively reduces the time required for routine tasks. However, most guides are demonstrated with
+:external:class:`~pandas.DataFrame` objects with only one point for brevity.
+
+.. note::
+    
+    In :mod:`geotech-pandas`, a **point** represents the point in which a borehole or a soil profile
+    is located. For now, :mod:`geotech-pandas` is location-unaware so it is not required to supply
+    geographic data in :external:class:`~pandas.DataFrame` objects. This may change in the future to
+    support methods for plotting site maps and similar tasks.
+
 Further information on any specific method can be obtained in the :doc:`../api-reference/index`.
 
 If you're new to `pandas <https://pandas.pydata.org/>`__ in general, it is recommended to make
@@ -60,3 +71,4 @@ Guides
 
     basics
     point
+    layer
