@@ -1,12 +1,10 @@
-.. _basics:
-
 ======
 Basics
 ======
-:mod:`geotech-pandas` is mainly accessed from the :py:class:`~pandas.DataFrame.geotech` accessor on
-:external:py:class:`~pandas.DataFrame` objects. When accessed, :mod:`geotech-pandas`
-validates the current :external:py:class:`~pandas.DataFrame` for several minimum
-requirements. These requirements are discussed in the following sections.
+:mod:`geotech-pandas` is mainly accessed from the :class:`~pandas.DataFrame.geotech` accessor on
+:external:class:`~pandas.DataFrame` objects. When accessed, :mod:`geotech-pandas` validates the
+current :external:class:`~pandas.DataFrame` for several minimum requirements. These requirements are
+discussed in the following sections.
 
 Customarily, we import as follows before we begin the guide,
 
@@ -21,8 +19,8 @@ The minimum required columns for :mod:`geotech-pandas` are the ``point_id`` and 
 The ``point_id`` represents the ID or the group where each observation or soil layer belongs to.
 Whereas, the ``bottom`` column represents the bottom depths of these observations.
 
-If you try to access :py:class:`~pandas.DataFrame.geotech` with the following
-:external:py:class:`~pandas.DataFrame`,
+If you try to access :class:`~pandas.DataFrame.geotech` with the following
+:external:class:`~pandas.DataFrame`,
 
 .. ipython:: python
     :okexcept:
@@ -34,8 +32,8 @@ If you try to access :py:class:`~pandas.DataFrame.geotech` with the following
     )
     df.geotech()
 
-An :external:py:class:`AttributeError` is raised stating that the
-:external:py:class:`~pandas.DataFrame` is missing the ``bottom`` column.
+An :external:class:`AttributeError` is raised stating that the :external:class:`~pandas.DataFrame`
+is missing the ``bottom`` column.
 
 Required Arrangement
 --------------------
@@ -43,8 +41,8 @@ Required Arrangement
 monotonically increasing, as most methods assume that each layer comes right after the other in each
 point.
 
-If you try to access :py:class:`~pandas.DataFrame.geotech` with the following
-:external:py:class:`~pandas.DataFrame`,
+If you try to access :class:`~pandas.DataFrame.geotech` with the following
+:external:class:`~pandas.DataFrame`,
 
 .. ipython:: python
     :okexcept:
@@ -57,7 +55,7 @@ If you try to access :py:class:`~pandas.DataFrame.geotech` with the following
     )
     df.geotech()
 
-An :external:py:class:`AttributeError` is raised listing which points contain the erroneous
+An :external:class:`AttributeError` is raised listing which points contain the erroneous
 arrangement.
 
 Required Uniqueness
@@ -65,8 +63,8 @@ Required Uniqueness
 :mod:`geotech-pandas` requires ``point_id`` and ``bottom`` pairs to be unique, as most methods
 assume that each layer is unique for each point.
 
-If you try to access :py:class:`~pandas.DataFrame.geotech` with the following
-:external:py:class:`~pandas.DataFrame`,
+If you try to access :class:`~pandas.DataFrame.geotech` with the following
+:external:class:`~pandas.DataFrame`,
 
 .. ipython:: python
     :okexcept:
@@ -79,17 +77,17 @@ If you try to access :py:class:`~pandas.DataFrame.geotech` with the following
     )
     df.geotech()
 
-An :external:py:class:`AttributeError` is raised listing which points contain duplicate values.
+An :external:class:`AttributeError` is raised listing which points contain duplicate values.
 
 Subaccessors
 ------------
-There are no available methods under the :py:class:`~pandas.DataFrame.geotech` accessor other than
-the validation methods that are called automatically upon initiation of the accessor as shown in the
+There are no available methods under the :class:`~pandas.DataFrame.geotech` accessor other than the
+validation methods that are called automatically upon initiation of the accessor as shown in the
 preceding sections.
 
-The :py:class:`~pandas.DataFrame.geotech` accessor serves as a parent namespace to the various
-scopes provided in :mod:`geotech-pandas`. These scopes are accessors that can be accessed from
-:py:class:`~pandas.DataFrame.geotech` like so,
+The :class:`~pandas.DataFrame.geotech` accessor serves as a parent namespace to the various scopes
+provided in :mod:`geotech-pandas`. These scopes are accessors that can be accessed from
+:class:`~pandas.DataFrame.geotech` like so,
 
 .. ipython:: python
 
@@ -101,6 +99,6 @@ scopes provided in :mod:`geotech-pandas`. These scopes are accessors that can be
     )
     df.geotech.point
 
-Here, we can access the :py:class:`~pandas.DataFrame.geotech.point` accessor where depth-related
+Here, we can access the :class:`~pandas.DataFrame.geotech.point` accessor where depth-related
 calculations can be accessed. Head to the related :doc:`guide <point>` for more information about
-the :py:class:`~pandas.DataFrame.geotech.point` accessor.
+the :class:`~pandas.DataFrame.geotech.point` accessor.
