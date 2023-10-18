@@ -66,7 +66,7 @@ Guides
 ------
 
 .. toctree::
-    :caption: Usage and Accessors
+    :caption: Usage and Subaccessors
     :maxdepth: 2
 
     basics
