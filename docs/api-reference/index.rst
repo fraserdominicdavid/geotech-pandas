@@ -7,22 +7,14 @@ API Reference
 :mod:`geotech-pandas` provides scope-specific methods under various subaccessors. These are separate
 namespaces within :class:`~pandas.DataFrame.geotech`.
 
-.. autoaccessorcallable:: DataFrame.geotech
-
-Subaccessors
-------------
+Accessor
+--------
 
 .. autosummary::
+   :toctree: api/
    :template: autosummary/accessor.rst
 
-   DataFrame.geotech.point
-   DataFrame.geotech.layer
-
-.. toctree::
-   :hidden:
-
-   point
-   layer
+   DataFrame.geotech
 
 .. _columns:
 
