@@ -1826,6 +1826,17 @@ files = [
 ptyprocess = ">=0.5"
 
 [[package]]
+name = "pickleshare"
+version = "0.7.5"
+description = "Tiny 'shelve'-like database with concurrency support"
+optional = false
+python-versions = "*"
+files = [
+    {file = "pickleshare-0.7.5-py2.py3-none-any.whl", hash = "sha256:9649af414d74d4df115d5d718f82acb59c9d418196b7b4290ed47a12ce62df56"},
+    {file = "pickleshare-0.7.5.tar.gz", hash = "sha256:87683d47965c1da65cdacaf31c8441d12b8044cdec9aca500cd78fc2c683afca"},
+]
+
+[[package]]
 name = "platformdirs"
 version = "3.11.0"
 description = "A small Python package for determining appropriate platform-specific dirs, e.g. a \"user data dir\"."
@@ -3194,4 +3205,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<4.0"
-content-hash = "cafafd797689ad902942f284980b7ebc18e02943d05f3818fdba07f4c3ff6c34"
+content-hash = "eef71d792adad741f0accb47bf45cf6c7c9612a4d71e08a25301e802799c2873"

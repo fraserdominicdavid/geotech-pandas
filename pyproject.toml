@@ -42,6 +42,7 @@ pydata-sphinx-theme = ">=0.14.1"
 sphinx-design = ">=0.5.0"
 numpydoc = ">=1.6.0"
 sphinx-autosummary-accessors = ">=2023.4.0"
+pickleshare = ">=0.7.5"
 
 [tool.coverage.report]  # https://coverage.readthedocs.io/en/latest/config.html#report
 precision = 1
