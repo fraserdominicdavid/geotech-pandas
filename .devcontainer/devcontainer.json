@@ -10,7 +10,9 @@
         "vscode": {
             "extensions": [
                 "charliermarsh.ruff",
+                "ms-python.mypy-type-checker",
                 "ms-python.python",
+                "ms-toolsai.jupyter",
                 "ryanluker.vscode-coverage-gutters",
                 "tamasfe.even-better-toml",
                 "visualstudioexptteam.vscodeintellicode",
@@ -25,6 +27,9 @@
                     "source.organizeImports": true
                 },
                 "editor.formatOnSave": true,
+                "[python]": {
+                    "editor.defaultFormatter": "charliermarsh.ruff"
+                },
                 "[toml]": {
                     "editor.formatOnSave": false
                 },
@@ -32,9 +37,8 @@
                     100
                 ],
                 "files.autoSave": "onFocusChange",
+                "mypy-type-checker.importStrategy": "fromEnvironment",
                 "python.defaultInterpreterPath": "/opt/geotech-pandas-env/bin/python",
-                "python.formatting.provider": "black",
-                "python.linting.mypyEnabled": true,
                 "python.terminal.activateEnvironment": false,
                 "python.testing.pytestEnabled": true,
                 "ruff.importStrategy": "fromEnvironment",
