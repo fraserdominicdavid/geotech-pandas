@@ -72,3 +72,4 @@ Guides
     basics
     point
     layer
+    in-situ
