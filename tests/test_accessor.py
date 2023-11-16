@@ -6,6 +6,7 @@ import pytest
 
 import geotech_pandas  # noqa: F401
 from geotech_pandas.accessor import GeotechDataFrameAccessor
+from geotech_pandas.layer import LayerDataFrameAccessor
 from geotech_pandas.point import PointDataFrameAccessor
 
 
@@ -24,6 +25,7 @@ def df():
     ("namespaces", "accessor"),
     [
         (["geotech"], GeotechDataFrameAccessor),
+        (["geotech", "layer"], LayerDataFrameAccessor),
         (["geotech", "point"], PointDataFrameAccessor),
     ],
 )
