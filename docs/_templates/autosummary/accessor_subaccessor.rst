@@ -4,24 +4,41 @@
 
 .. autoaccessorcallable:: {{ (module.split('.')[1:] + [objname]) | join('.') }}
 
-{% block methods -%}
-{% if methods -%}
+{%- block members %}
+{%- for item in members if item not in methods and item not in attributes and item[0] != "_" %}
+{%- if loop.length > 0 %}
+{%- if loop.index == 1 %}
+
+{{ _('Subaccessors') | escape | underline('-') }}
+
+.. autosummary::
+   :toctree:
+   :template: autosummary/accessor_subaccessor.rst
+{% endif %} 
+   {{ name }}.{{ item }}
+{%- endif %}
+{%- endfor %}
+{%- endblock %}
+
+{%- block methods %}
+{%- for item in methods if methods and item[0] != "_" %}
+{%- if loop.length > 0 %}
+{%- if loop.index == 1 %}
+
 {{ _('Methods') | escape | underline('-') }}
 
 .. autosummary::
    :toctree:
    :template: autosummary/accessor_method.rst
-{% for item in methods %}
-{#- This is needed to filter out private methods -#}
-{% if item[0] != "_" %}
+{% endif %}
    {{ name }}.{{ item }}
 {%- endif %}
 {%- endfor %}
-{%- endif %}
 {%- endblock %}
 
-{% block attributes -%}
-{% if attributes -%}
+{%- block attributes %}
+{%- if attributes %}
+
 {{ _('Attributes') | escape | underline('-') }}
 
 .. autosummary::
