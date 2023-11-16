@@ -6,3 +6,8 @@ namespace that contains other subaccessors with methods that deal with in-situ t
 the methods in these subaccessors only handle raw in-situ test data. For example, a method that
 reads the blow counts of each interval in a standard penetration test and returns the equivalent
 N-value. These subaccessors are further discussed in the following sections.
+
+.. toctree::
+    :maxdepth: 1
+
+    in-situ.spt
