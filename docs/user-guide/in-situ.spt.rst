@@ -12,3 +12,34 @@ First, we import the necessary libraries,
 
     import pandas as pd
     import geotech_pandas
+
+Next, we create a :external:class:`~pandas.DataFrame` with the following data,
+
+.. ipython:: python
+
+    df = pd.DataFrame(
+        {
+            "point_id": ["BH-1", "BH-1", "BH-1", "BH-1", "BH-1", "BH-1"],
+            "bottom": [1.5, 3.0, 4.5, 6.0, 7.5, 9.0],
+            "sample_type": ["spt", "spt", "spt", "spt", "spt", "spt"],
+            "sample_number": [1, 2, 3, 4, 5, 6],
+            "blows_1": [10, 14, 18, 25, 33, 40],
+            "blows_2": [12, 13, 20, 20, 35, 45],
+            "blows_3": [15, 13, 23, 27, 37, 50],
+            "pen_1": [150, 150, 150, 150, 150, 150],
+            "pen_2": [150, 150, 150, 150, 150, 150],
+            "pen_3": [150, 150, 150, 150, 150, 50],
+        }
+    )
+    df
+
+Getting the total penetration
+-----------------------------
+One of the methods under :class:`~pandas.DataFrame.geotech.in_situ.spt` is the ability to get the
+total penetration of each SPT interval. The
+:meth:`~pandas.DataFrame.geotech.in_situ.spt.get_total_pen` method returns a
+:external:class:`~pandas.Series` with the sum of the penetration per inteval in each sample/layer.
+
+.. ipython:: python
+
+    df.geotech.in_situ.spt.get_total_pen()
