@@ -29,3 +29,15 @@ class SPTDataFrameAccessor(GeotechPandasBase):
             self._obj[["pen_1", "pen_2", "pen_3"]].sum(axis=1, min_count=1),
             name="total_pen",
         )
+
+    def get_seating_drive(self) -> pd.Series:
+        """Return the number of blows in the first 150 mm interval for each sample.
+
+        Notes
+        -----
+        The seating drive is defined as the first 150 mm interval driven by the sampler, therefore,
+        only the number of blows of samples with ``pen_1`` equal to 150 mm are taken.
+        """
+        seating_drive = self._obj["blows_1"].convert_dtypes()
+        seating_drive.loc[self._obj["pen_1"].ne(150)] = pd.NA
+        return pd.Series(seating_drive, name="seating_drive")
