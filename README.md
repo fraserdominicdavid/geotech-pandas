@@ -1,4 +1,5 @@
 [![Open in Dev Containers](https://img.shields.io/static/v1?label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/fraserdominicdavid/geotech-pandas)
+[![codecov](https://codecov.io/gh/fraserdominicdavid/geotech-pandas/graph/badge.svg?token=CB7QB1LFRM)](https://codecov.io/gh/fraserdominicdavid/geotech-pandas)
 
 # geotech-pandas
 
