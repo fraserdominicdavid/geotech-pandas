@@ -33,8 +33,9 @@ def df():
             "pen_2": [150, 150, None, 150, 150, None],
             "pen_3": [150, 150, None, 100, None, None],
             "total_pen": [450, 450, None, 400, 300, 50],
-        }
-    )
+            "seating_drive": [23, 0, None, 45, 43, None],
+        },
+    ).convert_dtypes()
 
 
 def test_accessor():
@@ -47,4 +48,12 @@ def test_get_total_pen(df):
     tm.assert_series_equal(
         df.geotech.in_situ.spt.get_total_pen(),
         df["total_pen"],
+    )
+
+
+def test_get_seating_blows(df):
+    """Test if the correct calculation is returned."""
+    tm.assert_series_equal(
+        df.geotech.in_situ.spt.get_seating_drive(),
+        df["seating_drive"],
     )
