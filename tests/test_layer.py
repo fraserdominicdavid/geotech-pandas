@@ -1,59 +1,43 @@
 """Test ``layer`` subaccessor methods."""
+from functools import reduce
+
 import pandas as pd
 import pandas._testing as tm
+import pytest
 
-import geotech_pandas
+from geotech_pandas.layer import LayerDataFrameAccessor
 
-base_df = pd.DataFrame(
-    {
-        "point_id": ["BH-1", "BH-1", "BH-2", "BH-2"],
-        "bottom": [0.0, 1.0, 0.0, 1.0],
-    }
-)
+
+@pytest.fixture()
+def df() -> pd.DataFrame:
+    """Return common DataFrame for testing methods that return Series objects."""
+    return pd.DataFrame(
+        {
+            "point_id": ["BH-1", "BH-1", "BH-2", "BH-2"],
+            "bottom": [1.0, 2.0, 3.0, 4.0],
+            "top": [0.0, 1.0, 0.0, 3.0],
+            "center": [0.5, 1.5, 1.5, 3.5],
+            "thickness": [1.0, 1.0, 3.0, 1.0],
+        }
+    )
 
 
 def test_accessor():
     """Test if accessor is registered correctly."""
-    isinstance(pd.DataFrame.geotech.layer, geotech_pandas.layer.LayerDataFrameAccessor)
+    isinstance(pd.DataFrame.geotech.layer, LayerDataFrameAccessor)
 
 
-def test_get_top():
-    """Test if ``get_top`` returns the correct shifted ``bottom`` depths."""
-    df = pd.DataFrame(
-        {
-            "point_id": ["BH-1", "BH-1", "BH-2", "BH-2"],
-            "bottom": [1.0, 2.0, 3.0, 4.0],
-        }
-    )
-    tm.assert_series_equal(df.geotech.layer.get_top(), pd.Series([0.0, 1.0, 0.0, 3.0], name="top"))
-
-
-def test_get_center():
-    """Test if ``get_center`` returns the correct values."""
-    df = pd.DataFrame(
-        {
-            "point_id": ["BH-1", "BH-1", "BH-2", "BH-2"],
-            "bottom": [1.0, 2.0, 3.0, 4.0],
-            "top": [0.0, 1.0, 0.0, 3.0],
-        }
-    )
-    tm.assert_series_equal(
-        df.geotech.layer.get_center(), pd.Series([0.5, 1.5, 1.5, 3.5], name="center")
-    )
-
-
-def test_get_thickness():
-    """Test if ``get_thickness`` returns the correct values."""
-    df = pd.DataFrame(
-        {
-            "point_id": ["BH-1", "BH-1", "BH-2", "BH-2"],
-            "bottom": [1.0, 2.0, 3.0, 4.0],
-            "top": [0.0, 1.0, 0.0, 3.0],
-        }
-    )
-    tm.assert_series_equal(
-        df.geotech.layer.get_thickness(), pd.Series([1.0, 1.0, 3.0, 1.0], name="thickness")
-    )
+@pytest.mark.parametrize(
+    ("method", "column"),
+    [
+        ("geotech.layer.get_top", "top"),
+        ("geotech.layer.get_center", "center"),
+        ("geotech.layer.get_thickness", "thickness"),
+    ],
+)
+def test_layer_methods(df, method, column):
+    """Test if the results of the method are equal with the contents of the column."""
+    tm.assert_series_equal(reduce(getattr, method.split("."), df)(), df[column])
 
 
 def test_split_at_depth_numeric():
