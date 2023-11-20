@@ -90,3 +90,55 @@ sample/layer.
     This method simply sums up the second and third interval regardless if the intervals are
     completely penetrated or not. Due to this, the main drive may not always correspond to the
     reported N-value.
+
+Getting the N-value
+-------------------
+The SPT is mainly done to calculate the N-value. This can easily be calculated using the
+:meth:`~pandas.DataFrame.geotech.in_situ.spt.get_n_value` method for each sample/layer.
+
+.. ipython:: python
+
+    df.geotech.in_situ.spt.get_n_value()
+
+As you can see, the N-value for the last two samples are set to 50, but why? This is because the
+total penetration in these samples are less than 450 mm. This means that these samples satisfy the
+refusal criteria and are assumed to have an N-value of 50.
+
+Setting the assumed refusal N-value
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The refusal N-value can easily be changed by setting the ``refusal`` parameter like so,
+
+.. ipython:: python
+
+    df.geotech.in_situ.spt.get_n_value(refusal=100)
+
+You can also set it to :external:attr:`~pandas.NA` if you don't want to assume a refusal N-value,
+
+.. ipython:: python
+
+    df.geotech.in_situ.spt.get_n_value(refusal=pd.NA)
+
+Limiting the N-values
+^^^^^^^^^^^^^^^^^^^^^
+The ``limit`` parameter is also available if you wish to limit the non-refusal N-values to the
+refusal N-value. To limit the N-values, just set the ``limit`` parameter to ``True``,
+
+.. ipython:: python
+
+    df.geotech.in_situ.spt.get_n_value(limit=True)
+
+As you can see, the N-value in index ``4`` was limited from 72 to 50.
+
+.. warning::
+
+    Setting ``limit`` to ``True`` while also setting ``refusal`` to :external:attr:`~pandas.NA` will
+    have a similar output to ``Out[12]`` above. That is to say, the refusal N-value will change as
+    expected, however, since it is essentially nothing, nothing will get limited as well.
+
+    .. ipython:: python
+        :okwarning:
+
+        df.geotech.in_situ.spt.get_n_value(refusal=pd.NA, limit=True)
+    
+    :mod:`geotech-pandas` will warn you if it detects you using such settings, so don't worry if you
+    forget about this warning.
