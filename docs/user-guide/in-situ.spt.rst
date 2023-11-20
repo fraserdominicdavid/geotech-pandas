@@ -74,3 +74,19 @@ each sample/layer.
     Notice that the last value is :external:attr:`~pandas.NA`, this is because the first interval
     didn't reach the full 150 mm requirement. Such cases are usually considered as invalid tests or
     hint to the start of a hard layer of soil or rock.
+
+Getting the main drive
+----------------------
+The main drive, which is the total number of blows in the second and third 150 mm interval, can also
+be returned by the :meth:`~pandas.DataFrame.geotech.in_situ.spt.get_main_drive` method for each
+sample/layer.
+
+.. ipython:: python
+
+    df.geotech.in_situ.spt.get_main_drive()
+
+.. note::
+
+    This method simply sums up the second and third interval regardless if the intervals are
+    completely penetrated or not. Due to this, the main drive may not always correspond to the
+    reported N-value.

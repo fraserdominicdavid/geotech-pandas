@@ -52,3 +52,19 @@ class SPTDataFrameAccessor(GeotechPandasBase):
         seating_drive = self._obj["blows_1"].convert_dtypes()
         seating_drive.loc[self._obj["pen_1"].ne(150)] = pd.NA
         return pd.Series(seating_drive, name="seating_drive")
+
+    def get_main_drive(self) -> pd.Series:
+        """Return the total blows in the second and third 150 mm interval for each sample.
+
+        The sum is still returned regardless of the completeness of each interval. Due to this, the
+        results may not correspond to the reported N-value.
+
+        Returns
+        -------
+        :external:class:`~pandas.Series`
+            Series with main drive values.
+        """
+        return pd.Series(
+            self._obj[["blows_2", "blows_3"]].sum(axis=1, min_count=1),
+            name="main_drive",
+        )
