@@ -1,4 +1,6 @@
 """Test ``spt`` subaccessor methods."""
+from functools import reduce
+
 import pandas as pd
 import pandas._testing as tm
 import pytest
@@ -7,10 +9,10 @@ from geotech_pandas.in_situ import SPTDataFrameAccessor
 
 
 @pytest.fixture()
-def df():
-    """Return a dataframe with various data configurations for testing.
+def df() -> pd.DataFrame:
+    """Return common DataFrame for testing methods that return Series objects.
 
-    This dataframe is set up like a parametrized fixture where each point would expect a different
+    This DataFrame is set up like a parametrized fixture where each point would expect a different
     outcome for each method in the spt subaccessor. The following are brief descriptions of each
     point:
     - normal: normal spt result
@@ -44,25 +46,14 @@ def test_accessor():
     isinstance(pd.DataFrame.geotech.in_situ.spt, SPTDataFrameAccessor)
 
 
-def test_get_total_pen(df):
-    """Test if the correct calculation is returned."""
-    tm.assert_series_equal(
-        df.geotech.in_situ.spt.get_total_pen(),
-        df["total_pen"],
-    )
-
-
-def test_get_seating_blows(df):
-    """Test if the correct calculation is returned."""
-    tm.assert_series_equal(
-        df.geotech.in_situ.spt.get_seating_drive(),
-        df["seating_drive"],
-    )
-
-
-def test_get_main_drive(df):
-    """Test if the correct calculation is returnd."""
-    tm.assert_series_equal(
-        df.geotech.in_situ.spt.get_main_drive(),
-        df["main_drive"],
-    )
+@pytest.mark.parametrize(
+    ("method", "column"),
+    [
+        ("geotech.in_situ.spt.get_total_pen", "total_pen"),
+        ("geotech.in_situ.spt.get_seating_drive", "seating_drive"),
+        ("geotech.in_situ.spt.get_main_drive", "main_drive"),
+    ],
+)
+def test_spt_methods(df, method, column):
+    """Test if the results of the method are equal with the contents of the column."""
+    tm.assert_series_equal(reduce(getattr, method.split("."), df)(), df[column])
