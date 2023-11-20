@@ -1,8 +1,12 @@
 """Subaccessor that contains SPT-related methods."""
 
+import warnings
+
 import pandas as pd
 
 from geotech_pandas.base import GeotechPandasBase
+
+PEN_REQD = 450
 
 
 class SPTDataFrameAccessor(GeotechPandasBase):
@@ -68,3 +72,39 @@ class SPTDataFrameAccessor(GeotechPandasBase):
             self._obj[["blows_2", "blows_3"]].sum(axis=1, min_count=1),
             name="main_drive",
         )
+
+    def get_n_value(self, refusal=50, limit=False) -> pd.Series:
+        """Return the N-value for each sample.
+
+        When the total penetration is less than 450 mm, the N-value is assumed as `refusal`. If
+        `limit` is set to `True`, then any N-value exceeding `refusal` will be limited to `refusal`.
+
+        .. warning::
+
+            If `limit` is `True` while `refusal` is set to :external:attr:`~pandas.NA`,
+            nothing will get limited.
+
+        Parameters
+        ----------
+        refusal: int
+            Equivalent N-value for samples with total penetration less than 450 mm.
+        limit: bool, default False
+            If `True`, limits the resulting N-value to `refusal`.
+
+        Returns
+        -------
+        :external:class:`~pandas.Series`
+            Series with N-values.
+        """
+        n_value = self.get_main_drive()
+        n_value.loc[self.get_total_pen() < PEN_REQD] = refusal
+        if limit:
+            if refusal is pd.NA:
+                warnings.warn(
+                    f"Limiting the N-value with {refusal} will not do anything. "
+                    f"If you want to limit the N-value, make sure that `refusal` is set correctly.",
+                    stacklevel=2,
+                    category=SyntaxWarning,
+                )
+            n_value.loc[n_value > refusal] = refusal
+        return pd.Series(n_value, name="n_value")
