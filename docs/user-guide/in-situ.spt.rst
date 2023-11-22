@@ -91,6 +91,15 @@ sample/layer.
     completely penetrated or not. Due to this, the main drive may not always correspond to the
     reported N-value.
 
+Getting the total drive
+-----------------------
+It is also possible to calculate the total number of blows in all three 150 mm intervals for each
+sample/layer through the :meth:`~pandas.DataFrame.geotech.in_situ.spt.get_total_drive` method.
+
+.. ipython:: python
+
+    df.geotech.in_situ.spt.get_total_drive()
+
 Getting the N-value
 -------------------
 The SPT is mainly done to calculate the N-value. This can easily be calculated using the
@@ -132,7 +141,7 @@ As you can see, the N-value in index ``4`` was limited from 72 to 50.
 .. warning::
 
     Setting ``limit`` to ``True`` while also setting ``refusal`` to :external:attr:`~pandas.NA` will
-    have a similar output to ``Out[12]`` above. That is to say, the refusal N-value will change as
+    have a similar output to ``Out[13]`` above. That is to say, the refusal N-value will change as
     expected, however, since it is essentially nothing, nothing will get limited as well.
 
     .. ipython:: python
