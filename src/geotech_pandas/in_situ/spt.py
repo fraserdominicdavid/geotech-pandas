@@ -29,7 +29,7 @@ class SPTDataFrameAccessor(GeotechPandasBase):
         )
 
     def get_seating_pen(self) -> pd.Series:
-        """Return the seating penetration from the first interval of each sample.
+        """Return the seating penetration from the first increment of each sample.
 
         Only full penetrations of 150 mm are returned, where partial penetrations are masked with
         `NA`.
@@ -44,7 +44,7 @@ class SPTDataFrameAccessor(GeotechPandasBase):
         return pd.Series(seating_pen, name="seating_pen")
 
     def get_main_pen(self) -> pd.Series:
-        """Return the total penetration in the second and third 150 mm interval for each sample.
+        """Return the total penetration in the second and third 150 mm increment for each sample.
 
         Returns
         -------
@@ -57,7 +57,7 @@ class SPTDataFrameAccessor(GeotechPandasBase):
         )
 
     def get_total_pen(self) -> pd.Series:
-        """Return the total penetration of each interval.
+        """Return the total penetration of each increment.
 
         Returns
         -------
@@ -70,7 +70,7 @@ class SPTDataFrameAccessor(GeotechPandasBase):
         )
 
     def get_seating_drive(self) -> pd.Series:
-        """Return the number of blows in the first 150 mm interval for each sample.
+        """Return the number of blows in the first 150 mm increment for each sample.
 
         Returns
         -------
@@ -79,7 +79,7 @@ class SPTDataFrameAccessor(GeotechPandasBase):
 
         Notes
         -----
-        The seating drive is defined as the first 150 mm interval driven by the sampler, therefore,
+        The seating drive is defined as the first 150 mm increment driven by the sampler, therefore,
         only the number of blows of samples with ``pen_1`` equal to 150 mm are taken.
         """
         seating_drive = self._obj["blows_1"].convert_dtypes()
@@ -87,9 +87,9 @@ class SPTDataFrameAccessor(GeotechPandasBase):
         return pd.Series(seating_drive, name="seating_drive")
 
     def get_main_drive(self) -> pd.Series:
-        """Return the total blows in the second and third 150 mm interval for each sample.
+        """Return the total blows in the second and third 150 mm increment for each sample.
 
-        The sum is still returned regardless of the completeness of each interval. Due to this, the
+        The sum is still returned regardless of the completeness of each increment. Due to this, the
         results may not correspond to the reported N-value.
 
         Returns
@@ -103,9 +103,9 @@ class SPTDataFrameAccessor(GeotechPandasBase):
         )
 
     def get_total_drive(self) -> pd.Series:
-        """Return the sum of the number of blows in all three 150 mm intervals of each sample.
+        """Return the sum of the number of blows in all three 150 mm increments of each sample.
 
-        The sum is still returned regardless of the completeness of each interval.
+        The sum is still returned regardless of the completeness of each increment.
 
         Returns
         -------
