@@ -19,16 +19,16 @@ Next, we create a :external:class:`~pandas.DataFrame` with the following data,
 
     df = pd.DataFrame(
         {
-            "point_id": ["BH-1", "BH-1", "BH-1", "BH-1", "BH-1", "BH-1", "BH-1"],
-            "bottom": [1.5, 3.0, 4.5, 6.0, 7.5, 9.0, 10.0],
-            "sample_type": ["spt", "spt", "spt", "spt", "spt", "spt", "spt"],
-            "sample_number": [1, 2, 3, 4, 5, 6, 7],
-            "blows_1": [10, 14, 18, 25, 33, 40, 50],
-            "blows_2": [12, 13, 20, 29, 35, 45, None],
-            "blows_3": [15, 13, 23, 27, 37, 50, None],
-            "pen_1": [150, 150, 150, 150, 150, 150, 10],
-            "pen_2": [150, 150, 150, 150, 150, 150, None],
-            "pen_3": [150, 150, 150, 150, 150, 50, None],
+            "point_id": ["BH-1", "BH-1", "BH-1", "BH-1", "BH-1", "BH-1", "BH-1", "BH-1"],
+            "bottom": [1.0, 1.5, 3.0, 4.5, 6.0, 7.5, 9.0, 10.0],
+            "sample_type": ["spt", "spt", "spt", "spt", "spt", "spt", "spt", "spt"],
+            "sample_number": [1, 2, 3, 4, 5, 6, 7, 8],
+            "blows_1": [0, 10, 14, 18, 25, 33, 40, 50],
+            "blows_2": [0, 12, 13, 20, 29, 35, 45, None],
+            "blows_3": [0, 15, 13, 23, 27, 37, 50, None],
+            "pen_1": [150, 150, 150, 150, 150, 150, 150, 10],
+            "pen_2": [150, 150, 150, 150, 150, 150, 150, None],
+            "pen_3": [150, 150, 150, 150, 150, 150, 50, None],
         }
     )
     df = df.convert_dtypes()
@@ -138,6 +138,25 @@ A sample is considered a refusal when any of the following is true:
 
     df.geotech.in_situ.spt.is_refusal()
 
+Checking for hammer weight samples
+----------------------------------
+It is also possible to check which samples are hammer weights through
+:meth:`~pandas.DataFrame.geotech.in_situ.spt.is_hammer_weight`. This method will return ``True`` for
+any sample that may be considered hammer weight.
+
+A sample is considered hammer weight when all of the following are true:
+
+ - a total of 450 mm or more was penetrated by the sampler through sinking; and
+ - each 150 mm increment has 0 blows recorded.
+
+This can be defined in a :external:class:`~pandas.DataFrame` similar to how the first sample is
+recorded. The blow counts and penetration measurements for all three increments are ``0`` and
+``150``, respectively.
+
+.. ipython:: python
+
+    df.geotech.in_situ.spt.is_hammer_weight()
+
 Getting the N-value
 -------------------
 The SPT is mainly done to calculate the N-value. This can easily be calculated using the
@@ -174,7 +193,7 @@ refusal N-value. To limit the N-values, just set the ``limit`` parameter to ``Tr
 
     df.geotech.in_situ.spt.get_n_value(limit=True)
 
-As you can see, the N-value at index ``3`` was limited from 56 to 50.
+As you can see, the N-value at index ``4`` was limited from 56 to 50.
 
 .. warning::
 
