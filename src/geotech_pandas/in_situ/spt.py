@@ -238,3 +238,64 @@ class SPTDataFrameAccessor(GeotechPandasBase):
                 )
             n_value.loc[n_value > refusal] = refusal
         return pd.Series(n_value, name="n_value")
+
+    def _format_blows(self, interval) -> pd.Series:
+        _blows = self._obj[f"blows_{interval}"]
+        _pen = self._obj[f"pen_{interval}"]
+
+        _m = _pen < PEN_INC_MIN
+
+        _blows = _blows.astype("string")
+        _pen = _pen.astype("string")
+
+        _blows[_m] = _blows[_m] + "/" + _pen[_m] + "mm"
+        _blows.name = f"_format_blows_{interval}"
+        return _blows
+
+    def _cat_blows(self) -> pd.Series:
+        _blows_1 = self._format_blows(1)
+        _blows_2 = self._format_blows(2)
+        _blows_3 = self._format_blows(3)
+
+        _blows = _blows_1.str.cat([_blows_2, _blows_3], sep=",", na_rep="-")
+        _blows = _blows.replace("-,-,-", pd.NA)
+        _blows.name = "_cat_blows"
+        return _blows
+
+    def _format_n_value(self) -> pd.Series:
+        _n_value = "N=" + self.get_main_drive().astype("string")
+
+        _m = self.get_main_pen() < 2 * PEN_INC_MIN
+        _n_value[_m] = _n_value[_m] + "/" + self.get_main_pen()[_m].astype("string") + "mm"
+
+        _m = self.get_total_pen() < PEN_INC_MIN
+        _n_value[_m] = "N="
+
+        _m = self.is_refusal()
+        _n_value[_m] = _n_value[_m] + "(R)"
+
+        _m = self.is_hammer_weight()
+        _n_value[_m] = _n_value[_m] + "(HW)"
+
+        _n_value.name = "_format_n_value"
+        return _n_value
+
+    def get_report(self) -> pd.Series:
+        """Return descriptive strings that show the blows per interval and N-value.
+
+        The format of the strings follows this convention,
+        ``{blows_1},{blows_2},{blows_3} N={n_value}{remark}``, where the remark can be defined as
+        follows:
+
+         - ``(HW)`` for hammer weight samples
+         - ``(R)`` for refusal samples
+
+        Returns
+        -------
+        :external:class:`~pandas.Series`
+            Series with simple SPT descriptions.
+        """
+        return pd.Series(
+            self._cat_blows().str.cat(self._format_n_value(), sep=" "),
+            name="spt_report",
+        ).convert_dtypes()
