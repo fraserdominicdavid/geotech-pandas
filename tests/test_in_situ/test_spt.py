@@ -29,19 +29,23 @@ def df() -> pd.DataFrame:
             "bottom": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
             "sample_type": ["spt", "spt", "uds", "spt", "spt", "spt", "spt"],
             "sample_number": [1, 1, 1, 1, 1, 1, 1],
-            "blows_1": [23, 0, None, 45, 43, 50, 49],
-            "blows_2": [25, 0, None, 47, 50, None, 47],
-            "blows_3": [24, 0, None, 50, None, None, 49],
+            "blows_1": [23, 0, None, 45, 43, 50, 23],
+            "blows_2": [25, 0, None, 47, 50, None, 29],
+            "blows_3": [24, 0, None, 50, None, None, 35],
             "pen_1": [150, 150, None, 150, 150, 50, 150],
             "pen_2": [150, 150, None, 150, 150, None, 150],
             "pen_3": [150, 150, None, 100, None, None, 150],
             "seating_pen": [150, 150, None, 150, 150, None, 150],
             "main_pen": [300, 300, None, 250, 150, None, 300],
             "total_pen": [450, 450, None, 400, 300, 50, 450],
-            "seating_drive": [23, 0, None, 45, 43, None, 49],
-            "main_drive": [49, 0, None, 97, 50, None, 96],
-            "total_drive": [72, 0, None, 142, 93, 50, 145],
-            "n_value_1": [49, 0, None, 50, 50, 50, 96],
+            "seating_drive": [23, 0, None, 45, 43, None, 23],
+            "main_drive": [49, 0, None, 97, 50, None, 64],
+            "total_drive": [72, 0, None, 142, 93, 50, 87],
+            "_any_blows_max_inc": [False, False, None, True, True, True, False],
+            "_any_blows_max_total": [False, False, None, True, False, False, False],
+            "_any_pen_partial": [False, False, None, True, True, True, False],
+            "is_refusal": [False, False, None, True, True, True, False],
+            "n_value_1": [49, 0, None, 50, 50, 50, 64],
             "n_value_2": [49, 0, None, 50, 50, 50, 50],
         },
     ).convert_dtypes()
@@ -61,6 +65,10 @@ def test_accessor():
         ("geotech.in_situ.spt.get_seating_drive", "seating_drive", None, None),
         ("geotech.in_situ.spt.get_main_drive", "main_drive", None, None),
         ("geotech.in_situ.spt.get_total_drive", "total_drive", None, None),
+        ("geotech.in_situ.spt._any_blows_max_inc", "_any_blows_max_inc", None, None),
+        ("geotech.in_situ.spt._any_blows_max_total", "_any_blows_max_total", None, None),
+        ("geotech.in_situ.spt._any_pen_partial", "_any_pen_partial", None, None),
+        ("geotech.in_situ.spt.is_refusal", "is_refusal", None, None),
         ("geotech.in_situ.spt.get_n_value", "n_value_1", "n_value", None),
         ("geotech.in_situ.spt.get_n_value", "n_value_2", "n_value", {"limit": True}),
     ],
@@ -91,3 +99,12 @@ def test_get_n_value_warning(df):
     """Test if a warning is triggered when `refusal` is set to `pandas.NA` and `limit` is `True."""
     with pytest.warns(SyntaxWarning):
         df.geotech.in_situ.spt.get_n_value(refusal=pd.NA, limit=True)
+
+
+def test_any_with_na_error(df):
+    """Test if a `ValueError` is raised when passing on arguments with differnt shapes."""
+    values = df[["blows_1", "blows_2", "blows_3"]]
+    max_value = 100
+    mask = df[["blows_2", "blows_3"]] >= max_value
+    with pytest.raises(ValueError, match="`values` and `mask` must have the same shape."):
+        df.geotech.in_situ.spt._any_with_na_rows(values, mask)
