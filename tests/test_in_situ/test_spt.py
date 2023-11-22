@@ -18,9 +18,9 @@ def df() -> pd.DataFrame:
     - normal: normal spt result
     - hw: hammer weight spt result
     - uds: uds sample, no spt processing should be done
-    - ref_1: refusal with the partial penetration on the last interval
-    - ref_2: refusal with the partial penetration on the second interval
-    - ref_3: refusal with the partial penetration on the first interval
+    - ref_1: refusal with the partial penetration on the last increment
+    - ref_2: refusal with the partial penetration on the second increment
+    - ref_3: refusal with the partial penetration on the first increment
     - high: high N-value to test if `get_n_value(limit=True)` works as expected
     """
     return pd.DataFrame(
