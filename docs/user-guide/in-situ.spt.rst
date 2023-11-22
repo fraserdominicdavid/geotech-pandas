@@ -208,3 +208,12 @@ As you can see, the N-value at index ``4`` was limited from 56 to 50.
     
     :mod:`geotech-pandas` will warn you if it detects you using such settings, so don't worry if you
     forget about this warning.
+
+Getting a simple SPT report
+---------------------------
+A simple descriptive report of the blow counts and the N-value can be obtained through the
+:meth:`~pandas.DataFrame.geotech.in_situ.spt.get_report` method,
+
+.. ipython:: python
+
+    df.geotech.in_situ.spt.get_report()
