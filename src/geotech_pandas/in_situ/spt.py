@@ -8,6 +8,8 @@ from geotech_pandas.base import GeotechPandasBase
 
 PEN_INC_MIN = 150
 PEN_TOTAL_MIN = 450
+BLOWS_INC_MAX = 50
+BLOWS_TOTAL_MAX = 100
 
 
 class SPTDataFrameAccessor(GeotechPandasBase):
@@ -117,10 +119,75 @@ class SPTDataFrameAccessor(GeotechPandasBase):
             name="total_drive",
         )
 
+    def _any_with_na_rows(self, values: pd.DataFrame, mask: pd.DataFrame) -> pd.Series:
+        """Return whether any element is `True` in `mask` while preserving `NA` from `values`.
+
+        `NA` will only be preserved if all elements in a row are `NA`.
+
+        Parameters
+        ----------
+        values: DataFrame
+            Values to check for `NA` rows.
+        mask: DataFrame
+            `values` mask where the `NA` rows are applied.
+
+        Returns
+        -------
+        :external:class:`~pandas.Series`
+            Series whether any element is `True` in `mask`, with preserved `NA` rows.
+        """
+        if values.shape != mask.shape:
+            raise ValueError("`values` and `mask` must have the same shape.")
+
+        _na = values.isna().all(axis=1)
+        _values = mask.any(axis=1)
+        _values[_na] = pd.NA
+        return _values
+
+    def _any_blows_max_inc(self) -> pd.Series:
+        _values = self._obj[["blows_1", "blows_2", "blows_3"]]
+        return pd.Series(
+            self._any_with_na_rows(_values, (_values >= BLOWS_INC_MAX)),
+            name="_any_blows_max_inc",
+        )
+
+    def _any_blows_max_total(self) -> pd.Series:
+        return pd.Series(
+            self.get_total_drive() >= BLOWS_TOTAL_MAX,
+            name="_any_blows_max_total",
+        )
+
+    def _any_pen_partial(self) -> pd.Series:
+        _values = self._obj[["pen_1", "pen_2", "pen_3"]]
+        return pd.Series(
+            self._any_with_na_rows(_values, (_values < PEN_INC_MIN) | (_values.isna())),
+            name="_any_pen_partial",
+        )
+
+    def is_refusal(self) -> pd.Series:
+        """Return whether or not each sample is a refusal.
+
+        A sample is considered a refusal when any of the following is true:
+
+         - a total of 50 blows or more have been applied during any of the three 150 mm increments;
+         - a total of 100 blows or more have been applied; and
+         - partial penetration, which signifies that the sampler can no longer penetrate through the
+           strata, is present in any of the increments.
+
+        Returns
+        -------
+        :external:class:`~pandas.Series`
+            Series of booleans indicating whether or not each sample is refused.
+        """
+        return pd.Series(
+            self._any_blows_max_inc() | self._any_blows_max_total() | self._any_pen_partial(),
+            name="is_refusal",
+        )
+
     def get_n_value(self, refusal=50, limit=False) -> pd.Series:
         """Return the N-value for each sample.
 
-        When the total penetration is less than 450 mm, the N-value is assumed as `refusal`. If
+        When a sample is a refusal, then the N-value is assumed as the value set in `refusal`. If
         `limit` is set to `True`, then any N-value exceeding `refusal` will be limited to `refusal`.
 
         .. warning::
@@ -130,7 +197,7 @@ class SPTDataFrameAccessor(GeotechPandasBase):
 
         Parameters
         ----------
-        refusal: int
+        refusal: int, default 50
             Equivalent N-value for samples with total penetration less than 450 mm.
         limit: bool, default False
             If `True`, limits the resulting N-value to `refusal`.
@@ -141,7 +208,7 @@ class SPTDataFrameAccessor(GeotechPandasBase):
             Series with N-values.
         """
         n_value = self.get_main_drive()
-        n_value.loc[self.get_total_pen() < PEN_TOTAL_MIN] = refusal
+        n_value.loc[self.is_refusal()] = refusal
         if limit:
             if refusal is pd.NA:
                 warnings.warn(

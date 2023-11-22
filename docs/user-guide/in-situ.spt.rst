@@ -24,7 +24,7 @@ Next, we create a :external:class:`~pandas.DataFrame` with the following data,
             "sample_type": ["spt", "spt", "spt", "spt", "spt", "spt", "spt"],
             "sample_number": [1, 2, 3, 4, 5, 6, 7],
             "blows_1": [10, 14, 18, 25, 33, 40, 50],
-            "blows_2": [12, 13, 20, 20, 35, 45, None],
+            "blows_2": [12, 13, 20, 29, 35, 45, None],
             "blows_3": [15, 13, 23, 27, 37, 50, None],
             "pen_1": [150, 150, 150, 150, 150, 150, 10],
             "pen_2": [150, 150, 150, 150, 150, 150, None],
@@ -121,6 +121,23 @@ sample/layer through the :meth:`~pandas.DataFrame.geotech.in_situ.spt.get_total_
 
     df.geotech.in_situ.spt.get_total_drive()
 
+Checking for refusal samples
+----------------------------
+It is possible to check for which samples refused penetration through
+:meth:`~pandas.DataFrame.geotech.in_situ.spt.is_refusal`. This method will return ``True`` for any
+sample that may be considered a refusal.
+
+A sample is considered a refusal when any of the following is true:
+
+ - a total of 50 blows or more have been applied during any of the three 150 mm increments;
+ - a total of 100 blows or more have been applied; and
+ - partial penetration, which signifies that the sampler can no longer penetrate through the
+   strata, is present in any of the increments.
+
+.. ipython:: python
+
+    df.geotech.in_situ.spt.is_refusal()
+
 Getting the N-value
 -------------------
 The SPT is mainly done to calculate the N-value. This can easily be calculated using the
@@ -130,13 +147,13 @@ The SPT is mainly done to calculate the N-value. This can easily be calculated u
 
     df.geotech.in_situ.spt.get_n_value()
 
-As you can see, the N-value for the last two samples are set to 50, but why? This is because the
-total penetration in these samples are less than 450 mm. This means that these samples satisfy the
-refusal criteria and are assumed to have an N-value of 50.
+As you can see, the N-values for the last three samples are set to 50, but why? This is because
+these samples are refusals and are assumed to have an N-value of 50; however, this behavior can be
+customized.
 
 Setting the assumed refusal N-value
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-The refusal N-value can easily be changed by setting the ``refusal`` parameter like so,
+The assumed refusal N-value can easily be changed by setting the ``refusal`` parameter like so,
 
 .. ipython:: python
 
@@ -157,12 +174,12 @@ refusal N-value. To limit the N-values, just set the ``limit`` parameter to ``Tr
 
     df.geotech.in_situ.spt.get_n_value(limit=True)
 
-As you can see, the N-value in index ``4`` was limited from 72 to 50.
+As you can see, the N-value at index ``3`` was limited from 56 to 50.
 
 .. warning::
 
     Setting ``limit`` to ``True`` while also setting ``refusal`` to :external:attr:`~pandas.NA` will
-    have a similar output to ``Out[15]`` above. That is to say, the refusal N-value will change as
+    have a similar output to ``Out[16]`` above. That is to say, the refusal N-value will change as
     expected, however, since it is essentially nothing, nothing will get limited as well.
 
     .. ipython:: python
