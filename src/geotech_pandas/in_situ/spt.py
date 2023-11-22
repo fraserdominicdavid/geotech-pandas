@@ -27,6 +27,19 @@ class SPTDataFrameAccessor(GeotechPandasBase):
             ]
         )
 
+    def get_main_pen(self) -> pd.Series:
+        """Return the total penetration in the second and third 150 mm interval for each sample.
+
+        Returns
+        -------
+        :external:class:`~pandas.Series`
+            Series with main penetration values.
+        """
+        return pd.Series(
+            self._obj[["pen_2", "pen_3"]].sum(axis=1, min_count=1),
+            name="main_pen",
+        )
+
     def get_total_pen(self) -> pd.Series:
         """Return the total penetration of each interval.
 

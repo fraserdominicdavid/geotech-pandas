@@ -35,6 +35,7 @@ def df() -> pd.DataFrame:
             "pen_1": [150, 150, None, 150, 150, 50, 150],
             "pen_2": [150, 150, None, 150, 150, None, 150],
             "pen_3": [150, 150, None, 100, None, None, 150],
+            "main_pen": [300, 300, None, 250, 150, None, 300],
             "total_pen": [450, 450, None, 400, 300, 50, 450],
             "seating_drive": [23, 0, None, 45, 43, None, 49],
             "main_drive": [49, 0, None, 97, 50, None, 96],
@@ -53,6 +54,7 @@ def test_accessor():
 @pytest.mark.parametrize(
     ("method", "column", "rename", "kwargs"),
     [
+        ("geotech.in_situ.spt.get_main_pen", "main_pen", None, None),
         ("geotech.in_situ.spt.get_total_pen", "total_pen", None, None),
         ("geotech.in_situ.spt.get_seating_drive", "seating_drive", None, None),
         ("geotech.in_situ.spt.get_main_drive", "main_drive", None, None),
