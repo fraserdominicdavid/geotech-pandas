@@ -50,7 +50,7 @@ Next, we create a :external:class:`~pandas.DataFrame` with the following data,
 Getting the seating penetration
 -------------------------------
 The :meth:`~pandas.DataFrame.geotech.in_situ.spt.get_seating_pen` method returns a
-:external:class:`~pandas.Series` of penetration measurements in the first interval, where the
+:external:class:`~pandas.Series` of penetration measurements in the first increment, where the
 measurements are exactly 150 mm. Measurements that do not meet the requirements are
 masked with :external:attr:`~pandas.NA`.
 
@@ -62,7 +62,7 @@ Getting the main penetration
 ----------------------------
 The :meth:`~pandas.DataFrame.geotech.in_situ.spt.get_main_pen` method returns a
 :external:class:`~pandas.Series` with the sum of the penetration in the second and third 150 mm
-interval for each sample/layer.
+increment for each sample/layer.
 
 .. ipython:: python
 
@@ -71,7 +71,7 @@ interval for each sample/layer.
 Getting the total penetration
 -----------------------------
 One of the methods under :class:`~pandas.DataFrame.geotech.in_situ.spt` is the ability to get the
-total penetration of each SPT interval. The
+total penetration of each SPT increment. The
 :meth:`~pandas.DataFrame.geotech.in_situ.spt.get_total_pen` method returns a
 :external:class:`~pandas.Series` with the sum of the penetration per inteval in each sample/layer.
 
@@ -82,7 +82,7 @@ total penetration of each SPT interval. The
 Getting the seating drive
 -------------------------
 It is also possible to get the seating drive, which is, by definition, the number of blows required
-to penetrate the first 150 mm interval. The
+to penetrate the first 150 mm increment. The
 :meth:`~pandas.DataFrame.geotech.in_situ.spt.get_seating_drive` method returns such a result for
 each sample/layer.
 
@@ -92,14 +92,14 @@ each sample/layer.
 
 .. note::
 
-    Notice that the last value is :external:attr:`~pandas.NA`, this is because the first interval
+    Notice that the last value is :external:attr:`~pandas.NA`, this is because the first increment
     didn't reach the full 150 mm requirement. Such cases are usually considered as invalid tests or
     hint to the start of a hard layer of soil or rock.
 
 Getting the main drive
 ----------------------
-The main drive, which is the total number of blows in the second and third 150 mm interval, can also
-be returned by the :meth:`~pandas.DataFrame.geotech.in_situ.spt.get_main_drive` method for each
+The main drive, which is the total number of blows in the second and third 150 mm increment, can
+also be returned by the :meth:`~pandas.DataFrame.geotech.in_situ.spt.get_main_drive` method for each
 sample/layer.
 
 .. ipython:: python
@@ -108,13 +108,13 @@ sample/layer.
 
 .. note::
 
-    This method simply sums up the second and third interval regardless if the intervals are
+    This method simply sums up the second and third increment regardless if the increments are
     completely penetrated or not. Due to this, the main drive may not always correspond to the
     reported N-value.
 
 Getting the total drive
 -----------------------
-It is also possible to calculate the total number of blows in all three 150 mm intervals for each
+It is also possible to calculate the total number of blows in all three 150 mm increments for each
 sample/layer through the :meth:`~pandas.DataFrame.geotech.in_situ.spt.get_total_drive` method.
 
 .. ipython:: python
