@@ -73,6 +73,21 @@ class SPTDataFrameAccessor(GeotechPandasBase):
             name="main_drive",
         )
 
+    def get_total_drive(self) -> pd.Series:
+        """Return the sum of the number of blows in all three 150 mm intervals of each sample.
+
+        The sum is still returned regardless of the completeness of each interval.
+
+        Returns
+        -------
+        :external:class:`~pandas.Series`
+            Series with total drive values.
+        """
+        return pd.Series(
+            self._obj[["blows_1", "blows_2", "blows_3"]].sum(axis=1, min_count=1),
+            name="total_drive",
+        )
+
     def get_n_value(self, refusal=50, limit=False) -> pd.Series:
         """Return the N-value for each sample.
 
