@@ -47,6 +47,17 @@ Next, we create a :external:class:`~pandas.DataFrame` with the following data,
 
         df.dtypes
 
+Getting the seating penetration
+-------------------------------
+The :meth:`~pandas.DataFrame.geotech.in_situ.spt.get_seating_pen` method returns a
+:external:class:`~pandas.Series` of penetration measurements in the first interval, where the
+measurements are exactly 150 mm. Measurements that do not meet the requirements are
+masked with :external:attr:`~pandas.NA`.
+
+.. ipython:: python
+
+    df.geotech.in_situ.spt.get_seating_pen()
+
 Getting the main penetration
 ----------------------------
 The :meth:`~pandas.DataFrame.geotech.in_situ.spt.get_main_pen` method returns a
@@ -151,7 +162,7 @@ As you can see, the N-value in index ``4`` was limited from 72 to 50.
 .. warning::
 
     Setting ``limit`` to ``True`` while also setting ``refusal`` to :external:attr:`~pandas.NA` will
-    have a similar output to ``Out[14]`` above. That is to say, the refusal N-value will change as
+    have a similar output to ``Out[15]`` above. That is to say, the refusal N-value will change as
     expected, however, since it is essentially nothing, nothing will get limited as well.
 
     .. ipython:: python
