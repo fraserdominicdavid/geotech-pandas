@@ -184,6 +184,25 @@ class SPTDataFrameAccessor(GeotechPandasBase):
             name="is_refusal",
         )
 
+    def is_hammer_weight(self) -> pd.Series:
+        """Return whether or not each sample is hammer weight.
+
+        A sample is considered hammer weight when all of the following are true:
+
+         - a total of 450 mm or more was penetrated by the sampler through sinking; and
+         - each 150 mm increment has 0 blows recorded.
+
+        Returns
+        -------
+        :external:class:`~pandas.Series`
+            Series of booleans indicating whether or not each sample is hammer weight.
+        """
+        return pd.Series(
+            (self._obj[["blows_1", "blows_2", "blows_3"]].eq(0)).all(axis=1)
+            & (self.get_total_pen() >= PEN_TOTAL_MIN),
+            name="is_hammer_weight",
+        )
+
     def get_n_value(self, refusal=50, limit=False) -> pd.Series:
         """Return the N-value for each sample.
 
