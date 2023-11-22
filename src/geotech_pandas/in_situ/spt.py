@@ -6,7 +6,8 @@ import pandas as pd
 
 from geotech_pandas.base import GeotechPandasBase
 
-PEN_REQD = 450
+PEN_INC_MIN = 150
+PEN_TOTAL_MIN = 450
 
 
 class SPTDataFrameAccessor(GeotechPandasBase):
@@ -26,6 +27,21 @@ class SPTDataFrameAccessor(GeotechPandasBase):
                 "pen_3",
             ]
         )
+
+    def get_seating_pen(self) -> pd.Series:
+        """Return the seating penetration from the first interval of each sample.
+
+        Only full penetrations of 150 mm are returned, where partial penetrations are masked with
+        `NA`.
+
+        Returns
+        -------
+        :external:class:`~pandas.Series`
+            Series with seating penetration values.
+        """
+        seating_pen = self._obj["pen_1"].convert_dtypes()
+        seating_pen[seating_pen.ne(PEN_INC_MIN)] = pd.NA
+        return pd.Series(seating_pen, name="seating_pen")
 
     def get_main_pen(self) -> pd.Series:
         """Return the total penetration in the second and third 150 mm interval for each sample.
@@ -67,7 +83,7 @@ class SPTDataFrameAccessor(GeotechPandasBase):
         only the number of blows of samples with ``pen_1`` equal to 150 mm are taken.
         """
         seating_drive = self._obj["blows_1"].convert_dtypes()
-        seating_drive.loc[self._obj["pen_1"].ne(150)] = pd.NA
+        seating_drive[self.get_seating_pen().isna()] = pd.NA
         return pd.Series(seating_drive, name="seating_drive")
 
     def get_main_drive(self) -> pd.Series:
@@ -125,7 +141,7 @@ class SPTDataFrameAccessor(GeotechPandasBase):
             Series with N-values.
         """
         n_value = self.get_main_drive()
-        n_value.loc[self.get_total_pen() < PEN_REQD] = refusal
+        n_value.loc[self.get_total_pen() < PEN_TOTAL_MIN] = refusal
         if limit:
             if refusal is pd.NA:
                 warnings.warn(
