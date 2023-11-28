@@ -66,6 +66,12 @@ Guides
 ------
 
 .. toctree::
+    :caption: Getting Started
+    :maxdepth: 1
+
+    installation
+
+.. toctree::
     :caption: Usage and Subaccessors
     :maxdepth: 2
 
