@@ -57,4 +57,5 @@ html_static_path = ["_static"]
 html_title = project
 html_theme_options = {
     "navbar_align": "left",
+    "github_url": "https://github.com/fraserdominicdavid/geotech-pandas",
 }
