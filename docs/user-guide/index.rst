@@ -67,8 +67,9 @@ Guides
 
 .. toctree::
     :caption: Getting Started
-    :maxdepth: 1
+    :maxdepth: 2
 
+    introduction
     installation
 
 .. toctree::
