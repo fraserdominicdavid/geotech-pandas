@@ -3,11 +3,11 @@ Introduction
 ============
 Geotechnical engineering encompasses the analysis, design, and construction of foundations,
 earthworks, and retaining structures. It plays a crucial role in ensuring the stability and safety
-of civil infrastructure projects. The :mod:`geotech-pandas` package is a :external:mod:`pandas`
-extension that provides a suite of functions specifically tailored for geotechnical engineering
-calculations, seamlessly integrating with the powerful data manipulation and analysis capabilities
-of :external:mod:`pandas`. This open-source extension empowers geotechnical engineers to streamline
-their workflow, enhance data analysis, and improve productivity.
+of civil infrastructure projects. The geotech-pandas package is a `Pandas
+<https://pandas.pydata.org/>`__ extension that provides a suite of functions specifically tailored
+for geotechnical engineering calculations, seamlessly integrating with the powerful data
+manipulation and analysis capabilities of Pandas. This open-source extension empowers geotechnical
+engineers to streamline their workflow, enhance data analysis, and improve productivity.
 
 .. note::
 
@@ -24,8 +24,8 @@ Key features and benefits
 
 - **Enhanced data analysis**
   
-  Leverage the comprehensive functionality of :external:mod:`pandas` to analyze and visualize
-  geotechnical data effectively, enabling data-driven insights and decision-making.
+  Leverage the comprehensive functionality of Pandas to analyze and visualize geotechnical data
+  effectively, enabling data-driven insights and decision-making.
 
 - **Improved productivity**
   

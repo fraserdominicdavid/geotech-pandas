@@ -11,8 +11,8 @@ class PointDataFrameAccessor(GeotechPandasBase):
 
     The :external:class:`~pandas.DataFrame` should have ``point_id`` and ``bottom`` columns, where
     ``point_id`` would signify what group the ``bottom`` depths and other related data belong to.
-    These groups can be accessed as a :external:class:`~pandas.api.typing.DataFrameGroupBy` object
-    through the :attr:`~DataFrame.geotech.point.groups` property.
+    These groups can be accessed as a ``pandas.api.typing.DataFrameGroupBy`` object through the
+    :attr:`~DataFrame.geotech.point.groups` property.
     """
 
     @property
@@ -29,17 +29,16 @@ class PointDataFrameAccessor(GeotechPandasBase):
     @property
     def groups(self) -> DataFrameGroupBy:
         """
-        Return a :external:class:`~pandas.api.typing.DataFrameGroupBy` object based on the
-        ``point_id`` column.
+        Return a ``pandas.api.typing.DataFrameGroupBy`` object based on the ``point_id`` column.
 
         This can be used as a shortcut for grouping the :external:class:`~pandas.DataFrame` by the
         ``point_id``.
 
         Returns
         -------
-        :external:class:`~pandas.api.typing.DataFrameGroupBy`
+        ``pandas.api.typing.DataFrameGroupBy``
             GroupBy object that contains the grouped DataFrame objects.
-        """  # noqa: D205
+        """
         return self._obj.groupby("point_id")
 
     def get_group(self, point_id: str):

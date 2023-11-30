@@ -2,4 +2,4 @@
 License
 =======
 
-.. literalinclude:: ../../.github/LICENSE.md
+.. literalinclude:: ../../LICENSE.md

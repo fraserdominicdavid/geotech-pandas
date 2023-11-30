@@ -1,4 +1,4 @@
-"""Common base class used throughout the :mod:`geotech-pandas` package."""
+"""Common base class used throughout the geotech-pandas package."""
 
 from typing import Optional
 

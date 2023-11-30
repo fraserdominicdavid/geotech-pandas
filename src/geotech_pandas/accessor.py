@@ -1,4 +1,4 @@
-"""General :external:class:`~pandas.DataFrame` accessor for the :mod:`geotech-pandas` package."""
+"""General :external:class:`~pandas.DataFrame` accessor for the geotech-pandas package."""
 
 import pandas as pd
 
@@ -12,7 +12,7 @@ from geotech_pandas.utils import SubAccessor
 @pd.api.extensions.register_dataframe_accessor("geotech")
 class GeotechDataFrameAccessor(GeotechPandasBase):
     """:external:class:`~pandas.DataFrame` accessor that provides namespaces to the various
-    subaccessors in :mod:`geotech-pandas`.
+    subaccessors in geotech-pandas.
     """  # noqa: D205
 
     point = SubAccessor(PointDataFrameAccessor)

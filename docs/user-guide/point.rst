@@ -1,7 +1,7 @@
 =================
 Point Subaccessor
 =================
-In :mod:`geotech-pandas`, a **point** represents the point in which a borehole or a soil profile is
+In geotech-pandas, a **point** represents the point in which a borehole or a soil profile is
 located.
 
 In this guide, the basics of the :class:`~pandas.DataFrame.geotech.point` subaccessor methods are
@@ -76,6 +76,7 @@ On the other hand, getting a copy of **BH-2**,
     
     As you can see, the :external:class:`~pandas.DataFrame` copy in ``bh2`` was modified, but not
     the new copy from the source :external:class:`~pandas.DataFrame`. This is because of the
-    `Copy-on-Write optimizations <https://pandas.pydata.org/docs/user_guide/copy_on_write.html>`__ 
-    in :external:mod:`pandas` which prevents modifications on copies to reflect on the source. Keep
-    this in mind when modifying copies as it may not be the behavior you want.
+    Copy-on-Write optimizations in :external:mod:`pandas` which prevents modifications on copies to
+    reflect on the source. Keep this in mind when modifying copies as it may not be the behavior you
+    want. For more information, see `Copy-on-Write (CoW)
+    <https://pandas.pydata.org/docs/user_guide/copy_on_write.html>`__.
