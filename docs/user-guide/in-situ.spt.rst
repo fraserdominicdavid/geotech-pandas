@@ -4,8 +4,8 @@ SPT Subaccessor
 In this guide, the basics of the :class:`~pandas.DataFrame.geotech.in_situ.spt` subaccessor methods
 are presented. The :class:`~pandas.DataFrame.geotech.in_situ.spt` subaccessor is a collection of
 methods related to standard penetration test (SPT) calculations for each sample of each point in the
-:external:class:`~pandas.DataFrame`. To learn more about the columns used by this subaccessor, head
-to the :ref:`SPT column reference <columns_spt>`.
+:external:class:`~pandas.DataFrame`. For information about the columns used by this
+subaccessor, see :ref:`columns_spt`.
 
 First, we import the necessary libraries,
 
@@ -130,10 +130,10 @@ sample that may be considered a refusal.
 
 A sample is considered a refusal when any of the following is true:
 
- - a total of 50 blows or more have been applied during any of the three 150 mm increments;
- - a total of 100 blows or more have been applied; and
- - partial penetration, which signifies that the sampler can no longer penetrate through the
-   strata, is present in any of the increments.
+- a total of 50 blows or more have been applied during any of the three 150 mm increments;
+- a total of 100 blows or more have been applied; and
+- partial penetration, which signifies that the sampler can no longer penetrate through the
+  strata, is present in any of the increments.
 
 .. ipython:: python
 
@@ -147,8 +147,8 @@ any sample that may be considered hammer weight.
 
 A sample is considered hammer weight when all of the following are true:
 
- - a total of 450 mm or more was penetrated by the sampler through sinking; and
- - each 150 mm increment has 0 blows recorded.
+- a total of 450 mm or more was penetrated by the sampler through sinking; and
+- each 150 mm increment has 0 blows recorded.
 
 This can be defined in a :external:class:`~pandas.DataFrame` similar to how the first sample is
 recorded. The blow counts and penetration measurements for all three increments are ``0`` and
@@ -207,8 +207,8 @@ As you can see, the N-value at index ``4`` was limited from 56 to 50.
 
         df.geotech.in_situ.spt.get_n_value(refusal=pd.NA, limit=True)
     
-    :mod:`geotech-pandas` will warn you if it detects you using such settings, so don't worry if you
-    forget about this warning.
+    Don't worry if you forget about this warning, since geotech-pandas will warn you when it detects
+    you using such settings.
 
 Getting a simple SPT report
 ---------------------------

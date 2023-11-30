@@ -8,14 +8,10 @@ installs. The best practice is to:
 #. record dependency versions using your preferred package installer.
 
 For this guide, we will be using `Poetry <https://python-poetry.org/>`__ for its dependency resolver
-and isolation capabilites that agree well with the said best practices.
+and isolation capabilites that agree well with the said best practices. For more information on
+how to get started with Poetry, see `Basic usage <https://python-poetry.org/docs/basic-usage/>`__.
 
-To get your project started with Poetry, head over to
-`Poetry's Basic Usage Guide <https://python-poetry.org/docs/basic-usage/>`__.
-
-Once you're done setting up, add and install this package as a dependency of your project using,
-
-::
+Once you're done setting up, add and install this package as a dependency of your project using::
 
     poetry add geotech-pandas
 

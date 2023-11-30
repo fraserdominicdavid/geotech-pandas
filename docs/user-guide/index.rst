@@ -2,26 +2,26 @@
 User Guide
 ==========
 
-The user guide covers all of :mod:`geotech-pandas` by topic area. Each of the subsections
-introduces a topic, and discusses how :mod:`geotech-pandas` approaches the problem, with many
+The user guide covers all of geotech-pandas by topic area. Each of the subsections introduces a
+topic, and discusses how geotech-pandas approaches the problem, with many
 examples throughout.
 
-The methods in :mod:`geotech-pandas` are designed to work on multiple points at the same time which
+The methods in geotech-pandas are designed to work on multiple points at the same time which
 effectively reduces the time required for routine tasks. However, most guides are demonstrated with
 :external:class:`~pandas.DataFrame` objects with only one point for brevity.
 
 .. note::
     
-    In :mod:`geotech-pandas`, a **point** represents the point in which a borehole or a soil profile
-    is located. For now, :mod:`geotech-pandas` is location-unaware so it is not required to supply
-    geographic data in :external:class:`~pandas.DataFrame` objects. This may change in the future to
-    support methods for plotting site maps and similar tasks.
+    In geotech-pandas, a **point** represents the point in which a borehole or a soil profile is
+    located. For now, geotech-pandas is location-unaware so it is not required to supply geographic
+    data in :external:class:`~pandas.DataFrame` objects. This may change in the future to support
+    methods for plotting site maps and similar tasks.
 
 Further information on any specific method can be obtained in the :doc:`../api-reference/index`.
 
-If you're new to `pandas <https://pandas.pydata.org/>`__ in general, it is recommended to make
+If you're new to `Pandas <https://pandas.pydata.org/>`__ in general, it is recommended to make
 yourself familiar with it first by heading to the
-`pandas documentation <https://pandas.pydata.org/docs/>`__.
+`Pandas documentation <https://pandas.pydata.org/docs/>`__.
 
 How to read these guides
 ------------------------

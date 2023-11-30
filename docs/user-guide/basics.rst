@@ -1,9 +1,9 @@
 ======
 Basics
 ======
-:mod:`geotech-pandas` is mainly accessed from the :class:`~pandas.DataFrame.geotech` accessor on
-:external:class:`~pandas.DataFrame` objects. When accessed, :mod:`geotech-pandas` validates the
-current :external:class:`~pandas.DataFrame` for several minimum requirements. These requirements are
+geotech-pandas is mainly accessed from the :class:`~pandas.DataFrame.geotech` accessor on
+:external:class:`~pandas.DataFrame` objects. When accessed, geotech-pandas validates the current
+:external:class:`~pandas.DataFrame` for several minimum requirements. These requirements are
 discussed in the following sections.
 
 Customarily, we import the necessary libraries before we begin the guide,
@@ -17,10 +17,9 @@ Minimum requirements
 --------------------
 Columns
 ^^^^^^^
-The minimum required columns for :mod:`geotech-pandas` are the ``point_id`` and ``bottom`` columns.
-The ``point_id`` represents the ID or the group where each layer belongs to. Whereas, the ``bottom``
-column represents the bottom depths of these layers. More information about the types of columns in
-:mod:`geotech-pandas` can be found :ref:`here <columns>`.
+The minimum required columns for geotech-pandas are the ``point_id`` and ``bottom`` columns. The
+``point_id`` represents the ID or the group where each layer belongs to. Whereas, the ``bottom``
+column represents the bottom depths of these layers. For more information, see :ref:`columns`.
 
 If you try to access :class:`~pandas.DataFrame.geotech` with the following
 :external:class:`~pandas.DataFrame`,
@@ -40,7 +39,7 @@ is missing the ``bottom`` column.
 
 Arrangement
 ^^^^^^^^^^^
-:mod:`geotech-pandas` requires that the ``bottom`` depth values for each ``point_id`` are
+Another requirement is that the ``bottom`` depth values for each ``point_id`` should be
 monotonically increasing, as most methods assume that each layer comes right after the other in each
 point.
 
@@ -63,7 +62,7 @@ arrangement.
 
 Uniqueness
 ^^^^^^^^^^
-:mod:`geotech-pandas` requires ``point_id`` and ``bottom`` pairs to be unique, as most methods
+It is also required that the ``point_id`` and ``bottom`` pairs to be unique, as most methods
 assume that each layer is unique for each point.
 
 If you try to access :class:`~pandas.DataFrame.geotech` with the following
@@ -89,7 +88,7 @@ validation methods that are called automatically upon initiation of the accessor
 preceding sections.
 
 The :class:`~pandas.DataFrame.geotech` accessor serves as a parent namespace to the various scopes
-provided in :mod:`geotech-pandas`. These scopes are accessors that can be accessed from
+provided in geotech-pandas. These scopes are accessors that can be accessed from
 :class:`~pandas.DataFrame.geotech` like so,
 
 .. ipython:: python
@@ -104,4 +103,4 @@ provided in :mod:`geotech-pandas`. These scopes are accessors that can be access
 
 Here, we can access the :class:`~pandas.DataFrame.geotech.point` accessor where point-related
 methods can be accessed. Suceeding guides demonstrate the usage of each subaccessor in
-:mod:`geotech-pandas`.
+geotech-pandas.
