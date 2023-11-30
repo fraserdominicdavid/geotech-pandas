@@ -12,6 +12,7 @@ geotech-pandas documentation
    
    User Guide <user-guide/index>
    API Reference <api-reference/index>
+   Contribution <contribution/index>
 
 **Version**: |version|
 
@@ -43,4 +44,14 @@ calculations.
       The reference guide contains a detailed description of the functions, modules, and objects
       included in ``geotech-pandas``. The reference describes how the methods work and which
       parameters can be used. It assumes that you have an understanding of the key concepts.
+
+    .. grid-item-card:: Contribution
+      :link: contribution/index
+      :link-type: doc
+
+      :material-regular:`groups;5em`
+      ^^^
+
+      Saw a typo in the documentation? Want to improve existing functionalites? The contribution
+      guidlines will guide you through the process of improving ``geotech-pandas``.
       
