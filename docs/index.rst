@@ -16,7 +16,7 @@ geotech-pandas documentation
 
 **Version**: |version|
 
-:mod:`geotech-pandas` is a `pandas <https://pandas.pydata.org/>`__ extension for geotechnical
+:mod:`geotech-pandas` is a `Pandas <https://pandas.pydata.org/>`__ extension for geotechnical
 calculations.
 
 .. grid:: 2
@@ -31,8 +31,8 @@ calculations.
       :material-regular:`menu_book;5em`
       ^^^
 
-      The user guide provides in-depth information on the key concepts of ``geotech-pandas`` with
-      useful background information and explanation.
+      The user guide provides in-depth information on the key concepts of geotech-pandas with useful
+      background information and explanation.
 
     .. grid-item-card:: API Reference
       :link: api-reference/index
@@ -42,8 +42,8 @@ calculations.
       ^^^
 
       The reference guide contains a detailed description of the functions, modules, and objects
-      included in ``geotech-pandas``. The reference describes how the methods work and which
-      parameters can be used. It assumes that you have an understanding of the key concepts.
+      included in geotech-pandas. The reference describes how the methods work and which parameters
+      can be used. It assumes that you have an understanding of the key concepts.
 
     .. grid-item-card:: Contribution
       :link: contribution/index
@@ -53,5 +53,5 @@ calculations.
       ^^^
 
       Saw a typo in the documentation? Want to improve existing functionalites? The contribution
-      guidlines will guide you through the process of improving ``geotech-pandas``.
+      guidlines will guide you through the process of improving geotech-pandas.
       

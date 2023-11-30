@@ -1,8 +1,8 @@
 =================
 Layer Subaccessor
 =================
-In :mod:`geotech-pandas`, a **layer** reperesents a soil or rock layer of a point. These layers are
-usually implied as the elements or rows inside a :external:class:`~pandas.DataFrame`.
+In geotech-pandas, a **layer** reperesents a soil or rock layer of a point. These layers are usually
+implied as the elements or rows inside a :external:class:`~pandas.DataFrame`.
 
 In this guide, the basics of the :class:`~pandas.DataFrame.geotech.layer` subaccessor methods are
 presented. The :class:`~pandas.DataFrame.geotech.layer` subaccessor is a collection of depth-related
@@ -17,7 +17,7 @@ First, we import the necessary libraries,
 
 Next, we create a simple :external:class:`~pandas.DataFrame` with ``point_id`` and ``bottom``
 columns present. An additional ``soil_type`` column is also added to show how this column is
-transformed when :ref:`splitting <splitting-layers>`.
+transformed when :ref:`splitting-layers`.
 
 .. ipython:: python
 
@@ -72,8 +72,8 @@ Then proceed with the following command to concatenate ``df`` with the results o
 
 As you can see, it results to the same :external:class:`~pandas.DataFrame` as before.
 
-It is recommended to use the :external:func:`~pandas.concat` method since :mod:`geotech-pandas`
-relies heavily in consistent :ref:`column names <columns>`.
+It is recommended to use the :external:func:`~pandas.concat` method since geotech-pandas relies
+heavily in consistent column names. For more information, see :ref:`columns`.
 
 If you want the output to be much cleaner, you can always override the arrangement of columns like
 so,

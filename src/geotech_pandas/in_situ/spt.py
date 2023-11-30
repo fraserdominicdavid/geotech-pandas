@@ -169,10 +169,10 @@ class SPTDataFrameAccessor(GeotechPandasBase):
 
         A sample is considered a refusal when any of the following is true:
 
-         - a total of 50 blows or more have been applied during any of the three 150 mm increments;
-         - a total of 100 blows or more have been applied; and
-         - partial penetration, which signifies that the sampler can no longer penetrate through the
-           strata, is present in any of the increments.
+        - a total of 50 blows or more have been applied during any of the three 150 mm increments;
+        - a total of 100 blows or more have been applied; and
+        - partial penetration, which signifies that the sampler can no longer penetrate through the
+          strata, is present in any of the increments.
 
         Returns
         -------
@@ -189,8 +189,8 @@ class SPTDataFrameAccessor(GeotechPandasBase):
 
         A sample is considered hammer weight when all of the following are true:
 
-         - a total of 450 mm or more was penetrated by the sampler through sinking; and
-         - each 150 mm increment has 0 blows recorded.
+        - a total of 450 mm or more was penetrated by the sampler through sinking; and
+        - each 150 mm increment has 0 blows recorded.
 
         Returns
         -------

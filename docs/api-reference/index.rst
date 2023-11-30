@@ -3,9 +3,8 @@
 =============
 API Reference
 =============
-
-:mod:`geotech-pandas` provides scope-specific methods under various subaccessors. These are separate
-namespaces within :class:`~pandas.DataFrame.geotech`.
+In geotech-pandas, scope-specific methods under various subaccessors are provided. These are
+separate namespaces within :class:`~pandas.DataFrame.geotech`.
 
 Accessor
 --------
@@ -20,9 +19,8 @@ Accessor
 
 Columns
 -------
-
-:mod:`geotech-pandas` relies heavily in consistent column names and units. For now, SI units are
-assumed throughout the package. The columns used throughout the package are summarized in the
+There is a heavy reliance in consistent column names and units in geotech-pandas. For now, SI units
+are assumed throughout the package. The columns used throughout the package are summarized in the
 following table:
 
 Common Columns
