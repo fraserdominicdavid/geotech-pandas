@@ -8,7 +8,15 @@
 
 import sphinx_autosummary_accessors
 
-import geotech_pandas  # noqa: F401 registers accessor for autosummary
+try:
+    import geotech_pandas
+except ModuleNotFoundError:
+    import os
+    import sys
+
+    sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
+
+    import geotech_pandas  # noqa: F401 registers accessor for autosummary
 
 project = "geotech-pandas"
 copyright = "2023, Fraser Dominic David"
