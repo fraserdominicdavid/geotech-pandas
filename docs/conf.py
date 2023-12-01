@@ -57,7 +57,6 @@ extlinks = {
     "pull": ("https://github.com/fraserdominicdavid/geotech-pandas/pull/%s", "#%s"),
 }
 
-
 # numpydoc
 numpydoc_show_class_members = False
 numpydoc_show_inherited_class_members = False
