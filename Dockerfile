@@ -2,17 +2,8 @@
 ARG PYTHON_VERSION=3.9
 FROM python:$PYTHON_VERSION-slim AS base
 
-# Install Poetry.
-ENV POETRY_VERSION 1.6.1
-RUN --mount=type=cache,target=/root/.cache/pip/ \
-    pip install poetry~=$POETRY_VERSION
-
-# Install compilers that may be required for certain packages or platforms.
+# Remove docker-clean so we can keep the apt cache in Docker build cache.
 RUN rm /etc/apt/apt.conf.d/docker-clean
-RUN --mount=type=cache,target=/var/cache/apt/ \
-    --mount=type=cache,target=/var/lib/apt/ \
-    apt-get update && \
-    apt-get install --no-install-recommends --yes build-essential
 
 # Create a non-root user and switch to it [1].
 # [1] https://code.visualstudio.com/remote/advancedcontainers/add-nonroot-user
@@ -24,12 +15,34 @@ RUN groupadd --gid $GID user && \
 USER user
 
 # Create and activate a virtual environment.
-RUN python -m venv /opt/geotech-pandas-env
-ENV PATH /opt/geotech-pandas-env/bin:$PATH
 ENV VIRTUAL_ENV /opt/geotech-pandas-env
+ENV PATH $VIRTUAL_ENV/bin:$PATH
+RUN python -m venv $VIRTUAL_ENV
 
 # Set the working directory.
 WORKDIR /workspaces/geotech-pandas/
+
+
+
+FROM base as poetry
+
+USER root
+
+# Install Poetry in separate venv so it doesn't pollute the main venv.
+ENV POETRY_VERSION 1.6.1
+ENV POETRY_VIRTUAL_ENV /opt/poetry-env
+RUN --mount=type=cache,target=/root/.cache/pip/ \
+    python -m venv $POETRY_VIRTUAL_ENV && \
+    $POETRY_VIRTUAL_ENV/bin/pip install poetry~=$POETRY_VERSION && \
+    ln -s $POETRY_VIRTUAL_ENV/bin/poetry /usr/local/bin/poetry
+
+# Install compilers that may be required for certain packages or platforms.
+RUN --mount=type=cache,target=/var/cache/apt/ \
+    --mount=type=cache,target=/var/lib/apt/ \
+    apt-get update && \
+    apt-get install --no-install-recommends --yes build-essential
+
+USER user
 
 # Install the run time Python dependencies in the virtual environment.
 COPY --chown=user:user poetry.lock* pyproject.toml /workspaces/geotech-pandas/
@@ -40,7 +53,7 @@ RUN --mount=type=cache,uid=$UID,gid=$GID,target=/home/user/.cache/pypoetry/ \
 
 
 
-FROM base as ci
+FROM poetry as ci
 
 # Allow CI to run as root.
 USER root
@@ -57,7 +70,7 @@ RUN --mount=type=cache,target=/root/.cache/pypoetry/ \
 
 
 
-FROM base as dev
+FROM poetry as dev
 
 # Install development tools: curl, git, gpg, ssh, starship, sudo, vim, and zsh.
 USER root
