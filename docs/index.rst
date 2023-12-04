@@ -13,6 +13,7 @@ geotech-pandas documentation
    User Guide <user-guide/index>
    API Reference <api-reference/index>
    Contribution <contribution/index>
+   Changelog <changelog/index>
 
 **Version**: |version|
 
@@ -54,4 +55,12 @@ calculations.
 
       Saw a typo in the documentation? Want to improve existing functionalites? The contribution
       guidlines will guide you through the process of improving geotech-pandas.
-      
+
+    .. grid-item-card:: Changelog
+      :link: changelog/index
+      :link-type: doc
+
+      :material-regular:`format_list_bulleted;5em`
+      ^^^
+
+      Keep up-to-date with the changes across geotech-pandas versions.

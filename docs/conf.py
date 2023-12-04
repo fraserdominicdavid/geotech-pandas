@@ -36,6 +36,7 @@ extensions = [
     "sphinx.ext.autosummary",
     "numpydoc",
     "sphinx_autosummary_accessors",
+    "sphinx.ext.extlinks",
 ]
 
 autosummary_generate = True
@@ -50,6 +51,11 @@ intersphinx_mapping = {
 }
 
 intersphinx_disabled_reftypes = ["*"]
+
+# extlinks alias
+extlinks = {
+    "pull": ("https://github.com/fraserdominicdavid/geotech-pandas/pull/%s", "#%s"),
+}
 
 # numpydoc
 numpydoc_show_class_members = False
