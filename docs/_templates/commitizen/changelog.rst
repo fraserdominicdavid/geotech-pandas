@@ -16,7 +16,7 @@
 {% if change.scope %}
 - **{{ change.scope }}**: {{ change.message|replace("(#", "(:pull:`")|replace(")", "`)") }}
 {% elif change.message %}
-- {{ change.message }}
+- {{ change.message|replace("(#", "(:pull:`")|replace(")", "`)") }}
 {% endif %}
 {% endfor %}
 {% endfor %}
