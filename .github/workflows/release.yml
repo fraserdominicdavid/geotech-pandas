@@ -1,0 +1,58 @@
+# Simple workflow to create a version tag and release
+name: Release
+
+on:
+  push:
+    branches:
+      main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    # The commit must start with "bump", otherwise skip the whole workflow
+    if: startsWith(github.event.head_commit.message, 'bump')
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+      
+      - name: Install Commitizen
+        run: pip install commitizen
+      
+      # Get the current version since the bump commit has already updated the versions in the files
+      - name: Get version
+        id: version
+        run: echo "VERSION=v$(cz version --p)" >> "$GITHUB_OUTPUT"
+
+      - name: Create and push tag
+        uses: rickstaa/action-create-tag@v1
+        with:
+          tag: ${{ steps.version.outputs.VERSION }}
+
+      # Get the changelog of the current version to use as the release body
+      - name: Get changelog
+        env:
+          VERSION: ${{ steps.version.outputs.VERSION }}
+        run: cz changelog $VERSION --dry-run --template="CHANGELOG.md.j2" > body.md
+      
+      - name: Show changelog
+        run: cat body.md
+      
+      - name: Create release
+        uses: softprops/action-gh-release@v1
+        with:
+          body_path: "body.md"
+          tag_name: ${{ steps.version.outputs.VERSION }}
+          # Needs PAT to ensure release creation triggers on other workflows work as expected
+          token: ${{ secrets.GH_PAT }}
