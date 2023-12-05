@@ -16,7 +16,6 @@ tag_format = "v$version"
 update_changelog_on_bump = true
 version = "0.0.0"
 version_files = ["pyproject.toml:version", "docs/conf.py:version"]
-changelog_incremental= true
 changelog_file = "docs/changelog/changelog.rst"
 template = "docs/_templates/commitizen/changelog.rst"
 
