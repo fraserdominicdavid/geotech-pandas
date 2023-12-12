@@ -1,3 +1,11 @@
+v0.1.1 (2023-12-12)
+===================
+
+Fix
+---
+
+- **spt**: fix report on samples with only 150mm total penetration (:pull:`102`)
+
 v0.1.0 (2023-12-05)
 ===================
 
