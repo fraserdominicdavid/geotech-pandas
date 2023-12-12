@@ -4,6 +4,7 @@ import pandas as pd
 
 from geotech_pandas.base import GeotechPandasBase
 from geotech_pandas.in_situ import InSituDataFrameAccessor
+from geotech_pandas.lab import LabDataFrameAccessor
 from geotech_pandas.layer import LayerDataFrameAccessor
 from geotech_pandas.point import PointDataFrameAccessor
 from geotech_pandas.utils import SubAccessor
@@ -18,6 +19,7 @@ class GeotechDataFrameAccessor(GeotechPandasBase):
     point = SubAccessor(PointDataFrameAccessor)
     layer = SubAccessor(LayerDataFrameAccessor)
     in_situ = SubAccessor(InSituDataFrameAccessor)
+    lab = SubAccessor(LabDataFrameAccessor)
 
     def __init__(self, df: pd.DataFrame):
         self._obj = df
