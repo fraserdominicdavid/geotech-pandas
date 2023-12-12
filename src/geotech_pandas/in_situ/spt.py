@@ -268,7 +268,7 @@ class SPTDataFrameAccessor(GeotechPandasBase):
         _m = self.get_main_pen() < 2 * PEN_INC_MIN
         _n_value[_m] = _n_value[_m] + "/" + self.get_main_pen()[_m].astype("string") + "mm"
 
-        _m = self.get_total_pen() < PEN_INC_MIN
+        _m = self.get_total_pen() <= PEN_INC_MIN
         _n_value[_m] = "N="
 
         _m = self.is_refusal()
