@@ -31,12 +31,10 @@ jobs:
         - name: Set up Node.js
           uses: actions/setup-node@v4
           with:
-            node-version: 18
+            node-version: 21
         - name: Install @devcontainers/cli
-          run: npm install --location=global @devcontainers/cli@0.41.0
+          run: npm install --location=global @devcontainers/cli@0.55.0
         - name: Start Dev Container
-          env:
-            DOCKER_BUILDKIT: 1
           run: |
             git config --global init.defaultBranch main
             PYTHON_VERSION=3.9 devcontainer up --workspace-folder .

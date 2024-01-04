@@ -110,17 +110,14 @@ Recommended prerequisites
    #. `Install Docker Desktop <https://www.docker.com/get-started>`__.
    #. Enable *Use Docker Compose V2* in Docker Desktop's preferences window.
    #. For Linux installations:
-      
-      #. `Configure Docker to use the BuildKit build system
-         <https://docs.docker.com/build/buildkit/#getting-started>`__. On macOS and Windows,
-         BuildKit is enabled by default in Docker Desktop.
-      #. Export your user's user id and group id so that `files created in the Dev Container are
-         owned by your user <https://GitHub.com/moby/moby/issues/3206>`__::
 
-            cat << EOF >> ~/.bashrc
-            export UID=$(id --user)
-            export GID=$(id --group)
-            EOF
+      - Export your user's user id and group id so that `files created in the Dev Container are
+        owned by your user <https://GitHub.com/moby/moby/issues/3206>`__::
+
+           cat << EOF >> ~/.bashrc
+           export UID=$(id --user)
+           export GID=$(id --group)
+           EOF
 
 #. Install VS Code or PyCharm
    
