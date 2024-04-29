@@ -39,10 +39,7 @@ class GeotechPandasBase:
         if columns is None:
             columns = ["point_id", "bottom"]
 
-        missing_columns = []
-        for column in columns:
-            if column not in self._obj.columns:
-                missing_columns.append(column)
+        missing_columns = [column for column in columns if column not in self._obj.columns]
 
         if len(missing_columns) > 0:
             raise AttributeError(
