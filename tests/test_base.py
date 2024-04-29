@@ -38,7 +38,7 @@ def test_obj():
             ["top", "soil_type"],
             pytest.raises(
                 AttributeError,
-                match=r"The DataFrame must have: .* columns\.$",
+                match="The DataFrame must have: top, soil_type columns.",
             ),
         ),
         (
