@@ -23,43 +23,47 @@ def test_obj():
 
 
 @pytest.mark.parametrize(
-    ("df", "columns", "error", "error_message"),
+    ("df", "columns", "error"),
     [
         (
             base_df[["point_id"]].copy(),
             None,
-            pytest.raises(AttributeError),
-            "The DataFrame must have: bottom column.",
-        ),
-        (
-            base_df[["point_id"]].copy(),
-            ["point_id", "top", "bottom"],
-            pytest.raises(AttributeError),
-            "The DataFrame must have: top, bottom columns.",
+            pytest.raises(
+                AttributeError,
+                match="The DataFrame must have: bottom column.",
+            ),
         ),
         (
             base_df,
-            ["point_id", "top", "bottom"],
-            pytest.raises(AttributeError),
-            "The DataFrame must have: top column.",
+            ["top", "soil_type"],
+            pytest.raises(
+                AttributeError,
+                match=r"The DataFrame must have: .* columns\.$",
+            ),
+        ),
+        (
+            base_df,
+            ["top"],
+            pytest.raises(
+                AttributeError,
+                match="The DataFrame must have: top column.",
+            ),
         ),
         (
             base_df,
             None,
             does_not_raise(),
-            None,
         ),
     ],
 )
-def test_validate_columns(df, columns, error, error_message):
-    """Test if ``columns`` are in ``df`` else raise ``error`` with ``error_message``."""
-    with error as e:
+def test_validate_columns(df, columns, error):
+    """Test if ``columns`` are in ``df`` else raise ``error``."""
+    with error:
         df.geotech._validate_columns(columns)
-        assert error_message is None or error_message in str(e)
 
 
 @pytest.mark.parametrize(
-    ("df", "error", "error_message"),
+    ("df", "error"),
     [
         (
             pd.DataFrame(
@@ -68,8 +72,10 @@ def test_validate_columns(df, columns, error, error_message):
                     "bottom": [0.0, 2.0, 1.0, 0.0, 1.0],
                 }
             ),
-            pytest.raises(AttributeError),
-            "Elements in the bottom column must be monotonically increasing for: BH-1.",
+            pytest.raises(
+                AttributeError,
+                match="Elements in the bottom column must be monotonically increasing for: BH-1.",
+            ),
         ),
         (
             pd.DataFrame(
@@ -79,19 +85,17 @@ def test_validate_columns(df, columns, error, error_message):
                 }
             ),
             does_not_raise(),
-            None,
         ),
     ],
 )
-def test_validate_monotony(df, error, error_message):
+def test_validate_monotony(df, error):
     """Test if the ``bottom`` of each ``point_id`` group is monotonically increasing."""
-    with error as e:
+    with error:
         df.geotech._validate_monotony()
-        assert error_message is None or error_message in str(e)
 
 
 @pytest.mark.parametrize(
-    ("df", "error", "error_message"),
+    ("df", "error"),
     [
         (
             pd.DataFrame(
@@ -100,8 +104,10 @@ def test_validate_monotony(df, error, error_message):
                     "bottom": [0.0, 1.0, 1.0, 0.0, 1.0],
                 }
             ),
-            pytest.raises(AttributeError),
-            "The DataFrame contains duplicate point_id and bottom: BH-1.",
+            pytest.raises(
+                AttributeError,
+                match="The DataFrame contains duplicate point_id and bottom: BH-1.",
+            ),
         ),
         (
             pd.DataFrame(
@@ -111,24 +117,24 @@ def test_validate_monotony(df, error, error_message):
                 }
             ),
             does_not_raise(),
-            None,
         ),
     ],
 )
-def test_validate_duplicates(df, error, error_message):
+def test_validate_duplicates(df, error):
     """Test ``DataFrame`` for duplicate value pairs in the ``point_id`` and ``bottom`` columns."""
-    with error as e:
+    with error:
         df.geotech._validate_duplicates()
-        assert error_message is None or error_message in str(e)
 
 
 @pytest.mark.parametrize(
-    ("df", "error", "error_message"),
+    ("df", "error"),
     [
         (
             base_df[["point_id"]].copy(),
-            pytest.raises(AttributeError),
-            "The DataFrame must have: bottom column.",
+            pytest.raises(
+                AttributeError,
+                match="The DataFrame must have: bottom column.",
+            ),
         ),
         (
             pd.DataFrame(
@@ -137,8 +143,10 @@ def test_validate_duplicates(df, error, error_message):
                     "bottom": [0.0, 2.0, 1.0, 0.0, 1.0],
                 }
             ),
-            pytest.raises(AttributeError),
-            "Elements in the bottom column must be monotonically increasing for: BH-1.",
+            pytest.raises(
+                AttributeError,
+                match="Elements in the bottom column must be monotonically increasing for: BH-1.",
+            ),
         ),
         (
             pd.DataFrame(
@@ -147,18 +155,18 @@ def test_validate_duplicates(df, error, error_message):
                     "bottom": [0.0, 1.0, 1.0, 0.0, 1.0],
                 }
             ),
-            pytest.raises(AttributeError),
-            "The DataFrame contains duplicate point_id and bottom: BH-1.",
+            pytest.raises(
+                AttributeError,
+                match="The DataFrame contains duplicate point_id and bottom: BH-1.",
+            ),
         ),
         (
             base_df,
             does_not_raise(),
-            None,
         ),
     ],
 )
-def test_validators(df, error, error_message):
+def test_validators(df, error):
     """Test if validators are triggered for wrong ``DataFrame`` configurations."""
-    with error as e:
+    with error:
         df.geotech  # noqa: B018
-        assert error_message is None or error_message in str(e)
