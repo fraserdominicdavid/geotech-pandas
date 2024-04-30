@@ -99,3 +99,26 @@ SPT Columns
    * - ``spt_report``
      -
      - Simple descriptive SPT report.
+
+.. _columns_lab_index:
+
+Soil Index Columns
+^^^^^^^^^^^^^^^^^^
+.. list-table::
+   :header-rows: 1
+
+   * - Name
+     - Unit
+     - Description
+   * - ``moisture_content_mass_moist``
+     - g
+     - Mass of container and moist specimen.
+   * - ``moisture_content_mass_dry``
+     - g
+     - Mass of container and oven dry specimen.
+   * - ``moisture_content_mass_container``
+     - g
+     - Mass of container.
+   * - ``moisture_content``
+     - %
+     - Moisture content.

@@ -80,3 +80,4 @@ Guides
     point
     layer
     in-situ
+    lab
