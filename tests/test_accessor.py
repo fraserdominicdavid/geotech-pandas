@@ -1,4 +1,5 @@
 """Test if accessors are registered with their namespaces as expected."""
+
 from functools import reduce
 
 import pandas as pd

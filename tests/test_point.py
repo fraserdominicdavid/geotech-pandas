@@ -1,4 +1,5 @@
 """Test ``point`` subaccessor methods."""
+
 import pandas as pd
 import pandas._testing as tm
 import pytest

@@ -1,4 +1,5 @@
 """Test ``spt`` subaccessor methods."""
+
 from functools import reduce
 
 import pandas as pd
