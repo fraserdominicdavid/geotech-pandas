@@ -12,6 +12,7 @@ geotech-pandas documentation
    
    User Guide <user-guide/index>
    API Reference <api-reference/index>
+   Column Reference <column-reference/index>
    Contribution <contribution/index>
    Changelog <changelog/index>
 
@@ -20,7 +21,7 @@ geotech-pandas documentation
 :mod:`geotech-pandas` is a `Pandas <https://pandas.pydata.org/>`__ extension for geotechnical
 calculations.
 
-.. grid:: 2
+.. grid:: 1 2 2 2
     :gutter: 4
     :padding: 2 2 0 0
     :class-container: sd-text-center
@@ -45,6 +46,16 @@ calculations.
       The reference guide contains a detailed description of the functions, modules, and objects
       included in geotech-pandas. The reference describes how the methods work and which parameters
       can be used. It assumes that you have an understanding of the key concepts.
+
+    .. grid-item-card:: Column Reference
+      :link: column-reference/index
+      :link-type: doc
+
+      :material-regular:`view_column;5em`
+      ^^^
+
+      The column reference contains general information about the columns used in geotech-pandas.
+      The reference provides the description, unit, and expected dtype for each column.
 
     .. grid-item-card:: Contribution
       :link: contribution/index

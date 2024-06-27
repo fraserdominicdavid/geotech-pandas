@@ -5,7 +5,7 @@ In this guide, the basics of the :class:`~pandas.DataFrame.geotech.in_situ.spt` 
 are presented. The :class:`~pandas.DataFrame.geotech.in_situ.spt` subaccessor is a collection of
 methods related to standard penetration test (SPT) calculations for each sample of each point in the
 :external:class:`~pandas.DataFrame`. For information about the columns used by this
-subaccessor, see :ref:`columns_spt`.
+subaccessor, see :ref:`spt-columns`.
 
 First, we import the necessary libraries,
 

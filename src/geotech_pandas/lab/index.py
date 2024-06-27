@@ -107,13 +107,17 @@ class IndexDataFrameAccessor(GeotechPandasBase):
     def get_moisture_content(self) -> pd.Series:
         r"""Return moisture content calculation according to ASTM D2216.
 
-        The moisture content is calculated from the `moisture_content_mass_moist`,
-        `moisture_content_mass_dry`, and `moisture_content_mass_container` columns of the dataframe.
+        .. admonition:: **Requires:**
+            :class: important
+
+            | :term:`moisture_content_mass_moist`
+            | :term:`moisture_content_mass_dry`
+            | :term:`moisture_content_mass_container`
 
         Returns
         -------
         :external:class:`~pandas.Series`
-            Series with moisture content values.
+            :term:`moisture_content`
 
         Notes
         -----

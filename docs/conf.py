@@ -72,4 +72,10 @@ html_title = project
 html_theme_options = {
     "navbar_align": "left",
     "github_url": "https://github.com/fraserdominicdavid/geotech-pandas",
+    "show_nav_level": 4,
+}
+html_sidebars = {
+    "**": ["sidebar-nav-bs", "sidebar-ethical-ads"],
+    "changelog/index": [],
+    "column-reference/index": [],
 }
