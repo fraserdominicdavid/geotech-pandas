@@ -6,7 +6,7 @@ are presented. The :class:`~pandas.DataFrame.geotech.lab.index` subaccessor is a
 methods related to index property laboratory tests for each sample of each point in the
 :external:class:`~pandas.DataFrame`. The index properties of soil are the properties which help to
 assess the engineering behavior of soil and determine the classification of soil accurately. For
-information about the columns used by this subaccessor, see :ref:`columns_lab_index`.
+information about the columns used by this subaccessor, see :ref:`soil-index-columns`.
 
 First, we import the necessary libraries,
 

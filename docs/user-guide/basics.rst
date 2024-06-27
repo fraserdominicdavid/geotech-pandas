@@ -19,7 +19,8 @@ Columns
 ^^^^^^^
 The minimum required columns for geotech-pandas are the ``point_id`` and ``bottom`` columns. The
 ``point_id`` represents the ID or the group where each layer belongs to. Whereas, the ``bottom``
-column represents the bottom depths of these layers. For more information, see :ref:`columns`.
+column represents the bottom depths of these layers. For more information, see
+:ref:`general-columns`.
 
 If you try to access :class:`~pandas.DataFrame.geotech` with the following
 :external:class:`~pandas.DataFrame`,

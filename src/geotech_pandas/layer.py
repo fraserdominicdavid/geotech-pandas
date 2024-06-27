@@ -18,6 +18,11 @@ class LayerDataFrameAccessor(GeotechPandasBase):
     def get_top(self, fill_value: float = 0.0) -> pd.Series:
         """Return shifted ``bottom`` depth values that can be used as ``top`` depth values.
 
+        .. admonition:: **Requires:**
+            :class: important
+
+            | :term:`bottom`
+
         Parameters
         ----------
         fill_value: float, optional
@@ -26,7 +31,7 @@ class LayerDataFrameAccessor(GeotechPandasBase):
         Returns
         -------
         :external:class:`~pandas.Series`
-            Series with shifted ``bottom`` values.
+            :term:`top`
         """
         top = pd.Series(
             self._obj.geotech.point.groups["bottom"].shift(1, fill_value=fill_value), name="top"
@@ -37,10 +42,16 @@ class LayerDataFrameAccessor(GeotechPandasBase):
     def get_center(self) -> pd.Series:
         """Return ``center`` depth values from ``top`` and ``bottom`` depth values.
 
+        .. admonition:: **Requires:**
+            :class: important
+
+            | :term:`top`
+            | :term:`bottom`
+
         Returns
         -------
         :external:class:`~pandas.Series`
-            Series with ``center`` depth values.
+            :term:`center`
         """
         self._validate_columns(["top", "bottom"])
 
@@ -49,10 +60,16 @@ class LayerDataFrameAccessor(GeotechPandasBase):
     def get_thickness(self) -> pd.Series:
         """Return ``thickness`` values of ``top`` and ``bottom`` depth values.
 
+        .. admonition:: **Requires:**
+            :class: important
+
+            | :term:`top`
+            | :term:`bottom`
+
         Returns
         -------
         :external:class:`~pandas.Series`
-            Series with ``thickness`` values.
+            :term:`thickness`
         """
         self._validate_columns(["top", "bottom"])
 
@@ -74,6 +91,12 @@ class LayerDataFrameAccessor(GeotechPandasBase):
         This is particularly useful for cases where it is required or beneficial to split layers
         into two. For example, splitting a layer that is partly saturated and partly dry due to the
         groundwater level being found inside the layer.
+
+        .. admonition:: **Requires:**
+            :class: important
+
+            | :term:`top`
+            | :term:`bottom`
 
         Parameters
         ----------

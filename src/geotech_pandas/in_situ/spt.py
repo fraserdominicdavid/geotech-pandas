@@ -36,10 +36,15 @@ class SPTDataFrameAccessor(GeotechPandasBase):
         Only full penetrations of 150 mm are returned, where partial penetrations are masked with
         `NA`.
 
+        .. admonition:: **Requires:**
+            :class: important
+
+            | :term:`pen_1`
+
         Returns
         -------
         :external:class:`~pandas.Series`
-            Series with seating penetration values.
+            :term:`seating_pen`
         """
         seating_pen = self._obj["pen_1"].convert_dtypes()
         seating_pen[seating_pen.ne(PEN_INC_MIN)] = pd.NA
@@ -48,10 +53,16 @@ class SPTDataFrameAccessor(GeotechPandasBase):
     def get_main_pen(self) -> pd.Series:
         """Return the total penetration in the second and third 150 mm increment for each sample.
 
+        .. admonition:: **Requires:**
+            :class: important
+
+            | :term:`pen_2`
+            | :term:`pen_3`
+
         Returns
         -------
         :external:class:`~pandas.Series`
-            Series with main penetration values.
+            :term:`main_pen`
         """
         return pd.Series(
             self._obj[["pen_2", "pen_3"]].sum(axis=1, min_count=1),
@@ -61,10 +72,17 @@ class SPTDataFrameAccessor(GeotechPandasBase):
     def get_total_pen(self) -> pd.Series:
         """Return the total penetration of each increment.
 
+        .. admonition:: **Requires:**
+            :class: important
+
+            | :term:`pen_1`
+            | :term:`pen_2`
+            | :term:`pen_3`
+
         Returns
         -------
         :external:class:`~pandas.Series`
-            Series with total penetration values.
+            :term:`total_pen`
         """
         return pd.Series(
             self._obj[["pen_1", "pen_2", "pen_3"]].sum(axis=1, min_count=1),
@@ -74,10 +92,16 @@ class SPTDataFrameAccessor(GeotechPandasBase):
     def get_seating_drive(self) -> pd.Series:
         """Return the number of blows in the first 150 mm increment for each sample.
 
+        .. admonition:: **Requires:**
+            :class: important
+
+            | :term:`blows_1`
+            | :term:`pen_1`
+
         Returns
         -------
         :external:class:`~pandas.Series`
-            Series with seating drive values.
+            :term:`seating_drive`
 
         Notes
         -----
@@ -94,10 +118,16 @@ class SPTDataFrameAccessor(GeotechPandasBase):
         The sum is still returned regardless of the completeness of each increment. Due to this, the
         results may not correspond to the reported N-value.
 
+        .. admonition:: **Requires:**
+            :class: important
+
+            | :term:`blows_2`
+            | :term:`blows_3`
+
         Returns
         -------
         :external:class:`~pandas.Series`
-            Series with main drive values.
+            :term:`main_drive`
         """
         return pd.Series(
             self._obj[["blows_2", "blows_3"]].sum(axis=1, min_count=1),
@@ -109,10 +139,17 @@ class SPTDataFrameAccessor(GeotechPandasBase):
 
         The sum is still returned regardless of the completeness of each increment.
 
+        .. admonition:: **Requires:**
+            :class: important
+
+            | :term:`blows_1`
+            | :term:`blows_2`
+            | :term:`blows_3`
+
         Returns
         -------
         :external:class:`~pandas.Series`
-            Series with total drive values.
+            :term:`total_drive`
         """
         return pd.Series(
             self._obj[["blows_1", "blows_2", "blows_3"]].sum(axis=1, min_count=1),
@@ -174,10 +211,20 @@ class SPTDataFrameAccessor(GeotechPandasBase):
         - partial penetration, which signifies that the sampler can no longer penetrate through the
           strata, is present in any of the increments.
 
+        .. admonition:: **Requires:**
+            :class: important
+
+            | :term:`blows_1`
+            | :term:`blows_2`
+            | :term:`blows_3`
+            | :term:`pen_1`
+            | :term:`pen_2`
+            | :term:`pen_3`
+
         Returns
         -------
         :external:class:`~pandas.Series`
-            Series of booleans indicating whether or not each sample is refused.
+            :term:`is_refusal`
         """
         return pd.Series(
             self._any_blows_max_inc() | self._any_blows_max_total() | self._any_pen_partial(),
@@ -192,10 +239,20 @@ class SPTDataFrameAccessor(GeotechPandasBase):
         - a total of 450 mm or more was penetrated by the sampler through sinking; and
         - each 150 mm increment has 0 blows recorded.
 
+        .. admonition:: **Requires:**
+            :class: important
+
+            | :term:`blows_1`
+            | :term:`blows_2`
+            | :term:`blows_3`
+            | :term:`pen_1`
+            | :term:`pen_2`
+            | :term:`pen_3`
+
         Returns
         -------
         :external:class:`~pandas.Series`
-            Series of booleans indicating whether or not each sample is hammer weight.
+            :term:`is_hammer_weight`
         """
         return pd.Series(
             (self._obj[["blows_1", "blows_2", "blows_3"]].eq(0)).all(axis=1)
@@ -214,6 +271,16 @@ class SPTDataFrameAccessor(GeotechPandasBase):
             If `limit` is `True` while `refusal` is set to :external:attr:`~pandas.NA`,
             nothing will get limited.
 
+        .. admonition:: **Requires:**
+            :class: important
+
+            | :term:`blows_1`
+            | :term:`blows_2`
+            | :term:`blows_3`
+            | :term:`pen_1`
+            | :term:`pen_2`
+            | :term:`pen_3`
+
         Parameters
         ----------
         refusal: int, default 50
@@ -224,7 +291,7 @@ class SPTDataFrameAccessor(GeotechPandasBase):
         Returns
         -------
         :external:class:`~pandas.Series`
-            Series with N-values.
+            :term:`n_value`
         """
         n_value = self.get_main_drive()
         n_value.loc[self.is_refusal()] = refusal
@@ -290,10 +357,20 @@ class SPTDataFrameAccessor(GeotechPandasBase):
          - ``(HW)`` for hammer weight samples
          - ``(R)`` for refusal samples
 
+        .. admonition:: **Requires:**
+            :class: important
+
+            | :term:`blows_1`
+            | :term:`blows_2`
+            | :term:`blows_3`
+            | :term:`pen_1`
+            | :term:`pen_2`
+            | :term:`pen_3`
+
         Returns
         -------
         :external:class:`~pandas.Series`
-            Series with simple SPT descriptions.
+            :term:`spt_report`
         """
         return pd.Series(
             self._cat_blows().str.cat(self._format_n_value(), sep=" "),

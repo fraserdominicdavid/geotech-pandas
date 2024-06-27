@@ -73,7 +73,7 @@ Then proceed with the following command to concatenate ``df`` with the results o
 As you can see, it results to the same :external:class:`~pandas.DataFrame` as before.
 
 It is recommended to use the :external:func:`~pandas.concat` method since geotech-pandas relies
-heavily in consistent column names. For more information, see :ref:`columns`.
+heavily in consistent column names. For more information, see :ref:`general-columns`.
 
 If you want the output to be much cleaner, you can always override the arrangement of columns like
 so,
