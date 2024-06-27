@@ -19,7 +19,7 @@ except ModuleNotFoundError:
     import geotech_pandas  # noqa: F401 registers accessor for autosummary
 
 project = "geotech-pandas"
-copyright = "2023, Fraser Dominic David"
+copyright = "2023-2024, Fraser Dominic David"
 author = "Fraser Dominic David"
 version = "0.1.1"
 release = version
