@@ -10,6 +10,8 @@
         "vscode": {
             "extensions": [
                 "charliermarsh.ruff",
+                "GitHub.vscode-github-actions",
+                "GitHub.vscode-pull-request-github",
                 "ms-python.mypy-type-checker",
                 "ms-python.python",
                 "ms-toolsai.jupyter",
@@ -23,8 +25,8 @@
                     "reports/coverage.xml"
                 ],
                 "editor.codeActionsOnSave": {
-                    "source.fixAll": true,
-                    "source.organizeImports": true
+                    "source.fixAll": "explicit",
+                    "source.organizeImports": "explicit"
                 },
                 "editor.formatOnSave": true,
                 "[python]": {
@@ -37,7 +39,13 @@
                     100
                 ],
                 "files.autoSave": "onFocusChange",
+                "jupyter.kernels.excludePythonEnvironments": ["/usr/local/bin/python"],
                 "mypy-type-checker.importStrategy": "fromEnvironment",
+                "notebook.codeActionsOnSave": {
+                    "notebook.source.fixAll": "explicit",
+                    "notebook.source.organizeImports": "explicit"
+                },
+                "notebook.formatOnSave.enabled": true,
                 "python.defaultInterpreterPath": "/opt/geotech-pandas-env/bin/python",
                 "python.terminal.activateEnvironment": false,
                 "python.testing.pytestEnabled": true,

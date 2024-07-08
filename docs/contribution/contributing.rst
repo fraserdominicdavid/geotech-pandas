@@ -99,22 +99,24 @@ Recommended prerequisites
    #. Configure SSH to automatically load your SSH keys::
 
          cat << EOF >> ~/.ssh/config
+
          Host *
             AddKeysToAgent yes
             IgnoreUnknown UseKeychain
             UseKeychain yes
+            ForwardAgent yes
          EOF
 
 #. Install Docker
 
    #. `Install Docker Desktop <https://www.docker.com/get-started>`__.
-   #. Enable *Use Docker Compose V2* in Docker Desktop's preferences window.
    #. For Linux installations:
 
       - Export your user's user id and group id so that `files created in the Dev Container are
         owned by your user <https://GitHub.com/moby/moby/issues/3206>`__::
 
            cat << EOF >> ~/.bashrc
+
            export UID=$(id --user)
            export GID=$(id --group)
            EOF
