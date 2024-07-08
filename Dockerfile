@@ -29,7 +29,7 @@ FROM base as poetry
 USER root
 
 # Install Poetry in separate venv so it doesn't pollute the main venv.
-ENV POETRY_VERSION 1.6.1
+ENV POETRY_VERSION 1.8.0
 ENV POETRY_VIRTUAL_ENV /opt/poetry-env
 RUN --mount=type=cache,target=/root/.cache/pip/ \
     python -m venv $POETRY_VIRTUAL_ENV && \
@@ -49,7 +49,7 @@ COPY --chown=user:user poetry.lock* pyproject.toml /workspaces/geotech-pandas/
 RUN mkdir -p /home/user/.cache/pypoetry/ && mkdir -p /home/user/.config/pypoetry/ && \
     mkdir -p src/geotech_pandas/ && touch src/geotech_pandas/__init__.py && touch README.md
 RUN --mount=type=cache,uid=$UID,gid=$GID,target=/home/user/.cache/pypoetry/ \
-    poetry install --only main --no-interaction
+    poetry install --only main --all-extras --no-interaction
 
 
 
@@ -64,11 +64,12 @@ RUN --mount=type=cache,target=/var/cache/apt/ \
     sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- "--yes" && \
     usermod --shell /usr/bin/zsh user && \
     echo 'user ALL=(root) NOPASSWD:ALL' > /etc/sudoers.d/user && chmod 0440 /etc/sudoers.d/user
+RUN git config --system --add safe.directory '*'
 USER user
 
 # Install the development Python dependencies in the virtual environment.
 RUN --mount=type=cache,uid=$UID,gid=$GID,target=/home/user/.cache/pypoetry/ \
-    poetry install --no-interaction
+    poetry install --all-extras --no-interaction
 
 # Persist output generated during docker build so that we can restore it in the dev container.
 COPY --chown=user:user .pre-commit-config.yaml /workspaces/geotech-pandas/

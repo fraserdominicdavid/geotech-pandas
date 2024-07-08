@@ -25,7 +25,7 @@ def test_accessor():
 
 def test_get_ids(df):
     """Test if ``ids`` property returns correct list."""
-    assert ["BH-1", "BH-2"] == df.geotech.point.ids
+    assert df.geotech.point.ids == ["BH-1", "BH-2"]
 
 
 def test_groups(df):
