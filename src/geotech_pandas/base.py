@@ -1,7 +1,5 @@
 """Common base class used throughout the geotech-pandas package."""
 
-from typing import Optional
-
 import pandas as pd
 
 
@@ -16,7 +14,7 @@ class GeotechPandasBase:
         self._validate_monotony()
         self._validate_duplicates()
 
-    def _validate_columns(self, columns: Optional[list[str]] = None) -> None:
+    def _validate_columns(self, columns: list[str] | None = None) -> None:
         """
         Validate if the :external:class:`~pandas.DataFrame` contains the columns from a provided
         list.

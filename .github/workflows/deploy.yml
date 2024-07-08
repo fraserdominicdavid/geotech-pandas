@@ -37,7 +37,7 @@ jobs:
         - name: Start Dev Container
           run: |
             git config --global init.defaultBranch main
-            PYTHON_VERSION=3.9 devcontainer up --workspace-folder .
+            PYTHON_VERSION=3.10 devcontainer up --workspace-folder .
         - name: Build docs
           run: devcontainer exec --workspace-folder . poe docs -O "-E -a"
         - name: Setup Pages

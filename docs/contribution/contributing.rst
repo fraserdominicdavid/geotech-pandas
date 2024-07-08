@@ -37,7 +37,7 @@ In particular, when submitting a pull request (PR):
   consistent commit messages, which are then used in automated semantic versioning and changelog
   generation.
 
-- The geotech-pandas project supports Python 3.9+ only, usually in-sync with the supported versions
+- The geotech-pandas project supports Python 3.10+ only, usually in-sync with the supported versions
   of Pandas.
 
 Bug reports and feature requests
