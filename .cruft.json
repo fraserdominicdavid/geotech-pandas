@@ -9,7 +9,7 @@
       "package_url": "https://github.com/fraserdominicdavid/geotech-pandas",
       "author_name": "Fraser Dominic David",
       "author_email": "77269589+fraserdominicdavid@users.noreply.github.com",
-      "python_version": "3.9",
+      "python_version": "3.10",
       "docker_image": "python:$PYTHON_VERSION-slim",
       "development_environment": "simple",
       "with_conventional_commits": "1",

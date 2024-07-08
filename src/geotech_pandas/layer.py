@@ -1,7 +1,5 @@
 """Subaccessor that contains depth-related methods."""
 
-from typing import Union
-
 import pandas as pd
 
 from geotech_pandas.base import GeotechPandasBase
@@ -76,7 +74,7 @@ class LayerDataFrameAccessor(GeotechPandasBase):
         return pd.Series((self._obj["bottom"] - self._obj["top"]).abs(), name="thickness")
 
     def split_at(
-        self, depth: Union[pd.Series, float, int, str], reset_index: bool = True
+        self, depth: pd.Series | float | int | str, reset_index: bool = True
     ) -> pd.DataFrame:
         """Split layers in the :external:class:`~pandas.DataFrame` into two with the provided depth.
 

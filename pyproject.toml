@@ -20,7 +20,7 @@ changelog_file = "docs/changelog/changelog.rst"
 template = "docs/_templates/commitizen/changelog.rst"
 
 [tool.poetry.dependencies]  # https://python-poetry.org/docs/dependency-specification/
-python = ">=3.9,<4.0"
+python = ">=3.10,<4.0"
 pandas = ">=2.1.0"
 
 [tool.poetry.group.test.dependencies]  # https://python-poetry.org/docs/master/managing-dependencies/
@@ -82,7 +82,7 @@ select = ["A", "ASYNC", "B", "C4", "C90", "D", "DTZ", "E", "F", "FLY", "FURB", "
 ignore = ["E501", "PGH001", "PGH002", "PGH003", "RET504", "S101"]
 unfixable = ["F401", "F841"]
 src = ["src", "tests"]
-target-version = "py39"
+target-version = "py310"
 
 [tool.ruff.flake8-tidy-imports]
 ban-relative-imports = "all"
