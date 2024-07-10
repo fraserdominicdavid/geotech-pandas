@@ -148,27 +148,31 @@ Soil Index Columns
 ------------------
 .. glossary::
 
-    moisture_content_mass_moist
+    {prefix}_mass_moist
         | Mass of container and moist specimen.
         | *grams (g)*
         | ``float``
 
-    moisture_content_mass_dry
+    {prefix}_mass_dry
         | Mass of container and oven dry specimen.
         | *grams (g)*
         | ``float``
 
-    moisture_content_mass_container
+    {prefix}_mass_container
         | Mass of container.
         | *grams (g)*
         | ``float``
 
-    moisture_content
+    {prefix}_moisture_content
         | Moisture content.
         | *percent (%)*
         | ``float``
 
         .. note::
 
-            :term:`moisture_content` mass measurements don't necessarily require using *grams (g)*
-            as the unit. However, **consistency** in the chosen units is essential.
+            The `{prefix}` indicated here is used to specify the prefix when calculating the
+            moisture content. By default, the prefix is "moisture_content", so
+            :term:`{prefix}_moisture_content` would then become `moisture_content`.
+
+            Moisture content mass measurements do not necessarily require using *grams (g)*
+            as the unit. However, maintaining **consistency** in the chosen units is essential.
