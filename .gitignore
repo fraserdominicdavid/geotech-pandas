@@ -62,6 +62,9 @@ dist/
 # Terraform
 .terraform/
 
+# uv
+uv.lock
+
 # VS Code
 .vscode/
 
