@@ -1,3 +1,19 @@
+v0.2.0 (2025-04-14)
+===================
+
+Feat
+----
+
+- **index**: add prefix to get_moisture_content method (:pull:`156`)
+- **index**: add ability to get moisture content (:pull:`141`)
+- **index**: add subaccessor for index property tests (:pull:`105`)
+- **lab**: add lab subaccessor (:pull:`104`)
+
+Perf
+----
+
+- use list comprehension in column validation (:pull:`140`)
+
 v0.1.1 (2023-12-12)
 ===================
 
