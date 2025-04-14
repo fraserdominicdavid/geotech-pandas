@@ -92,45 +92,29 @@ Each of these steps is detailed in the following sections after reading through 
 
 Recommended prerequisites
 ^^^^^^^^^^^^^^^^^^^^^^^^^
-#. Set up Git to use SSH
-   
-   #. `Generate an SSH key <https://docs.GitHub.com/en/authentication/connecting-to-GitHub-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key>`__
-      and `add the SSH key to your GitHub account <https://docs.GitHub.com/en/authentication/connecting-to-GitHub-with-ssh/adding-a-new-ssh-key-to-your-GitHub-account>`__.
-   #. Configure SSH to automatically load your SSH keys::
+  
+#. `Generate an SSH key <https://docs.GitHub.com/en/authentication/connecting-to-GitHub-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key>`__
+   and `add the SSH key to your GitHub account <https://docs.GitHub.com/en/authentication/connecting-to-GitHub-with-ssh/adding-a-new-ssh-key-to-your-GitHub-account>`__.
+#. Configure SSH to automatically load your SSH keys::
 
-         cat << EOF >> ~/.ssh/config
+      cat << EOF >> ~/.ssh/config
 
-         Host *
-            AddKeysToAgent yes
-            IgnoreUnknown UseKeychain
-            UseKeychain yes
-            ForwardAgent yes
-         EOF
+      Host *
+         AddKeysToAgent yes
+         IgnoreUnknown UseKeychain
+         UseKeychain yes
+         ForwardAgent yes
+      EOF
 
-#. Install Docker
-
-   #. `Install Docker Desktop <https://www.docker.com/get-started>`__.
-   #. For Linux installations:
-
-      - Export your user's user id and group id so that `files created in the Dev Container are
-        owned by your user <https://GitHub.com/moby/moby/issues/3206>`__::
-
-           cat << EOF >> ~/.bashrc
-
-           export UID=$(id --user)
-           export GID=$(id --group)
-           EOF
-
-#. Install VS Code or PyCharm
-   
-   #. `Install VS Code <https://code.visualstudio.com/>`__ and `VS Code's Dev Containers extension 
-      <https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers>`__.
-      Alternatively, install `PyCharm <https://www.jetbrains.com/pycharm/download/>`__.
-   #. *Optional:* install a `Nerd Font <https://www.nerdfonts.com/font-downloads>`__ such as
-      `FiraCode Nerd Font
-      <https://GitHub.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/FiraCode>`__ and `configure
-      VS Code <https://GitHub.com/tonsky/FiraCode/wiki/VS-Code-Instructions>`__ or `configure 
-      PyCharm <https://GitHub.com/tonsky/FiraCode/wiki/Intellij-products-instructions>`__ to use it.
+#. `Install Docker Desktop <https://www.docker.com/get-started>`__.
+#. `Install VS Code <https://code.visualstudio.com/>`__ and `VS Code's Dev Containers extension 
+   <https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers>`__.
+   Alternatively, install `PyCharm <https://www.jetbrains.com/pycharm/download/>`__.
+#. *Optional:* install a `Nerd Font <https://www.nerdfonts.com/font-downloads>`__ such as
+   `FiraCode Nerd Font <https://GitHub.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/FiraCode>`__
+   and `configure VS Code <https://GitHub.com/tonsky/FiraCode/wiki/VS-Code-Instructions>`__ or
+   `configure PyCharm <https://GitHub.com/tonsky/FiraCode/wiki/Intellij-products-instructions>`__ to
+   use it.
 
 .. _fork-the-git-repository:
 
@@ -157,36 +141,34 @@ This creates the directory ``geotech-pandas-yourname`` and connects your reposit
 
 Set up a development environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Thanks to Dev Containers, it is now easier to set up a consistent environment for the development
-of this project. The following development environments are supported:
+The following development environments are supported:
 
-#. *GitHub Codespaces*:
-   
-   From your GitHub fork, click on *Code* and select *Create codespace* to start a Dev Container
-   with `GitHub Codespaces <https://GitHub.com/features/codespaces>`__.
+#. ⭐️ *GitHub Codespaces*: click on
+   `Open in GitHub Codespaces <https://github.com/codespaces/new/fraserdominicdavid/geotech-pandas>`__
+   to start developing in your browser.
 
-#. *VS Code*:
-   
-   :ref:`clone-your-fork`, open it with VS Code, and run :kbd:`Ctrl/⌘` + :kbd:`⇧` + :kbd:`P` →
-   *Dev Containers: Reopen in Container*.
+#. ⭐️ *VS Code Dev Container (with container volume)*: click on
+   `Open in Dev Containers <https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/fraserdominicdavid/geotech-pandas>`__
+   to clone this repository in a container volume and create a Dev Container with VS Code.
 
-#. *PyCharm*:
+#. ⭐️ *uv*: clone this repository and run the following from root of the repository::
 
-   :ref:`clone-your-fork`, open it with PyCharm, and `configure Docker Compose as a remote
-   interpreter <https://www.jetbrains.com/help/pycharm/using-docker-compose-as-a-remote-interpreter.html#docker-compose-remote>`__
-   with the ``dev`` service.
+      # Create and install a virtual environment
+      uv sync --python 3.10 --all-extras
 
-#. *Terminal*:
+      # Activate the virtual environment
+      source .venv/bin/activate
 
-   :ref:`clone-your-fork`, open it with your terminal, and run::
-   
-      docker compose up --detach dev 
-   
-   to start a Dev Container in the background, and then run::
-   
-      docker compose exec dev zsh
-   
-   to open a shell prompt in the Dev Container.
+      # Install the pre-commit hooks
+      pre-commit install --install-hooks
+
+#. *VS Code Dev Container*: :ref:`clone-your-fork`, open it with VS Code, and run :kbd:`Ctrl/⌘` +
+   :kbd:`⇧` + :kbd:`P` → *Dev Containers: Reopen in Container*.
+
+#. *PyCharm Dev Container*: :ref:`clone-your-fork`, open it with PyCharm, `create a Dev
+   Container with Mount Sources <https://www.jetbrains.com/help/pycharm/start-dev-container-inside-ide.html>`__,
+   and `configure an existing interpreter <https://www.jetbrains.com/help/pycharm/configuring-python-interpreter.html#widget>`__
+   at ``/opt/venv/bin/python``.
 
 .. _create-a-feature-branch:
 
@@ -424,8 +406,12 @@ various packages that are used during development. To do that, run::
     git fetch upstream
     git merge upstream/main
 
-If there are any updates to the dependencies, for instance, if the ``pyproject.toml`` and/or
-``poetry.lock`` files are changed, then you must also rebuild your Dev Container:
+Run ``uv sync --upgrade`` from within the development environment to upgrade all dependencies to
+the latest versions allowed by ``pyproject.toml``. Add ``--only-dev`` to upgrade the development
+dependencies only.
+
+If there are any updates to the dependencies, for instance, if the ``pyproject.toml`` file is
+changed, then you must also rebuild your Dev Container:
 
 #. *GitHub Codespaces*:
    
@@ -467,3 +453,8 @@ To improve the chances of your PR being reviewed, you should:
 - **Ensure that GHA status is green**, otherwise, reviewers may not even take a look; and
 - **Keep** :ref:`updating your PR<update-your-pull-request>`, either by the request of a reviewer or
   every few days to keep up-to-date with the current geotech-pandas codebase.
+
+Bumping the package version
+---------------------------
+Run ``cz bump`` to bump the package's version, update the ``CHANGELOG.rst``, and create a git tag.
+Then push the changes and the git tag with ``git push origin main --tags``.

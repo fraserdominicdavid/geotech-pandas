@@ -13,7 +13,7 @@ from geotech_pandas.layer import LayerDataFrameAccessor
 from geotech_pandas.point import PointDataFrameAccessor
 
 
-@pytest.fixture()
+@pytest.fixture
 def df():
     """Return default ``DataFrame`` for testing."""
     return pd.DataFrame(

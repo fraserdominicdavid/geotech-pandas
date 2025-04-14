@@ -19,7 +19,7 @@ except ModuleNotFoundError:
     import geotech_pandas  # noqa: F401 registers accessor for autosummary
 
 project = "geotech-pandas"
-copyright = "2023-2024, Fraser Dominic David"
+copyright = "2023-2025, Fraser Dominic David"
 author = "Fraser Dominic David"
 version = "0.1.1"
 release = version
@@ -73,9 +73,11 @@ html_theme_options = {
     "navbar_align": "left",
     "github_url": "https://github.com/fraserdominicdavid/geotech-pandas",
     "show_nav_level": 4,
+    "secondary_sidebar_items": ["page-toc"],
 }
 html_sidebars = {
     "**": ["sidebar-nav-bs", "sidebar-ethical-ads"],
+    "index": [],
     "changelog/index": [],
     "column-reference/index": [],
 }

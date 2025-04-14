@@ -9,7 +9,7 @@ import pytest
 from geotech_pandas.layer import LayerDataFrameAccessor
 
 
-@pytest.fixture()
+@pytest.fixture
 def df() -> pd.DataFrame:
     """Return common DataFrame for testing methods that return Series objects."""
     return pd.DataFrame(

@@ -9,7 +9,7 @@ import pytest
 from geotech_pandas.in_situ import SPTDataFrameAccessor
 
 
-@pytest.fixture()
+@pytest.fixture
 def df() -> pd.DataFrame:
     """Return common DataFrame for testing methods that return Series objects.
 
