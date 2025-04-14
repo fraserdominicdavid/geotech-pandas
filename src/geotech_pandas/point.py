@@ -24,7 +24,7 @@ class PointDataFrameAccessor(GeotechPandasBase):
         list of str
             List of unique point IDs.
         """
-        return self._obj["point_id"].unique().tolist()
+        return [str(point_id) for point_id in self._obj["point_id"].unique()]
 
     @property
     def groups(self) -> DataFrameGroupBy:

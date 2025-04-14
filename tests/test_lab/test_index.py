@@ -14,7 +14,7 @@ def test_accessor():
     isinstance(pd.DataFrame.geotech.lab.index, IndexDataFrameAccessor)
 
 
-@pytest.fixture()
+@pytest.fixture
 def df() -> pd.DataFrame:
     """Return common dataframe for testing methods."""
     return pd.DataFrame(

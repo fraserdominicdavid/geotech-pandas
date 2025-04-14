@@ -1,4 +1,4 @@
-[![codecov](https://codecov.io/gh/fraserdominicdavid/geotech-pandas/graph/badge.svg?token=CB7QB1LFRM)](https://codecov.io/gh/fraserdominicdavid/geotech-pandas)
+[![Open in Dev Containers](https://img.shields.io/static/v1?label=Dev%20Containers&message=Open&color=blue&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTE3IDE2VjdsLTYgNU0yIDlWOGwxLTFoMWw0IDMgOC04aDFsNCAyIDEgMXYxNGwtMSAxLTQgMmgtMWwtOC04LTQgM0gzbC0xLTF2LTFsMy0zIi8+PC9zdmc+)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/fraserdominicdavid/geotech-pandas) [![Open in GitHub Codespaces](https://img.shields.io/static/v1?label=GitHub%20Codespaces&message=Open&color=blue&logo=github)](https://github.com/codespaces/new/fraserdominicdavid/geotech-pandas)
 
 # geotech-pandas
 
@@ -7,6 +7,14 @@ The [*geotech-pandas*](https://fraserdominicdavid.github.io/geotech-pandas/) pac
 tailored for geotechnical engineering calculations, seamlessly integrating with the powerful data
 manipulation and analysis capabilities of Pandas. This open-source extension empowers geotechnical
 engineers to streamline their workflow, enhance data analysis, and improve productivity.
+
+## Installing
+
+To install this package, run:
+
+```sh
+pip install geotech-pandas
+```
 
 ## Using
 

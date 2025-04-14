@@ -7,7 +7,7 @@ import pytest
 from geotech_pandas.point import PointDataFrameAccessor
 
 
-@pytest.fixture()
+@pytest.fixture
 def df() -> pd.DataFrame:
     """Return common DataFrame for testing methods that return Series objects."""
     return pd.DataFrame(

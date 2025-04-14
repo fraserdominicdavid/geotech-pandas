@@ -1,0 +1,12 @@
+_commit: v1.5.1
+_src_path: gh:superlinear-ai/substrate
+author_email: 77269589+fraserdominicdavid@users.noreply.github.com
+author_name: Fraser Dominic David
+project_description: A Pandas extension for geotechnical calculations.
+project_name: geotech-pandas
+project_type: package
+project_url: https://github.com/fraserdominicdavid/geotech-pandas
+python_version: '3.10'
+typing: optional
+with_conventional_commits: true
+with_typer_cli: false
