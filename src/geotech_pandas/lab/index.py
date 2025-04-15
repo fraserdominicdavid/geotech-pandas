@@ -145,7 +145,7 @@ class IndexDataFrameAccessor(GeotechPandasBase):
         self._validate_columns(columns)
         return columns
 
-    def _melt_and_pivot_liquid_limit_data(self, columns: list) -> pd.DataFrame:
+    def _transform_liquid_limit_data(self, columns: list[str]) -> pd.DataFrame:
         """Transform liquid limit data into a format suitable for analysis.
 
         This method melts and pivots the DataFrame to organize the liquid limit data by trial,
@@ -159,7 +159,7 @@ class IndexDataFrameAccessor(GeotechPandasBase):
 
         Parameters
         ----------
-        columns: list
+        columns: list of str
             A list of column names to include in the transformation.
 
         Returns
@@ -240,7 +240,7 @@ class IndexDataFrameAccessor(GeotechPandasBase):
         Name: liquid_limit, dtype: Float64
         """
         columns = self._prepare_liquid_limit_data(trials)
-        df = self._melt_and_pivot_liquid_limit_data(columns)
+        df = self._transform_liquid_limit_data(columns)
 
         liquid_limit = df.groupby(["point_id", "bottom"]).apply(
             lambda group: _get_linear_forecast(
