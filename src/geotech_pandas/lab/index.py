@@ -1,8 +1,10 @@
 """Subaccessor that contains methods related to index property tests."""
 
+import numpy as np
 import pandas as pd
 
 from geotech_pandas.base import GeotechPandasBase
+from geotech_pandas.helpers import _get_linear_forecast
 
 
 class IndexDataFrameAccessor(GeotechPandasBase):
@@ -109,3 +111,154 @@ class IndexDataFrameAccessor(GeotechPandasBase):
         moisture_content = pd.Series((moist - dry) / (dry - container) * 100, name=prefix)
 
         return moisture_content
+
+    def _prepare_liquid_limit_data(self, trials: int) -> list[str]:
+        """Prepare and validate the required columns for liquid limit calculations.
+
+        This method generates a list of column names based on the number of trials and validates
+        their existence in the DataFrame.
+
+        .. admonition:: **Requires:**
+            :class: important
+
+            | :term:`liquid_limit_{n}_drops`
+            | :term:`liquid_limit_{n}_moisture_content`
+
+        Parameters
+        ----------
+        trials: int
+            The number of trials to include in the liquid limit calculation.
+
+        Returns
+        -------
+        list[str]
+            A list of column names required for liquid limit calculations.
+        """
+        columns = ["point_id", "bottom"]
+        for n in range(trials):
+            columns.extend(
+                [
+                    f"liquid_limit_{n + 1}_drops",
+                    f"liquid_limit_{n + 1}_moisture_content",
+                ]
+            )
+        self._validate_columns(columns)
+        return columns
+
+    def _melt_and_pivot_liquid_limit_data(self, columns: list) -> pd.DataFrame:
+        """Transform liquid limit data into a format suitable for analysis.
+
+        This method melts and pivots the DataFrame to organize the liquid limit data by trial,
+        including the logarithm of the number of drops for interpolation.
+
+        .. admonition:: **Requires:**
+            :class: important
+
+            | :term:`liquid_limit_{n}_drops`
+            | :term:`liquid_limit_{n}_moisture_content`
+
+        Parameters
+        ----------
+        columns: list
+            A list of column names to include in the transformation.
+
+        Returns
+        -------
+        pd.DataFrame
+            A transformed DataFrame with trial-specific liquid limit data, including a column
+            for the logarithm of the number of drops.
+        """
+        melted_df = pd.melt(
+            self._obj[columns],
+            id_vars=["point_id", "bottom"],
+            value_vars=[col for col in columns if "drops" in col or "moisture_content" in col],
+            var_name="variable",
+            value_name="value",
+        )
+        melted_df["type"] = (
+            melted_df["variable"].str.extract(r"(drops|moisture_content)").fillna("")
+        )
+        melted_df["trial_id"] = melted_df["variable"].str.extract(r"(\d+)").astype(int)
+
+        df = melted_df.pivot_table(
+            index=["point_id", "bottom", "trial_id"],
+            columns="type",
+            values="value",
+            aggfunc="first",
+        ).reset_index()
+
+        df["drops_log"] = np.log(df["drops"])
+        df = df.sort_values(["point_id", "bottom", "drops_log"])
+
+        return df
+
+    def get_liquid_limit(self, trials: int = 3) -> pd.Series:
+        """Calculate and return the liquid limit according to ASTM D4318 Method A Multipoint Method.
+
+        This method computes the liquid limit by interpolating the moisture content at 25 drops
+        using the logarithm of the number of drops and the corresponding moisture content values.
+
+        .. admonition:: **Requires:**
+            :class: important
+
+            | :term:`liquid_limit_{n}_drops`
+            | :term:`liquid_limit_{n}_moisture_content`
+
+        Parameters
+        ----------
+        trials: int, default 3
+            The number of trials to be considered for interpolation.
+
+        Returns
+        -------
+        :external:class:`~pandas.Series`
+            Series with liquid limit values, calculated by interpolating the moisture content
+            at 25 drops.
+
+        References
+        ----------
+        .. [1] ASTM International. (2018). *Standard test methods for liquid limit, plastic limit,
+           and plasticity index of soils* (ASTM D4318-17e1).
+           https://doi.org/10.1520/D4318-17E01
+
+        Examples
+        --------
+        >>> df = pd.DataFrame(
+        ...     {
+        ...         "point_id": ["BH-1"],
+        ...         "bottom": [1.0],
+        ...         "liquid_limit_1_drops": [23],
+        ...         "liquid_limit_1_moisture_content": [48.1],
+        ...         "liquid_limit_2_drops": [28],
+        ...         "liquid_limit_2_moisture_content": [46.7],
+        ...         "liquid_limit_3_drops": [33],
+        ...         "liquid_limit_3_moisture_content": [46.1],
+        ...     }
+        ... )
+        >>> df.geotech.lab.index.get_liquid_limit(trials=3)
+        0    47.539917
+        Name: liquid_limit, dtype: Float64
+        """
+        columns = self._prepare_liquid_limit_data(trials)
+        df = self._melt_and_pivot_liquid_limit_data(columns)
+
+        liquid_limit = df.groupby(["point_id", "bottom"]).apply(
+            lambda group: _get_linear_forecast(
+                group=group,
+                x_col_name="drops_log",
+                y_col_name="moisture_content",
+                x_target=np.log(25),
+            ),
+            include_groups=False,
+        )
+        liquid_limit.name = "liquid_limit"
+        df = liquid_limit.reset_index()
+        df = pd.merge(
+            self._obj[["point_id", "bottom"]],
+            df,
+            on=["point_id", "bottom"],
+            how="left",
+        )
+        liquid_limit = df["liquid_limit"].astype("Float64")
+
+        return liquid_limit

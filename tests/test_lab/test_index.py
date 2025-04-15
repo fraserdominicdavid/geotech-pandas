@@ -25,6 +25,13 @@ def df() -> pd.DataFrame:
             "moisture_content_mass_dry": [174.40, 120.05, 134.31, None],
             "moisture_content_mass_container": [22.20, 18.66, 20.27, None],
             "moisture_content": [40.76, 33.88, 26.63, None],
+            "liquid_limit_1_drops": [23, 22, 17, None],
+            "liquid_limit_2_drops": [28, 27, 25, None],
+            "liquid_limit_3_drops": [33, 32, 34, None],
+            "liquid_limit_1_moisture_content": [48.1, 46.5, 42.4, None],
+            "liquid_limit_2_moisture_content": [46.7, 45.6, 41.5, None],
+            "liquid_limit_3_moisture_content": [46.1, 43.9, 40.9, None],
+            "liquid_limit": [47.5, 45.94, 41.5, None],
         }
     ).convert_dtypes()
 
@@ -33,6 +40,7 @@ def df() -> pd.DataFrame:
     ("method", "column", "rename", "kwargs"),
     [
         ("geotech.lab.index.get_moisture_content", "moisture_content", None, None),
+        ("geotech.lab.index.get_liquid_limit", "liquid_limit", None, None),
     ],
 )
 def test_index_methods(df, method, column, rename, kwargs):
