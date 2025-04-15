@@ -70,3 +70,4 @@ uv.lock
 
 # Sphinx
 docs/_build
+docs/api-reference/api
