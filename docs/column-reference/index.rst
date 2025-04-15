@@ -191,3 +191,13 @@ Soil Index Columns
 
             The `{n}` indicated here is used to specify the trial number when calculating the
             liquid limit.
+
+    plastic_limit_1_moisture_content
+        | Moisture content for the first plastic limit test.
+        | *percent (%)*
+        | ``float``
+
+    plastic_limit_2_moisture_content
+        | Moisture content for the second plastic limit test.
+        | *percent (%)*
+        | ``float``
