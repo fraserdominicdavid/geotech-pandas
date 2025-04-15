@@ -38,6 +38,12 @@ Next, we create a :external:class:`~pandas.DataFrame` with the following data,
             "liquid_limit_3_mass_moist": [21.38, 17.77, 13.40],
             "liquid_limit_3_mass_dry": [15.91, 13.67, 10.64],
             "liquid_limit_3_mass_container": [3.21, 3.24, 3.23],
+            "plastic_limit_1_mass_moist": [12.26, 11.66, 13.22],
+            "plastic_limit_1_mass_dry": [10.23, 9.89, 11.28],
+            "plastic_limit_1_mass_container": [2.57, 2.99, 2.97],
+            "plastic_limit_2_mass_moist": [11.17, 13.20, 17.01],
+            "plastic_limit_2_mass_dry": [9.45, 11.01, 14.30],
+            "plastic_limit_2_mass_container": [3.07, 2.56, 2.90],
         }
     )
     df = df.convert_dtypes()
@@ -90,7 +96,7 @@ moisture content values. For 3 trials, this method requires the following column
 - ``liquid_limit_3_drops``: number of drops causing closure of the groove for trial 3, drops.
 - ``liquid_limit_3_moisture_content``: moisture content for trial 3, %.
 
-Since, there are no moisture content columns for each trial, we can use the
+Since there are no moisture content columns for each trial, we can use the
 :meth:`~pandas.DataFrame.geotech.lab.index.get_moisture_content` method to calculate
 the moisture content for each trial and assign it back to the dataframe.
 
@@ -110,3 +116,31 @@ for each sample in the dataframe.
 .. ipython:: python
 
     df.geotech.lab.index.get_liquid_limit()
+
+Getting the plastic limit
+-------------------------
+The :meth:`~pandas.DataFrame.geotech.lab.index.get_plastic_limit` method calculates and returns 
+the plastic limit according to ASTM D4318. The plastic limit is the average of two moisture 
+content measurements for the plastic limit test. This method requires the following columns:
+
+- ``plastic_limit_1_moisture_content``: moisture content for the first plastic limit test, %.
+- ``plastic_limit_2_moisture_content``: moisture content for the second plastic limit test, %.
+
+Since there are no moisture content columns for each test, we can use the
+:meth:`~pandas.DataFrame.geotech.lab.index.get_moisture_content` method to calculate
+the moisture content for each test and assign it back to the dataframe.
+
+.. ipython:: python
+
+    df["plastic_limit_1_moisture_content"] = df.geotech.lab.index.get_moisture_content(prefix="plastic_limit_1")
+    df["plastic_limit_1_moisture_content"]
+    df["plastic_limit_2_moisture_content"] = df.geotech.lab.index.get_moisture_content(prefix="plastic_limit_2")
+    df["plastic_limit_2_moisture_content"]
+
+Now that all required columns are present, we can call the
+:meth:`~pandas.DataFrame.geotech.lab.index.get_plastic_limit` method to calculate the plastic limit
+for each sample in the dataframe.
+
+.. ipython:: python
+
+    df.geotech.lab.index.get_plastic_limit()

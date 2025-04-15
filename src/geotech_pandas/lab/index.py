@@ -262,3 +262,54 @@ class IndexDataFrameAccessor(GeotechPandasBase):
         liquid_limit = df["liquid_limit"].astype("Float64")
 
         return liquid_limit
+
+    def get_plastic_limit(self) -> pd.Series:
+        """Calculate and return the plastic limit according to ASTM D4318.
+
+        The plastic limit is calculated as the average of two moisture content measurements
+        for the plastic limit test.
+
+        .. admonition:: **Requires:**
+            :class: important
+
+            | :term:`plastic_limit_1_moisture_content`
+            | :term:`plastic_limit_2_moisture_content`
+
+        Returns
+        -------
+        :external:class:`~pandas.Series`
+            Series with plastic limit values.
+
+        References
+        ----------
+        .. [1] ASTM International. (2018). *Standard test methods for liquid limit, plastic limit,
+           and plasticity index of soils* (ASTM D4318-17e1).
+           https://doi.org/10.1520/D4318-17E01
+
+        Examples
+        --------
+        >>> df = pd.DataFrame(
+        ...     {
+        ...         "point_id": ["BH-1"],
+        ...         "bottom": [1.0],
+        ...         "plastic_limit_1_moisture_content": [29.7],
+        ...         "plastic_limit_2_moisture_content": [29.1],
+        ...     }
+        ... )
+        >>> df.geotech.lab.index.get_plastic_limit()
+        0    29.4
+        Name: plastic_limit, dtype: Float64
+        """
+        self._validate_columns(
+            ["plastic_limit_1_moisture_content", "plastic_limit_2_moisture_content"]
+        )
+
+        plastic_limit = pd.Series(
+            self._obj[
+                ["plastic_limit_1_moisture_content", "plastic_limit_2_moisture_content"]
+            ].mean(axis=1),
+            name="plastic_limit",
+        )
+        plastic_limit = plastic_limit.astype("Float64")
+
+        return plastic_limit
