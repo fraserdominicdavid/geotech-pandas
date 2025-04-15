@@ -19,22 +19,24 @@ def df() -> pd.DataFrame:
     """Return common dataframe for testing methods."""
     return pd.DataFrame(
         {
-            "point_id": ["bh-1", "bh-2", "bh-3", "None"],
-            "bottom": [1, 1, 1, 1],
-            "moisture_content_mass_moist": [236.44, 154.40, 164.68, None],
-            "moisture_content_mass_dry": [174.40, 120.05, 134.31, None],
-            "moisture_content_mass_container": [22.20, 18.66, 20.27, None],
-            "moisture_content": [40.76, 33.88, 26.63, None],
-            "liquid_limit_1_drops": [23, 22, 17, None],
-            "liquid_limit_2_drops": [28, 27, 25, None],
-            "liquid_limit_3_drops": [33, 32, 34, None],
-            "liquid_limit_1_moisture_content": [48.1, 46.5, 42.4, None],
-            "liquid_limit_2_moisture_content": [46.7, 45.6, 41.5, None],
-            "liquid_limit_3_moisture_content": [46.1, 43.9, 40.9, None],
-            "liquid_limit": [47.5, 45.94, 41.5, None],
-            "plastic_limit_1_moisture_content": [26.5, 25.7, 23.3, None],
-            "plastic_limit_2_moisture_content": [27.0, 25.9, 23.8, None],
-            "plastic_limit": [26.7, 25.8, 23.6, None],
+            "point_id": ["bh-1", "bh-2", "bh-3", "bh-4", "None"],
+            "bottom": [1, 1, 1, 1, 1],
+            "moisture_content_mass_moist": [236.44, 154.40, 164.68, None, None],
+            "moisture_content_mass_dry": [174.40, 120.05, 134.31, None, None],
+            "moisture_content_mass_container": [22.20, 18.66, 20.27, None, None],
+            "moisture_content": [40.76, 33.88, 26.63, None, None],
+            "liquid_limit_1_drops": [23, 22, 17, 21, None],
+            "liquid_limit_2_drops": [28, 27, 25, 29, None],
+            "liquid_limit_3_drops": [33, 32, 34, 32, None],
+            "liquid_limit_1_moisture_content": [48.1, 46.5, 42.4, 23.3, None],
+            "liquid_limit_2_moisture_content": [46.7, 45.6, 41.5, 24.3, None],
+            "liquid_limit_3_moisture_content": [46.1, 43.9, 40.9, 25.1, None],
+            "liquid_limit": [47.5, 45.94, 41.5, 23.94, None],
+            "plastic_limit_1_moisture_content": [26.5, 25.7, 23.3, 35.3, None],
+            "plastic_limit_2_moisture_content": [27.0, 25.9, 23.8, 35.3, None],
+            "plastic_limit": [26.7, 25.8, 23.6, 35.3, None],
+            "is_nonplastic": [False, False, False, True, True],
+            "plasticity_index": [20.8, 20.14, 17.9, None, None],
         }
     ).convert_dtypes()
 
@@ -45,6 +47,8 @@ def df() -> pd.DataFrame:
         ("geotech.lab.index.get_moisture_content", "moisture_content", None, None),
         ("geotech.lab.index.get_liquid_limit", "liquid_limit", None, None),
         ("geotech.lab.index.get_plastic_limit", "plastic_limit", None, None),
+        ("geotech.lab.index.is_nonplastic", "is_nonplastic", None, None),
+        ("geotech.lab.index.get_plasticity_index", "plasticity_index", None, None),
     ],
 )
 def test_index_methods(df, method, column, rename, kwargs):

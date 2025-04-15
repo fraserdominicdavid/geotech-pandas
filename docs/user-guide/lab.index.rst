@@ -115,7 +115,8 @@ for each sample in the dataframe.
 
 .. ipython:: python
 
-    df.geotech.lab.index.get_liquid_limit()
+    df["liquid_limit"] = df.geotech.lab.index.get_liquid_limit()
+    df["liquid_limit"]
 
 Getting the plastic limit
 -------------------------
@@ -143,4 +144,33 @@ for each sample in the dataframe.
 
 .. ipython:: python
 
-    df.geotech.lab.index.get_plastic_limit()
+    df["plastic_limit"] = df.geotech.lab.index.get_plastic_limit()
+    df["plastic_limit"]
+
+Checking for nonplastic layers
+------------------------------
+The :meth:`~pandas.DataFrame.geotech.lab.index.is_nonplastic` method checks if a layer is
+nonplastic. A layer is considered nonplastic if the plastic limit is greater than or equal to the
+liquid limit, or if either the liquid limit or plastic limit is missing
+(:external:attr:`~pandas.NA`). This method requires the following columns:
+
+- ``liquid_limit``: liquid limit, %.
+- ``plastic_limit``: plastic limit, %.
+
+.. ipython:: python
+
+    df.geotech.lab.index.is_nonplastic()
+
+Getting the plasticity index
+----------------------------
+The :meth:`~pandas.DataFrame.geotech.lab.index.get_plasticity_index` method calculates the
+plasticity index as the difference between the liquid limit and the plastic limit. If a layer is
+nonplastic, the plasticity index is set to :external:attr:`~pandas.NA`. This method requires the
+following columns:
+
+- ``liquid_limit``: liquid limit, %.
+- ``plastic_limit``: plastic limit, %.
+
+.. ipython:: python
+
+    df.geotech.lab.index.get_plasticity_index()

@@ -191,6 +191,11 @@ Soil Index Columns
 
             The `{n}` indicated here is used to specify the trial number when calculating the
             liquid limit.
+    
+    liquid_limit
+        | Liquid limit, calculated as the moisture content at 25 drops.
+        | *percent (%)*
+        | ``float``
 
     plastic_limit_1_moisture_content
         | Moisture content for the first plastic limit test.
@@ -199,5 +204,22 @@ Soil Index Columns
 
     plastic_limit_2_moisture_content
         | Moisture content for the second plastic limit test.
+        | *percent (%)*
+        | ``float``
+
+    plastic_limit
+        | Plastic limit, calculated as the average of two moisture content measurements for the
+          plastic limit test.
+        | *percent (%)*
+        | ``float``
+
+    is_nonplastic
+        | Whether or not a layer is considered nonplastic.
+        | *unitless*
+        | ``bool``
+
+    plasticity_index
+        | Plasticity index, calculated as the difference between the liquid limit and the plastic
+          limit.
         | *percent (%)*
         | ``float``
