@@ -176,3 +176,18 @@ Soil Index Columns
 
             Moisture content mass measurements do not necessarily require using *grams (g)*
             as the unit. However, maintaining **consistency** in the chosen units is essential.
+
+    liquid_limit_{n}_drops
+        | Number of drops causing closure of the groove for trial `{n}`.
+        | *drops*
+        | ``int``
+
+    liquid_limit_{n}_moisture_content
+        | Moisture content for trial `{n}`.
+        | *percent (%)*
+        | ``float``
+
+        .. note::
+
+            The `{n}` indicated here is used to specify the trial number when calculating the
+            liquid limit.

@@ -11,7 +11,11 @@ authors = [
   { name = "Fraser Dominic David", email = "77269589+fraserdominicdavid@users.noreply.github.com" },
 ]
 requires-python = ">=3.10,<4.0"
-dependencies = ["pandas>=2.1.2"]
+dependencies = [
+    "numpy>=2.2.4",
+    "pandas>=2.1.2",
+    "statsmodels>=0.14.4",
+]
 
 [project.urls] # https://packaging.python.org/en/latest/specifications/well-known-project-urls/#well-known-labels
 homepage = "https://github.com/fraserdominicdavid/geotech-pandas"

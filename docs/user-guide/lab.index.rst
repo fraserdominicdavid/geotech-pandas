@@ -26,6 +26,18 @@ Next, we create a :external:class:`~pandas.DataFrame` with the following data,
             "moisture_content_mass_moist": [236.44, 154.40, 164.68],
             "moisture_content_mass_dry": [174.40, 120.05, 134.31],
             "moisture_content_mass_container": [22.20, 18.66, 20.27],
+            "liquid_limit_1_drops": [19, 18, 20],
+            "liquid_limit_1_mass_moist": [13.91, 14.58, 16.24],
+            "liquid_limit_1_mass_dry": [10.56, 11.23, 12.56],
+            "liquid_limit_1_mass_container": [3.22, 3.28, 3.24],
+            "liquid_limit_2_drops": [25, 25, 26],
+            "liquid_limit_2_mass_moist": [18.48, 13.36, 12.23],
+            "liquid_limit_2_mass_dry": [13.78, 10.45, 9.74],
+            "liquid_limit_2_mass_container": [3.15, 3.27, 3.26],
+            "liquid_limit_3_drops": [31, 32, 35],
+            "liquid_limit_3_mass_moist": [21.38, 17.77, 13.40],
+            "liquid_limit_3_mass_dry": [15.91, 13.67, 10.64],
+            "liquid_limit_3_mass_container": [3.21, 3.24, 3.23],
         }
     )
     df = df.convert_dtypes()
@@ -63,3 +75,38 @@ columns:
 .. ipython:: python
 
     df.geotech.lab.index.get_moisture_content()
+
+Getting the liquid limit
+------------------------
+The :meth:`~pandas.DataFrame.geotech.lab.index.get_liquid_limit` method calculates and returns the
+liquid limit according to ASTM D4318 Method A Multipoint Method. The method interpolates the
+moisture content at 25 drops using the logarithm of the number of drops and the corresponding
+moisture content values. For 3 trials, this method requires the following columns:
+
+- ``liquid_limit_1_drops``: number of drops causing closure of the groove for trial 1, drops.
+- ``liquid_limit_1_moisture_content``: moisture content for trial 1, %.
+- ``liquid_limit_2_drops``: number of drops causing closure of the groove for trial 2, drops.
+- ``liquid_limit_2_moisture_content``: moisture content for trial 2, %.
+- ``liquid_limit_3_drops``: number of drops causing closure of the groove for trial 3, drops.
+- ``liquid_limit_3_moisture_content``: moisture content for trial 3, %.
+
+Since, there are no moisture content columns for each trial, we can use the
+:meth:`~pandas.DataFrame.geotech.lab.index.get_moisture_content` method to calculate
+the moisture content for each trial and assign it back to the dataframe.
+
+.. ipython:: python
+
+    df["liquid_limit_1_moisture_content"] = df.geotech.lab.index.get_moisture_content(prefix="liquid_limit_1")
+    df["liquid_limit_1_moisture_content"]
+    df["liquid_limit_2_moisture_content"] = df.geotech.lab.index.get_moisture_content(prefix="liquid_limit_2")
+    df["liquid_limit_2_moisture_content"]
+    df["liquid_limit_3_moisture_content"] = df.geotech.lab.index.get_moisture_content(prefix="liquid_limit_3")
+    df["liquid_limit_3_moisture_content"]
+
+Now that all required columns are present, we can call the
+:meth:`~pandas.DataFrame.geotech.lab.index.get_liquid_limit` method to calculate the liquid limit
+for each sample in the dataframe.
+
+.. ipython:: python
+
+    df.geotech.lab.index.get_liquid_limit()
