@@ -21,7 +21,7 @@ except ModuleNotFoundError:
 project = "geotech-pandas"
 copyright = "2023-2025, Fraser Dominic David"
 author = "Fraser Dominic David"
-version = "0.2.0"
+version = "0.3.0"
 release = version
 
 # -- General configuration ---------------------------------------------------

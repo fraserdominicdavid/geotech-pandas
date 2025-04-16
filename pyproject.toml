@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project] # https://packaging.python.org/en/latest/specifications/pyproject-toml/
 name = "geotech-pandas"
-version = "0.2.0"
+version = "0.3.0"
 description = "A Pandas extension for geotechnical calculations."
 readme = "README.md"
 authors = [
