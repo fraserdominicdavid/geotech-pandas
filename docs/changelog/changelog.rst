@@ -1,3 +1,14 @@
+v0.3.0 (2025-04-16)
+===================
+
+Feat
+----
+
+- **index**: add ability to get liquidity index (:pull:`171`)
+- **index**: add ability to get plasticity index (:pull:`170`)
+- **index**: add ability to get plastic limit (:pull:`169`)
+- **index**: add ability to get liquid limit (:pull:`167`)
+
 v0.2.0 (2025-04-14)
 ===================
 
