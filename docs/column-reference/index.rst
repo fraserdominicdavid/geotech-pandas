@@ -164,15 +164,18 @@ Soil Index Columns
         | ``float``
 
     {prefix}_moisture_content
-        | Moisture content.
+        | Moisture content. The ratio of the mass of water contained in the pore spaces of soil or
+          rock material, to the solid mass of particles in that material. A standard temperature of
+          110 ± 5°C is used to determine these masses.
         | *percent (%)*
         | ``float``
 
         .. note::
 
             The `{prefix}` indicated here is used to specify the prefix when calculating the
-            moisture content. By default, the prefix is "moisture_content", so
-            :term:`{prefix}_moisture_content` would then become `moisture_content`.
+            moisture content. By default, the prefix is "moisture_content", however if the prefix is
+            "moisture_content", :term:`{prefix}_moisture_content` would then become just
+            `moisture_content` alone to avoid confusion.
 
             Moisture content mass measurements do not necessarily require using *grams (g)*
             as the unit. However, maintaining **consistency** in the chosen units is essential.
@@ -193,7 +196,8 @@ Soil Index Columns
             liquid limit.
     
     liquid_limit
-        | Liquid limit, calculated as the moisture content at 25 drops.
+        | Liquid limit. The water content of a soil at the arbitrarily defined boundary between the
+          semi-liquid and plastic states.
         | *percent (%)*
         | ``float``
 
@@ -208,8 +212,8 @@ Soil Index Columns
         | ``float``
 
     plastic_limit
-        | Plastic limit, calculated as the average of two moisture content measurements for the
-          plastic limit test.
+        | Plastic limit. The water content of a soil at the boundary between the plastic
+          and semi-solid states.
         | *percent (%)*
         | ``float``
 
@@ -219,13 +223,12 @@ Soil Index Columns
         | ``bool``
 
     plasticity_index
-        | Plasticity index, calculated as the difference between the liquid limit and the plastic
-          limit.
+        | Plasticity index. The range of water content over which a soil behaves plastically.
         | *percent (%)*
         | ``float``
 
     liquidity_index
-        | Liquidity index, calculated as the ratio of the natural moisture content minus the plastic
-          limit to the plasticity index.
+        | Liquidity index. The ratio of the water content of a soil at a given condition/state minus
+          its plastic limit, to its plasticity index.
         | *unitless*
         | ``float``

@@ -11,16 +11,33 @@ class IndexDataFrameAccessor(GeotechPandasBase):
     """Subaccessor that contains methods related to index property tests.
 
     The index properties of soil are the properties which help to assess the engineering behavior of
-    soil and determine the classification of soil accurately. Some key properties include:
+    soil and determine the classification of soil accurately.
 
-    - moisture content
+    Notes
+    -----
+    The index properties of soil are important for understanding the physical and chemical
+    characteristics of soil. They are used to classify soil and predict its behavior under different
+    conditions. These properties are determined through laboratory tests, some key properties
+    include:
+
+    - moisture content [1]_
+    - consistency or Atterberg limits [2]_
     - particle size distribution
-    - consistency or Atterberg limits
     - specific gravity
+    - soil classification
+
+    References
+    ----------
+    .. [1] ASTM International. (2019). *Standard test methods for laboratory determination of
+           water (moisture) content of soil and rock by mass* (ASTM D2216-19).
+           https://doi.org/10.1520/D2216-19
+    .. [2] ASTM International. (2018). *Standard test methods for liquid limit, plastic limit,
+           and plasticity index of soils* (ASTM D4318-17e1).
+           https://doi.org/10.1520/D4318-17E01
     """
 
     def get_moisture_content(self, prefix="moisture_content") -> pd.Series:
-        r"""Return moisture content calculation according to ASTM D2216.
+        r"""Calculate and return the moisture content according to ASTM D2216.
 
         This method allows the use of `prefix` where it is possible to specify the prefix and name
         used for calculating the moisture content. This is useful for other moisture content
@@ -331,6 +348,12 @@ class IndexDataFrameAccessor(GeotechPandasBase):
         :external:class:`~pandas.Series`
             Boolean series indicating whether each layer is nonplastic.
 
+        References
+        ----------
+        .. [1] ASTM International. (2018). *Standard test methods for liquid limit, plastic limit,
+           and plasticity index of soils* (ASTM D4318-17e1).
+           https://doi.org/10.1520/D4318-17E01
+
         Examples
         --------
         >>> df = pd.DataFrame(
@@ -384,6 +407,12 @@ class IndexDataFrameAccessor(GeotechPandasBase):
         - :math:`PI =` plasticity index, %,
         - :math:`LL =` liquid limit, %,
         - :math:`PL =` plastic limit, %.
+
+        References
+        ----------
+        .. [1] ASTM International. (2018). *Standard test methods for liquid limit, plastic limit,
+           and plasticity index of soils* (ASTM D4318-17e1).
+           https://doi.org/10.1520/D4318-17E01
 
         Examples
         --------
