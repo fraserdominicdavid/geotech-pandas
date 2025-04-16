@@ -223,3 +223,9 @@ Soil Index Columns
           limit.
         | *percent (%)*
         | ``float``
+
+    liquidity_index
+        | Liquidity index, calculated as the ratio of the natural moisture content minus the plastic
+          limit to the plasticity index.
+        | *unitless*
+        | ``float``

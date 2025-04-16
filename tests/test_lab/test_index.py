@@ -37,6 +37,7 @@ def df() -> pd.DataFrame:
             "plastic_limit": [26.7, 25.8, 23.6, 35.3, None],
             "is_nonplastic": [False, False, False, True, True],
             "plasticity_index": [20.8, 20.14, 17.9, None, None],
+            "liquidity_index": [0.68, 0.40, 0.17, None, None],
         }
     ).convert_dtypes()
 
@@ -49,6 +50,7 @@ def df() -> pd.DataFrame:
         ("geotech.lab.index.get_plastic_limit", "plastic_limit", None, None),
         ("geotech.lab.index.is_nonplastic", "is_nonplastic", None, None),
         ("geotech.lab.index.get_plasticity_index", "plasticity_index", None, None),
+        ("geotech.lab.index.get_liquidity_index", "liquidity_index", None, None),
     ],
 )
 def test_index_methods(df, method, column, rename, kwargs):
