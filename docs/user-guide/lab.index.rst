@@ -68,9 +68,12 @@ The :meth:`~pandas.DataFrame.geotech.lab.index.get_moisture_content` method retu
 :external:class:`~pandas.Series` of moisture content values. This method requires the following
 columns:
 
-- ``moisture_content_mass_moist``: mass of container and moist specimen, g.
-- ``moisture_content_mass_dry``: mass of container and oven dry specimen, g.
-- ``moisture_content_mass_container``: mass of container, g.
+- :term:`moisture_content_mass_moist <{prefix}_mass_moist>`: mass of container and
+  moist specimen, g.
+- :term:`moisture_content_mass_dry <{prefix}_mass_dry>`: mass of container and oven
+  dry specimen, g.
+- :term:`moisture_content_mass_container <{prefix}_mass_container>`: mass of
+  container, g.
 
 .. note::
 
@@ -90,12 +93,18 @@ liquid limit according to ASTM D4318 Method A Multipoint Method. The method inte
 moisture content at 25 drops using the logarithm of the number of drops and the corresponding
 moisture content values. For 3 trials, this method requires the following columns:
 
-- ``liquid_limit_1_drops``: number of drops causing closure of the groove for trial 1, drops.
-- ``liquid_limit_1_moisture_content``: moisture content for trial 1, %.
-- ``liquid_limit_2_drops``: number of drops causing closure of the groove for trial 2, drops.
-- ``liquid_limit_2_moisture_content``: moisture content for trial 2, %.
-- ``liquid_limit_3_drops``: number of drops causing closure of the groove for trial 3, drops.
-- ``liquid_limit_3_moisture_content``: moisture content for trial 3, %.
+- :term:`liquid_limit_1_drops <liquid_limit_{n}_drops>`: number of drops causing closure of the
+  groove for trial 1, drops.
+- :term:`liquid_limit_1_moisture_content <liquid_limit_{n}_moisture_content>`: moisture content for
+  trial 1, %.
+- :term:`liquid_limit_2_drops <liquid_limit_{n}_drops>`: number of drops causing closure of the
+  groove for trial 2, drops.
+- :term:`liquid_limit_2_moisture_content <liquid_limit_{n}_moisture_content>`: moisture content for
+  trial 2, %.
+- :term:`liquid_limit_3_drops <liquid_limit_{n}_drops>`: number of drops causing closure of the
+  groove for trial 3, drops.
+- :term:`liquid_limit_3_moisture_content <liquid_limit_{n}_moisture_content>`: moisture content for
+  trial 3, %.
 
 Since there are no moisture content columns for each trial, we can use the
 :meth:`~pandas.DataFrame.geotech.lab.index.get_moisture_content` method to calculate
@@ -125,8 +134,8 @@ The :meth:`~pandas.DataFrame.geotech.lab.index.get_plastic_limit` method calcula
 the plastic limit according to ASTM D4318. The plastic limit is the average of two moisture 
 content measurements for the plastic limit test. This method requires the following columns:
 
-- ``plastic_limit_1_moisture_content``: moisture content for the first plastic limit test, %.
-- ``plastic_limit_2_moisture_content``: moisture content for the second plastic limit test, %.
+- :term:`plastic_limit_1_moisture_content`: moisture content for the first plastic limit test, %.
+- :term:`plastic_limit_2_moisture_content`: moisture content for the second plastic limit test, %.
 
 Since there are no moisture content columns for each test, we can use the
 :meth:`~pandas.DataFrame.geotech.lab.index.get_moisture_content` method to calculate
@@ -155,8 +164,8 @@ nonplastic. A layer is considered nonplastic if the plastic limit is greater tha
 liquid limit, or if either the liquid limit or plastic limit is missing
 (:external:attr:`~pandas.NA`). This method requires the following columns:
 
-- ``liquid_limit``: liquid limit, %.
-- ``plastic_limit``: plastic limit, %.
+- :term:`liquid_limit`: liquid limit, %.
+- :term:`plastic_limit`: plastic limit, %.
 
 .. ipython:: python
 
@@ -169,8 +178,8 @@ plasticity index as the difference between the liquid limit and the plastic limi
 nonplastic, the plasticity index is set to :external:attr:`~pandas.NA`. This method requires the
 following columns:
 
-- ``liquid_limit``: liquid limit, %.
-- ``plastic_limit``: plastic limit, %.
+- :term:`liquid_limit`: liquid limit, %.
+- :term:`plastic_limit`: plastic limit, %.
 
 .. ipython:: python
 
@@ -183,9 +192,9 @@ The :meth:`~pandas.DataFrame.geotech.lab.index.get_liquidity_index` method calcu
 index as the ratio of the natural moisture content minus the plastic limit to the plasticity index.
 This method requires the following columns:
 
-- ``moisture_content``: moisture content, %.
-- ``plastic_limit``: plastic limit, %.
-- ``plasticity_index``: plasticity index, %.
+- :term:`moisture_content <{prefix}_moisture_content>`: moisture content, %.
+- :term:`plastic_limit`: plastic limit, %.
+- :term:`plasticity_index`: plasticity index, %.
 
 .. ipython:: python
 
