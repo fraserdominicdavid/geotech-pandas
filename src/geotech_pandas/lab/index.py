@@ -410,3 +410,69 @@ class IndexDataFrameAccessor(GeotechPandasBase):
         plasticity_index = plasticity_index.astype("Float64")
 
         return plasticity_index
+
+    def get_liquidity_index(self) -> pd.Series:
+        r"""Calculate and return the liquidity index.
+
+        The liquidity index is calculated as the ratio of the natural moisture content minus the
+        plastic limit to the plasticity index.
+
+        .. admonition:: **Requires:**
+            :class: important
+
+            | :term:`moisture_content <{prefix}_moisture_content>`
+            | :term:`plastic_limit`
+            | :term:`plasticity_index`
+
+        Returns
+        -------
+        :external:class:`~pandas.Series`
+            Series with liquidity index values.
+
+        Notes
+        -----
+        The liquidity index is defined as:
+
+        .. math:: LI = \frac{w - PL}{PI}
+
+        where:
+
+        - :math:`LI =` liquidity index,
+        - :math:`w =` natural moisture content, %,
+        - :math:`PL =` plastic limit, %,
+        - :math:`PI =` plasticity index, %.
+
+        References
+        ----------
+        .. [1] ASTM International. (2018). *Standard test methods for liquid limit, plastic limit,
+           and plasticity index of soils* (ASTM D4318-17e1).
+           https://doi.org/10.1520/D4318-17E01
+
+        Examples
+        --------
+        >>> df = pd.DataFrame(
+        ...     {
+        ...         "point_id": ["BH-1"],
+        ...         "bottom": [1.0],
+        ...         "moisture_content": [30.0],
+        ...         "plastic_limit": [25.3],
+        ...         "plasticity_index": [22.2],
+        ...     }
+        ... )
+        >>> df.geotech.lab.index.get_liquidity_index()
+        0    0.211712
+        Name: liquidity_index, dtype: Float64
+        """
+        self._validate_columns(["moisture_content", "plastic_limit", "plasticity_index"])
+
+        moisture_content = self._obj["moisture_content"]
+        plastic_limit = self._obj["plastic_limit"]
+        plasticity_index = self._obj["plasticity_index"]
+
+        liquidity_index = pd.Series(
+            (moisture_content - plastic_limit) / plasticity_index,
+            name="liquidity_index",
+        )
+        liquidity_index = liquidity_index.astype("Float64")
+
+        return liquidity_index

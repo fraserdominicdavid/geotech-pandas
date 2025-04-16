@@ -80,7 +80,8 @@ columns:
 
 .. ipython:: python
 
-    df.geotech.lab.index.get_moisture_content()
+    df["moisture_content"] = df.geotech.lab.index.get_moisture_content()
+    df["moisture_content"]
 
 Getting the liquid limit
 ------------------------
@@ -173,4 +174,20 @@ following columns:
 
 .. ipython:: python
 
-    df.geotech.lab.index.get_plasticity_index()
+    df["plasticity_index"] = df.geotech.lab.index.get_plasticity_index()
+    df["plasticity_index"]
+
+Getting the liquidity index
+----------------------------
+The :meth:`~pandas.DataFrame.geotech.lab.index.get_liquidity_index` method calculates the liquidity
+index as the ratio of the natural moisture content minus the plastic limit to the plasticity index.
+This method requires the following columns:
+
+- ``moisture_content``: moisture content, %.
+- ``plastic_limit``: plastic limit, %.
+- ``plasticity_index``: plasticity index, %.
+
+.. ipython:: python
+
+    df["liquidity_index"] = df.geotech.lab.index.get_liquidity_index()
+    df["liquidity_index"]
