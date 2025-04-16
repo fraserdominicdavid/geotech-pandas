@@ -164,7 +164,7 @@ class IndexDataFrameAccessor(GeotechPandasBase):
 
         Returns
         -------
-        pd.DataFrame
+        :external:class:`~pandas.DataFrame`
             A transformed DataFrame with trial-specific liquid limit data, including a column
             for the logarithm of the number of drops.
         """
@@ -313,3 +313,100 @@ class IndexDataFrameAccessor(GeotechPandasBase):
         plastic_limit = plastic_limit.astype("Float64")
 
         return plastic_limit
+
+    def is_nonplastic(self) -> pd.Series:
+        """Check if a layer is nonplastic.
+
+        A layer is considered nonplastic if the plastic limit is greater than or equal to the
+        liquid limit, or if either the liquid limit or plastic limit are NA.
+
+        .. admonition:: **Requires:**
+            :class: important
+
+            | :term:`liquid_limit`
+            | :term:`plastic_limit`
+
+        Returns
+        -------
+        :external:class:`~pandas.Series`
+            Boolean series indicating whether each layer is nonplastic.
+
+        Examples
+        --------
+        >>> df = pd.DataFrame(
+        ...     {
+        ...         "point_id": ["BH-1", "BH-1", "BH-1"],
+        ...         "bottom": [1.0, 2.0, 3.0],
+        ...         "liquid_limit": [47.5, None, 30.0],
+        ...         "plastic_limit": [25.3, 50.0, 50.0],
+        ...     }
+        ... )
+        >>> df.geotech.lab.index.is_nonplastic()
+        0    False
+        1     True
+        2     True
+        Name: is_nonplastic, dtype: bool
+        """
+        self._validate_columns(["liquid_limit", "plastic_limit"])
+
+        liquid_limit = self._obj["liquid_limit"]
+        plastic_limit = self._obj["plastic_limit"]
+        is_nonplastic = (plastic_limit >= liquid_limit) | liquid_limit.isna() | plastic_limit.isna()
+        is_nonplastic.name = "is_nonplastic"
+
+        return is_nonplastic
+
+    def get_plasticity_index(self) -> pd.Series:
+        """Calculate and return the plasticity index.
+
+        The plasticity index is calculated as the difference between the liquid limit and the
+        plastic limit.
+
+        .. admonition:: **Requires:**
+            :class: important
+
+            | :term:`liquid_limit`
+            | :term:`plastic_limit`
+
+        Returns
+        -------
+        :external:class:`~pandas.Series`
+            Series with plasticity index values.
+
+        Notes
+        -----
+        The plasticity index is defined as:
+
+        .. math:: PI = LL - PL
+
+        where:
+
+        - :math:`PI =` plasticity index, %,
+        - :math:`LL =` liquid limit, %,
+        - :math:`PL =` plastic limit, %.
+
+        Examples
+        --------
+        >>> df = pd.DataFrame(
+        ...     {
+        ...         "point_id": ["BH-1"],
+        ...         "bottom": [1.0],
+        ...         "liquid_limit": [47.5],
+        ...         "plastic_limit": [25.3],
+        ...     }
+        ... )
+        >>> df.geotech.lab.index.get_plasticity_index()
+        0    22.2
+        Name: plasticity_index, dtype: Float64
+        """
+        self._validate_columns(["liquid_limit", "plastic_limit"])
+
+        liquid_limit = self._obj["liquid_limit"]
+        plastic_limit = self._obj["plastic_limit"]
+        nonplastic_mask = self.is_nonplastic()
+
+        plasticity_index = pd.Series(liquid_limit - plastic_limit, name="plasticity_index")
+        plasticity_index[nonplastic_mask] = pd.NA
+        plasticity_index = plasticity_index.astype("Float64")
+
+        return plasticity_index

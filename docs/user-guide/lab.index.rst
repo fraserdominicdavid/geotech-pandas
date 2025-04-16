@@ -21,29 +21,29 @@ Next, we create a :external:class:`~pandas.DataFrame` with the following data,
 
     df = pd.DataFrame(
         {
-            "point_id": ["BH-1", "BH-1", "BH-1"],
-            "bottom": [1.0, 1.5, 3.0],
-            "moisture_content_mass_moist": [236.44, 154.40, 164.68],
-            "moisture_content_mass_dry": [174.40, 120.05, 134.31],
-            "moisture_content_mass_container": [22.20, 18.66, 20.27],
-            "liquid_limit_1_drops": [19, 18, 20],
-            "liquid_limit_1_mass_moist": [13.91, 14.58, 16.24],
-            "liquid_limit_1_mass_dry": [10.56, 11.23, 12.56],
-            "liquid_limit_1_mass_container": [3.22, 3.28, 3.24],
-            "liquid_limit_2_drops": [25, 25, 26],
-            "liquid_limit_2_mass_moist": [18.48, 13.36, 12.23],
-            "liquid_limit_2_mass_dry": [13.78, 10.45, 9.74],
-            "liquid_limit_2_mass_container": [3.15, 3.27, 3.26],
-            "liquid_limit_3_drops": [31, 32, 35],
-            "liquid_limit_3_mass_moist": [21.38, 17.77, 13.40],
-            "liquid_limit_3_mass_dry": [15.91, 13.67, 10.64],
-            "liquid_limit_3_mass_container": [3.21, 3.24, 3.23],
-            "plastic_limit_1_mass_moist": [12.26, 11.66, 13.22],
-            "plastic_limit_1_mass_dry": [10.23, 9.89, 11.28],
-            "plastic_limit_1_mass_container": [2.57, 2.99, 2.97],
-            "plastic_limit_2_mass_moist": [11.17, 13.20, 17.01],
-            "plastic_limit_2_mass_dry": [9.45, 11.01, 14.30],
-            "plastic_limit_2_mass_container": [3.07, 2.56, 2.90],
+            "point_id": ["BH-1", "BH-1", "BH-1", "BH-1"],
+            "bottom": [1.0, 1.5, 3.0, 4.5],
+            "moisture_content_mass_moist": [236.44, 154.40, 164.68, 135.61],
+            "moisture_content_mass_dry": [174.40, 120.05, 134.31, 107.64],
+            "moisture_content_mass_container": [22.20, 18.66, 20.27, 22.32],
+            "liquid_limit_1_drops": [19, 18, 20, pd.NA],
+            "liquid_limit_1_mass_moist": [13.91, 14.58, 16.24, pd.NA],
+            "liquid_limit_1_mass_dry": [10.56, 11.23, 12.56, pd.NA],
+            "liquid_limit_1_mass_container": [3.22, 3.28, 3.24, pd.NA],
+            "liquid_limit_2_drops": [25, 25, 26, pd.NA],
+            "liquid_limit_2_mass_moist": [18.48, 13.36, 12.23, pd.NA],
+            "liquid_limit_2_mass_dry": [13.78, 10.45, 9.74, pd.NA],
+            "liquid_limit_2_mass_container": [3.15, 3.27, 3.26, pd.NA],
+            "liquid_limit_3_drops": [31, 32, 35, pd.NA],
+            "liquid_limit_3_mass_moist": [21.38, 17.77, 13.40, pd.NA],
+            "liquid_limit_3_mass_dry": [15.91, 13.67, 10.64, pd.NA],
+            "liquid_limit_3_mass_container": [3.21, 3.24, 3.23, pd.NA],
+            "plastic_limit_1_mass_moist": [12.26, 11.66, 13.22, pd.NA],
+            "plastic_limit_1_mass_dry": [10.23, 9.89, 11.28, pd.NA],
+            "plastic_limit_1_mass_container": [2.57, 2.99, 2.97, pd.NA],
+            "plastic_limit_2_mass_moist": [11.17, 13.20, 17.01, pd.NA],
+            "plastic_limit_2_mass_dry": [9.45, 11.01, 14.30, pd.NA],
+            "plastic_limit_2_mass_container": [3.07, 2.56, 2.90, pd.NA],
         }
     )
     df = df.convert_dtypes()
@@ -115,7 +115,8 @@ for each sample in the dataframe.
 
 .. ipython:: python
 
-    df.geotech.lab.index.get_liquid_limit()
+    df["liquid_limit"] = df.geotech.lab.index.get_liquid_limit()
+    df["liquid_limit"]
 
 Getting the plastic limit
 -------------------------
@@ -143,4 +144,33 @@ for each sample in the dataframe.
 
 .. ipython:: python
 
-    df.geotech.lab.index.get_plastic_limit()
+    df["plastic_limit"] = df.geotech.lab.index.get_plastic_limit()
+    df["plastic_limit"]
+
+Checking for nonplastic layers
+------------------------------
+The :meth:`~pandas.DataFrame.geotech.lab.index.is_nonplastic` method checks if a layer is
+nonplastic. A layer is considered nonplastic if the plastic limit is greater than or equal to the
+liquid limit, or if either the liquid limit or plastic limit is missing
+(:external:attr:`~pandas.NA`). This method requires the following columns:
+
+- ``liquid_limit``: liquid limit, %.
+- ``plastic_limit``: plastic limit, %.
+
+.. ipython:: python
+
+    df.geotech.lab.index.is_nonplastic()
+
+Getting the plasticity index
+----------------------------
+The :meth:`~pandas.DataFrame.geotech.lab.index.get_plasticity_index` method calculates the
+plasticity index as the difference between the liquid limit and the plastic limit. If a layer is
+nonplastic, the plasticity index is set to :external:attr:`~pandas.NA`. This method requires the
+following columns:
+
+- ``liquid_limit``: liquid limit, %.
+- ``plastic_limit``: plastic limit, %.
+
+.. ipython:: python
+
+    df.geotech.lab.index.get_plasticity_index()
