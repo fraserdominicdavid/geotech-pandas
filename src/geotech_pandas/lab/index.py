@@ -164,7 +164,7 @@ class IndexDataFrameAccessor(GeotechPandasBase):
 
         Returns
         -------
-        pd.DataFrame
+        :external:class:`~pandas.DataFrame`
             A transformed DataFrame with trial-specific liquid limit data, including a column
             for the logarithm of the number of drops.
         """
@@ -328,7 +328,7 @@ class IndexDataFrameAccessor(GeotechPandasBase):
 
         Returns
         -------
-        pd.Series
+        :external:class:`~pandas.Series`
             Boolean series indicating whether each layer is nonplastic.
 
         Examples
