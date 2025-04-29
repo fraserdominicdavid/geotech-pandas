@@ -142,6 +142,44 @@ SPT Columns
         | *unitless*
         | ``string``
 
+    spt_hammer_country
+        | The country of origin for the SPT practice. This determines the methodology and hammer
+          efficiency factor used in the test.
+        | *unitless*
+        | ``string``
+
+        **Possible Values**
+
+        - ``jp``: Japan
+        - ``us``: United States
+        - ``ar``: Argentina
+        - ``cn``: China
+
+    spt_hammer_type
+        | The type of hammer used in the SPT.
+        | *unitless*
+        | ``string``
+
+        **Possible Values**
+
+        - ``donut hammer``
+        - ``safety hammer``
+
+    spt_hammer_release
+        | The release mechanism of the hammer used in the SPT.
+        | *unitless*
+        | ``string``
+
+        **Possible Values**
+
+        - ``free fall``
+        - ``rope and pulley``
+    
+    spt_hammer_efficiency_factor
+        | The efficiency factor of the hammer used in the SPT for N-value correction.
+        | *unitless*
+        | ``float``
+
 .. _soil-index-columns:
 
 Soil Index Columns

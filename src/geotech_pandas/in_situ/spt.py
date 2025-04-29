@@ -376,3 +376,136 @@ class SPTDataFrameAccessor(GeotechPandasBase):
             self._cat_blows().str.cat(self._format_n_value(), sep=" "),
             name="spt_report",
         ).convert_dtypes()
+
+    def get_typical_hammer_efficiency_factor(self) -> pd.Series:
+        """Return the typical hammer efficiency factor based on country, type, and release.
+
+        The efficiency factor is used to convert the N-value to a corrected N-value. The hammer
+        efficiency factor is based on the following conditions (country, type, and release):
+
+        .. list-table:: Typical Hammer Efficiency Factors
+            :header-rows: 1
+
+            * - Country
+              - Hammer Type
+              - Hammer Release
+              - Efficiency Factor
+            * - Japan (jp)
+              - donut hammer
+              - free fall
+              - 0.78
+            * - Japan (jp)
+              - donut hammer
+              - rope and pulley
+              - 0.67
+            * - United States (us)
+              - safety hammer
+              - rope and pulley
+              - 0.60
+            * - United States (us)
+              - donut hammer
+              - rope and pulley
+              - 0.45
+            * - Argentina (ar)
+              - donut hammer
+              - rope and pulley
+              - 0.45
+            * - China (cn)
+              - donut hammer
+              - free fall
+              - 0.60
+            * - China (cn)
+              - donut hammer
+              - rope and pulley
+              - 0.50
+
+        The country mentioned here refers to the origin of the SPT practice, not the location of the
+        test. This is because SPT practice is not standardized worldwide and the methodology used
+        in each country causes the variation in the hammer efficiency factor.
+
+        If any value in the required columns is `NA`, then the efficiency factor will also be `NA`.
+
+        .. admonition:: **Requires:**
+            :class: important
+
+            | :term:`spt_hammer_country`
+            | :term:`spt_hammer_type`
+            | :term:`spt_hammer_release`
+
+        Returns
+        -------
+        :external:class:`~pandas.Series`
+            :term:`spt_hammer_efficiency_factor`
+        """
+        self._validate_column_values("spt_hammer_country", ["jp", "us", "ar", "cn"])
+        self._validate_column_values("spt_hammer_type", ["donut hammer", "safety hammer"])
+        self._validate_column_values("spt_hammer_release", ["free fall", "rope and pulley"])
+
+        caselist = [
+            # None
+            (
+                (self._obj["spt_hammer_country"].isna())
+                | (self._obj["spt_hammer_type"].isna())
+                | (self._obj["spt_hammer_release"].isna()),
+                pd.NA,
+            ),
+            # Japan
+            (
+                (self._obj["spt_hammer_country"] == "jp")
+                & (self._obj["spt_hammer_type"] == "donut hammer")
+                & (self._obj["spt_hammer_release"] == "free fall"),
+                0.78,
+            ),
+            (
+                (self._obj["spt_hammer_country"] == "jp")
+                & (self._obj["spt_hammer_type"] == "donut hammer")
+                & (self._obj["spt_hammer_release"] == "rope and pulley"),
+                0.67,
+            ),
+            # United States
+            (
+                (self._obj["spt_hammer_country"] == "us")
+                & (self._obj["spt_hammer_type"] == "safety hammer")
+                & (self._obj["spt_hammer_release"] == "rope and pulley"),
+                0.60,
+            ),
+            (
+                (self._obj["spt_hammer_country"] == "us")
+                & (self._obj["spt_hammer_type"] == "donut hammer")
+                & (self._obj["spt_hammer_release"] == "rope and pulley"),
+                0.45,
+            ),
+            # Argentina
+            (
+                (self._obj["spt_hammer_country"] == "ar")
+                & (self._obj["spt_hammer_type"] == "donut hammer")
+                & (self._obj["spt_hammer_release"] == "rope and pulley"),
+                0.45,
+            ),
+            # China
+            (
+                (self._obj["spt_hammer_country"] == "cn")
+                & (self._obj["spt_hammer_type"] == "donut hammer")
+                & (self._obj["spt_hammer_release"] == "free fall"),
+                0.60,
+            ),
+            (
+                (self._obj["spt_hammer_country"] == "cn")
+                & (self._obj["spt_hammer_type"] == "donut hammer")
+                & (self._obj["spt_hammer_release"] == "rope and pulley"),
+                0.50,
+            ),
+        ]
+
+        spt_hammer_efficiency_factor = pd.Series(
+            pd.NA,
+            index=self._obj.index,
+            name="spt_hammer_efficiency_factor",
+        )
+
+        # Ignore mypy error which detects incompatible type "list[tuple[Series[bool], object]]" for
+        # the caselist arg of the case_when method. Possibly raise an issue in pandas.
+        spt_hammer_efficiency_factor = spt_hammer_efficiency_factor.case_when(caselist)  # type: ignore[arg-type]
+        spt_hammer_efficiency_factor = spt_hammer_efficiency_factor.astype("Float64")
+
+        return spt_hammer_efficiency_factor

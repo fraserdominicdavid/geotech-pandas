@@ -170,3 +170,59 @@ def test_validators(df, error):
     """Test if validators are triggered for wrong ``DataFrame`` configurations."""
     with error:
         df.geotech  # noqa: B018
+
+
+@pytest.mark.parametrize(
+    ("df", "column", "valid_values", "error"),
+    [
+        (
+            base_df,
+            "point_id",
+            ["BH-3", "BH-4"],
+            pytest.raises(
+                ValueError,
+                match=r"Invalid values found in 'point_id': \['BH-1', 'BH-2'\]. Valid values are: "
+                r"\['BH-3', 'BH-4'\]",
+            ),
+        ),
+        (
+            base_df,
+            "point_id",
+            ["BH-3"],
+            pytest.raises(
+                ValueError,
+                match=r"Invalid values found in 'point_id': \['BH-1', 'BH-2'\]. Valid value is: "
+                r"\['BH-3'\]",
+            ),
+        ),
+        (
+            base_df,
+            "point_id",
+            ["BH-1"],
+            pytest.raises(
+                ValueError,
+                match=r"Invalid value found in 'point_id': \['BH-2'\]. Valid value is: \['BH-1'\]",
+            ),
+        ),
+        (
+            base_df,
+            "point_id",
+            ["BH-1", "BH-3"],
+            pytest.raises(
+                ValueError,
+                match=r"Invalid value found in 'point_id': \['BH-2'\]. Valid values are: "
+                r"\['BH-1', 'BH-3'\]",
+            ),
+        ),
+        (
+            base_df,
+            "point_id",
+            ["BH-1", "BH-2"],
+            does_not_raise(),
+        ),
+    ],
+)
+def test_validate_column_values(df, column, valid_values, error):
+    """Test if ``columns`` are in ``df`` else raise ``error``."""
+    with error:
+        df.geotech._validate_column_values(column, valid_values)
