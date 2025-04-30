@@ -13,7 +13,8 @@ authors = [
 requires-python = ">=3.10,<4.0"
 dependencies = [
     "numpy>=2.2.4",
-    "pandas>=2.2.0",
+    "pandas>=2.2.2",
+    "pandas-stubs>=2.2.2.240909",
     "statsmodels>=0.14.4",
 ]
 
@@ -34,7 +35,6 @@ dev = [
   "ipywidgets (>=8.1.2)",
   "mypy (>=1.14.1)",
   "numpydoc>=1.6.0",
-  "pandas-stubs>=2.2.0.240218",
   "pickleshare>=0.7.5",
   "poethepoet (>=0.32.1)",
   "pre-commit (>=4.0.1)",
