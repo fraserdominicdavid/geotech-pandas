@@ -83,7 +83,7 @@ def df() -> pd.DataFrame:
                 "23,29,35 N=64",
                 "50,-,- N=(R)",
             ],
-            "spt_hammer_country": ["jp", "jp", "us", "us", "us", "ar", "cn", "cn"],
+            "spt_hammer_country_ref": ["jp", "jp", "us", "us", "us", "ar", "cn", "cn"],
             "spt_hammer_type": [
                 "donut hammer",
                 "donut hammer",

@@ -226,7 +226,7 @@ returns the typical hammer efficiency factor based on the country, type, and rel
 the SPT hammer. This factor is used to correct the N-value for hammer efficiency. This method
 requires the following columns:
 
-- :term:`spt_hammer_country`
+- :term:`spt_hammer_country_ref`
 - :term:`spt_hammer_type`
 - :term:`spt_hammer_release`
 
@@ -260,7 +260,7 @@ and get the efficiency factor for each sample/layer,
 
 .. ipython:: python
 
-    df["spt_hammer_country"] = "us"
+    df["spt_hammer_country_ref"] = "us"
     df["spt_hammer_type"] = "donut hammer"
     df["spt_hammer_release"] = "rope and pulley"
 

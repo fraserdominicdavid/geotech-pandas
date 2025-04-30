@@ -142,8 +142,8 @@ SPT Columns
         | *unitless*
         | ``string``
 
-    spt_hammer_country
-        | The country of origin for the SPT practice. This determines the methodology and hammer
+    spt_hammer_country_ref
+        | The reference country for the SPT practice. This determines the methodology and hammer
           efficiency factor used in the test.
         | *unitless*
         | ``string``

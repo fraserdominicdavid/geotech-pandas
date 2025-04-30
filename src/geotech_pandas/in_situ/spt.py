@@ -419,16 +419,16 @@ class SPTDataFrameAccessor(GeotechPandasBase):
               - rope and pulley
               - 0.50
 
-        The country mentioned here refers to the origin of the SPT practice, not the location of the
-        test. This is because SPT practice is not standardized worldwide and the methodology used
-        in each country causes the variation in the hammer efficiency factor.
+        The country mentioned here refers to the referenced country of the SPT practice, not the
+        location of the test. This is because SPT practice is not standardized worldwide and the
+        methodology used in each country causes the variation in the hammer efficiency factor.
 
         If any value in the required columns is `NA`, then the efficiency factor will also be `NA`.
 
         .. admonition:: **Requires:**
             :class: important
 
-            | :term:`spt_hammer_country`
+            | :term:`spt_hammer_country_ref`
             | :term:`spt_hammer_type`
             | :term:`spt_hammer_release`
 
@@ -437,60 +437,60 @@ class SPTDataFrameAccessor(GeotechPandasBase):
         :external:class:`~pandas.Series`
             :term:`spt_hammer_efficiency_factor`
         """
-        self._validate_column_values("spt_hammer_country", ["jp", "us", "ar", "cn"])
+        self._validate_column_values("spt_hammer_country_ref", ["jp", "us", "ar", "cn"])
         self._validate_column_values("spt_hammer_type", ["donut hammer", "safety hammer"])
         self._validate_column_values("spt_hammer_release", ["free fall", "rope and pulley"])
 
         caselist = [
             # None
             (
-                (self._obj["spt_hammer_country"].isna())
+                (self._obj["spt_hammer_country_ref"].isna())
                 | (self._obj["spt_hammer_type"].isna())
                 | (self._obj["spt_hammer_release"].isna()),
                 pd.NA,
             ),
             # Japan
             (
-                (self._obj["spt_hammer_country"] == "jp")
+                (self._obj["spt_hammer_country_ref"] == "jp")
                 & (self._obj["spt_hammer_type"] == "donut hammer")
                 & (self._obj["spt_hammer_release"] == "free fall"),
                 0.78,
             ),
             (
-                (self._obj["spt_hammer_country"] == "jp")
+                (self._obj["spt_hammer_country_ref"] == "jp")
                 & (self._obj["spt_hammer_type"] == "donut hammer")
                 & (self._obj["spt_hammer_release"] == "rope and pulley"),
                 0.67,
             ),
             # United States
             (
-                (self._obj["spt_hammer_country"] == "us")
+                (self._obj["spt_hammer_country_ref"] == "us")
                 & (self._obj["spt_hammer_type"] == "safety hammer")
                 & (self._obj["spt_hammer_release"] == "rope and pulley"),
                 0.60,
             ),
             (
-                (self._obj["spt_hammer_country"] == "us")
+                (self._obj["spt_hammer_country_ref"] == "us")
                 & (self._obj["spt_hammer_type"] == "donut hammer")
                 & (self._obj["spt_hammer_release"] == "rope and pulley"),
                 0.45,
             ),
             # Argentina
             (
-                (self._obj["spt_hammer_country"] == "ar")
+                (self._obj["spt_hammer_country_ref"] == "ar")
                 & (self._obj["spt_hammer_type"] == "donut hammer")
                 & (self._obj["spt_hammer_release"] == "rope and pulley"),
                 0.45,
             ),
             # China
             (
-                (self._obj["spt_hammer_country"] == "cn")
+                (self._obj["spt_hammer_country_ref"] == "cn")
                 & (self._obj["spt_hammer_type"] == "donut hammer")
                 & (self._obj["spt_hammer_release"] == "free fall"),
                 0.60,
             ),
             (
-                (self._obj["spt_hammer_country"] == "cn")
+                (self._obj["spt_hammer_country_ref"] == "cn")
                 & (self._obj["spt_hammer_type"] == "donut hammer")
                 & (self._obj["spt_hammer_release"] == "rope and pulley"),
                 0.50,
