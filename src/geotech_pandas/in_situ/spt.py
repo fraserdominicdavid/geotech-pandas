@@ -381,9 +381,10 @@ class SPTDataFrameAccessor(GeotechPandasBase):
         """Return the typical hammer efficiency factor based on country, type, and release.
 
         The efficiency factor is used to convert the N-value to a corrected N-value. The hammer
-        efficiency factor is based on the following conditions (country, type, and release):
+        efficiency factor can be assumed based on the following conditions (country, type,
+        and release):
 
-        .. list-table:: Typical Hammer Efficiency Factors
+        .. list-table:: Typical Hammer Efficiency Factors [1]_
             :header-rows: 1
 
             * - Country
@@ -436,6 +437,13 @@ class SPTDataFrameAccessor(GeotechPandasBase):
         -------
         :external:class:`~pandas.Series`
             :term:`spt_hammer_efficiency_factor`
+
+        References
+        ----------
+        .. [1] Seed, H. B., Tokimatsu, K., Harder, L. F., Chung, R. M. (1985). Influence of SPT
+           procedures in soil liquefaction resistance evaluations. *Journal of Geotechnical
+           Engineering Division*, 111(12), 1426-1432.
+           `<https://doi.org/10.1061/(ASCE)0733-9410(1985)111:12(1425)>`_
         """
         self._validate_column_values("spt_hammer_country_ref", ["jp", "us", "ar", "cn"])
         self._validate_column_values("spt_hammer_type", ["donut hammer", "safety hammer"])
