@@ -218,3 +218,50 @@ A simple descriptive report of the blow counts and the N-value can be obtained t
 .. ipython:: python
 
     df.geotech.in_situ.spt.get_report()
+
+Getting the typical hammer efficiency factor
+--------------------------------------------
+The :meth:`~pandas.DataFrame.geotech.in_situ.spt.get_typical_hammer_efficiency_factor` method
+returns the typical hammer efficiency factor based on the country, type, and release mechanism of
+the SPT hammer. This factor is used to correct the N-value for hammer efficiency. This method
+requires the following columns:
+
+- :term:`spt_hammer_country_ref`
+- :term:`spt_hammer_type`
+- :term:`spt_hammer_release`
+
+The efficiency factor is then determined based on the following conditions:
+
+- **Japan (jp):**
+
+  - Donut hammer, free fall: 0.78
+  - Donut hammer, rope and pulley: 0.67
+
+- **United States (us):**
+
+  - Safety hammer, rope and pulley: 0.60
+  - Donut hammer, rope and pulley: 0.45
+
+- **Argentina (ar):**
+
+  - Donut hammer, rope and pulley: 0.45
+
+- **China (cn):**
+
+  - Donut hammer, free fall: 0.60
+  - Donut hammer, rope and pulley: 0.50
+
+If any of the required columns contain missing values, the corresponding efficiency factor will also
+be :external:attr:`~pandas.NA`.
+
+Assuming that the SPT hammer is a donut hammer with a rope and pulley release mechanism as practiced
+in the United States, we can set the following columns in the :external:class:`~pandas.DataFrame`
+and get the efficiency factor for each sample/layer,
+
+.. ipython:: python
+
+    df["spt_hammer_country_ref"] = "us"
+    df["spt_hammer_type"] = "donut hammer"
+    df["spt_hammer_release"] = "rope and pulley"
+
+    df.geotech.in_situ.spt.get_typical_hammer_efficiency_factor()

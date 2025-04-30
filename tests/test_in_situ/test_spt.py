@@ -83,6 +83,28 @@ def df() -> pd.DataFrame:
                 "23,29,35 N=64",
                 "50,-,- N=(R)",
             ],
+            "spt_hammer_country_ref": ["jp", "jp", "us", "us", "us", "ar", "cn", "cn"],
+            "spt_hammer_type": [
+                "donut hammer",
+                "donut hammer",
+                None,
+                "safety hammer",
+                "donut hammer",
+                "donut hammer",
+                "donut hammer",
+                "donut hammer",
+            ],
+            "spt_hammer_release": [
+                "free fall",
+                "rope and pulley",
+                None,
+                "rope and pulley",
+                "rope and pulley",
+                "rope and pulley",
+                "free fall",
+                "rope and pulley",
+            ],
+            "spt_hammer_efficiency_factor": [0.78, 0.67, None, 0.60, 0.45, 0.45, 0.60, 0.50],
         },
     ).convert_dtypes()
 
@@ -114,6 +136,12 @@ def test_accessor():
         ("geotech.in_situ.spt._cat_blows", "_cat_blows", None, None),
         ("geotech.in_situ.spt._format_n_value", "_format_n_value", None, None),
         ("geotech.in_situ.spt.get_report", "spt_report", None, None),
+        (
+            "geotech.in_situ.spt.get_typical_hammer_efficiency_factor",
+            "spt_hammer_efficiency_factor",
+            None,
+            None,
+        ),
     ],
 )
 def test_spt_methods(df, method, column, rename, kwargs):
@@ -135,6 +163,8 @@ def test_spt_methods(df, method, column, rename, kwargs):
     result = reduce(getattr, method.split("."), df)
     result = result() if kwargs is None else result(**kwargs)
     expected = df[column] if rename is None else df[column].rename(rename)
+    print(result)
+    print(expected)
     tm.assert_series_equal(result, expected)
 
 

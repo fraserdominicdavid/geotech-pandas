@@ -13,7 +13,8 @@ authors = [
 requires-python = ">=3.10,<4.0"
 dependencies = [
     "numpy>=2.2.4",
-    "pandas>=2.1.2",
+    "pandas>=2.2.2",
+    "pandas-stubs>=2.2.2.240909",
     "statsmodels>=0.14.4",
 ]
 
@@ -34,7 +35,6 @@ dev = [
   "ipywidgets (>=8.1.2)",
   "mypy (>=1.14.1)",
   "numpydoc>=1.6.0",
-  "pandas-stubs>=2.0.3.230814",
   "pickleshare>=0.7.5",
   "poethepoet (>=0.32.1)",
   "pre-commit (>=4.0.1)",
@@ -79,6 +79,7 @@ show_column_numbers = true
 show_error_codes = true
 show_error_context = true
 warn_unreachable = true
+warn_unused_ignores = true
 
 [tool.pytest.ini_options] # https://docs.pytest.org/en/latest/reference/reference.html#ini-options-ref
 addopts = "--color=yes --doctest-modules --exitfirst --failed-first --verbosity=2 --junitxml=reports/pytest.xml"

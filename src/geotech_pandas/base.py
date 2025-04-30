@@ -81,3 +81,27 @@ class GeotechPandasBase:
                 "The DataFrame contains duplicate point_id and bottom:"
                 f" {', '.join(duplicate_list)}."
             )
+
+    def _validate_column_values(self, column: str, valid_values: list) -> None:
+        """Validate that all non-NA values in a column are within the valid list of values.
+
+        Parameters
+        ----------
+        column : str
+            The name of the column to validate.
+        valid_values : list
+            A list of valid values for the column.
+
+        Raises
+        ------
+        ValueError
+            If any value in the column is not in the valid list of values.
+        """
+        validation_mask = self._obj[column].dropna().isin(valid_values)
+        if not validation_mask.all():
+            invalid_values = self._obj[column].dropna()[~validation_mask].unique().tolist()
+            raise ValueError(
+                f"Invalid value{'s' if len(invalid_values) > 1 else ''} found in '{column}': "
+                f"{invalid_values}. Valid value{'s are' if len(valid_values) > 1 else ' is'}: "
+                f"{valid_values}"
+            )
